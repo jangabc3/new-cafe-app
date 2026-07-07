@@ -1,3 +1,7 @@
+[hidden] {
+  display: none !important;
+}
+
 .site-header {
   position: sticky;
   top: 0;
@@ -257,6 +261,10 @@ h1 {
   font-weight: 900;
 }
 
+.summary-note,
+.empty-state p,
+.complete-panel p {
+  color: var(--text-secondary);
 .summary-note {
   color: var(--text-muted);
   font-size: var(--font-size-sm);
@@ -319,11 +327,6 @@ h1 {
 .empty-state strong,
 .complete-panel h2 {
   font-size: var(--font-size-xl);
-}
-
-.empty-state p,
-.complete-panel p {
-  color: var(--text-secondary);
 }
 
 .complete-actions {

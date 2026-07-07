@@ -138,12 +138,12 @@ cafe-app/
 
 ### 5단계: 고객 - 주문 관리 시스템
 
-- [ ] `orders/list.html` — 주문 내역 목록
-- [ ] `orders/list.css`
-- [ ] `orders/list.js`
-- [ ] `orders/detail.html` — 주문 상세
-- [ ] `orders/detail.css`
-- [ ] `orders/detail.js`
+- [x] `orders/list.html` — 주문 내역 목록
+- [x] `orders/list.css`
+- [x] `orders/list.js`
+- [x] `orders/detail.html` — 주문 상세
+- [x] `orders/detail.css`
+- [x] `orders/detail.js`
 
 ### 6단계: 고객 - 메인 페이지
 

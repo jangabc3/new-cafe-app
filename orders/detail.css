@@ -1,0 +1,143 @@
+@import url("list.css");
+
+.detail-shell {
+  width: min(960px, calc(100% - 32px));
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  margin-bottom: var(--sp-md);
+  color: #294842;
+  font-weight: 900;
+}
+
+.detail-panel {
+  display: grid;
+  gap: var(--sp-lg);
+  padding: var(--sp-xl);
+}
+
+.detail-header {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: var(--sp-md);
+  padding-bottom: var(--sp-md);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.detail-header h1 {
+  font-size: var(--font-size-2xl);
+}
+
+.detail-meta {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--sp-md);
+}
+
+.detail-meta article {
+  padding: var(--sp-md);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background: rgba(41, 72, 66, 0.05);
+}
+
+.detail-meta span,
+.items-table th,
+.summary-list dt {
+  color: var(--text-secondary);
+  font-size: var(--font-size-sm);
+  font-weight: 800;
+}
+
+.detail-meta strong {
+  display: block;
+  margin-top: 4px;
+}
+
+.items-table {
+  overflow-x: auto;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+}
+
+table {
+  width: 100%;
+  min-width: 620px;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border-color);
+  text-align: left;
+}
+
+tr:last-child td {
+  border-bottom: 0;
+}
+
+th {
+  background: rgba(41, 72, 66, 0.06);
+}
+
+.summary-list {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  justify-self: end;
+  min-width: min(320px, 100%);
+}
+
+.summary-list div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-lg);
+}
+
+.summary-list dd {
+  margin: 0;
+  font-weight: 900;
+}
+
+.summary-total {
+  padding-top: 12px;
+  border-top: 1px solid var(--border-color);
+}
+
+.summary-total dt,
+.summary-total dd {
+  color: #294842;
+  font-size: var(--font-size-lg);
+  font-weight: 900;
+}
+
+.detail-actions {
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.missing-copy {
+  color: var(--text-secondary);
+}
+
+@media (max-width: 720px) {
+  .detail-panel {
+    padding: var(--sp-lg);
+  }
+
+  .detail-header,
+  .detail-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .detail-meta {
+    grid-template-columns: 1fr;
+  }
+}

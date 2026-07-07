@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Orders | Cafe</title>
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="list.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="../index.html" aria-label="Cafe home">
+        <span class="brand-mark">C</span>
+        <span>Cafe</span>
+      </a>
+      <nav class="site-nav" aria-label="Customer navigation">
+        <a href="../menus/list.html">Menu</a>
+        <a href="../basket/list.html">Basket <span id="cartCount" class="cart-badge">0</span></a>
+        <a class="is-active" href="list.html">Orders</a>
+      </nav>
+    </header>
+
+    <main class="orders-shell">
+      <section class="page-heading">
+        <div>
+          <p class="eyebrow">Order History</p>
+          <h1>주문 내역</h1>
+        </div>
+        <a class="secondary-button" href="../menus/list.html">메뉴 주문하기</a>
+      </section>
+
+      <section class="summary-grid" aria-label="Order summary">
+        <article>
+          <span>전체 주문</span>
+          <strong id="totalOrders">0</strong>
+        </article>
+        <article>
+          <span>진행 중</span>
+          <strong id="activeOrders">0</strong>
+        </article>
+        <article>
+          <span>누적 금액</span>
+          <strong id="totalSpent">0 KRW</strong>
+        </article>
+      </section>
+
+      <section id="emptyState" class="empty-state" hidden>
+        <strong>아직 주문 내역이 없습니다.</strong>
+        <p>장바구니에서 주문을 생성하면 이곳에 기록됩니다.</p>
+        <a class="primary-button" href="../menus/list.html">메뉴 보러가기</a>
+      </section>
+
+      <section id="ordersList" class="orders-list" aria-label="Orders"></section>
+    </main>
+
+    <script src="../js/data.js"></script>
+    <script src="../js/utils.js"></script>
+    <script src="list.js"></script>
+  </body>
+</html>

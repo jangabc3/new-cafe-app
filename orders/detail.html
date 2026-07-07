@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Order Detail | Cafe</title>
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="detail.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="../index.html" aria-label="Cafe home">
+        <span class="brand-mark">C</span>
+        <span>Cafe</span>
+      </a>
+      <nav class="site-nav" aria-label="Customer navigation">
+        <a href="../menus/list.html">Menu</a>
+        <a href="../basket/list.html">Basket <span id="cartCount" class="cart-badge">0</span></a>
+        <a class="is-active" href="list.html">Orders</a>
+      </nav>
+    </header>
+
+    <main class="orders-shell detail-shell">
+      <a class="back-link" href="list.html">주문 내역</a>
+      <section id="detailPanel" class="detail-panel"></section>
+    </main>
+
+    <script src="../js/data.js"></script>
+    <script src="../js/utils.js"></script>
+    <script src="detail.js"></script>
+  </body>
+</html>

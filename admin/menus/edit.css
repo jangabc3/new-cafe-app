@@ -1,0 +1,14 @@
+@import url("create.css");
+
+.missing-panel {
+  grid-template-columns: 1fr;
+}
+
+.missing-panel h2,
+.missing-panel p {
+  margin: 0;
+}
+
+.missing-panel .primary-button {
+  width: fit-content;
+}

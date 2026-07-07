@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Edit Menu | Cafe Admin</title>
+    <link rel="stylesheet" href="../../css/variables.css">
+    <link rel="stylesheet" href="edit.css">
+  </head>
+  <body>
+    <header class="admin-header">
+      <a class="brand" href="list.html" aria-label="Menu admin home">
+        <span class="brand-mark">C</span>
+        <span>Cafe Admin</span>
+      </a>
+      <nav class="admin-nav" aria-label="Admin navigation">
+        <a class="is-active" href="list.html">Menus</a>
+        <a href="../index.html">Dashboard</a>
+      </nav>
+    </header>
+
+    <main class="admin-shell form-shell">
+      <section class="page-heading">
+        <div>
+          <p class="eyebrow">Edit Menu</p>
+          <h1 id="pageTitle">메뉴 수정</h1>
+        </div>
+        <a class="secondary-button" href="list.html">목록</a>
+      </section>
+
+      <form id="menuForm" class="form-panel" hidden>
+        <label class="form-field">
+          <span class="form-label">메뉴명</span>
+          <input name="name" required maxlength="60">
+        </label>
+        <label class="form-field">
+          <span class="form-label">카테고리</span>
+          <select name="category" required id="categorySelect"></select>
+        </label>
+        <label class="form-field">
+          <span class="form-label">가격</span>
+          <input name="price" required type="number" min="0" step="100">
+        </label>
+        <label class="form-field form-field-wide">
+          <span class="form-label">설명</span>
+          <textarea name="description" required maxlength="240"></textarea>
+        </label>
+        <label class="form-field form-field-wide">
+          <span class="form-label">이미지 URL</span>
+          <input name="image" type="url">
+        </label>
+        <p id="formError" class="form-error" hidden></p>
+        <div class="form-actions">
+          <button class="primary-button" type="submit">변경 저장</button>
+          <a id="detailLink" class="secondary-button" href="list.html">상세</a>
+        </div>
+      </form>
+
+      <section id="missingPanel" class="form-panel missing-panel" hidden>
+        <h2>메뉴를 찾을 수 없습니다.</h2>
+        <p>목록으로 돌아가 다시 선택해 주세요.</p>
+        <a class="primary-button" href="list.html">목록으로 이동</a>
+      </section>
+    </main>
+
+    <script src="../../js/data.js"></script>
+    <script src="../../js/utils.js"></script>
+    <script src="edit.js"></script>
+  </body>
+</html>

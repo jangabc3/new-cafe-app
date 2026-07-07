@@ -37,7 +37,9 @@ function enrichCartItem(item) {
     ...item,
     name: menu ? menu.name : item.name,
     category: menu ? menu.category : item.category,
-    price: menu ? menu.price : item.price
+    price: menu ? menu.price : item.price,
+    image: menu ? menu.image : '',
+    description: menu ? menu.description : ''
   };
 }
 
@@ -83,7 +85,9 @@ function renderCart() {
 function changeQuantity(menuId, amount) {
   const item = getCart().find((cartItem) => String(cartItem.menuId) === String(menuId));
   if (!item) return;
-  updateCartQuantity(menuId, item.quantity + amount);
+
+  const nextQuantity = item.quantity + amount;
+  updateCartQuantity(menuId, nextQuantity);
   renderCart();
 }
 
@@ -92,8 +96,16 @@ cartList.addEventListener('click', (event) => {
   if (!button) return;
 
   const { action, menuId } = button.dataset;
-  if (action === 'increase') changeQuantity(menuId, 1);
-  if (action === 'decrease') changeQuantity(menuId, -1);
+  if (action === 'increase') {
+    changeQuantity(menuId, 1);
+    return;
+  }
+
+  if (action === 'decrease') {
+    changeQuantity(menuId, -1);
+    return;
+  }
+
   if (action === 'remove') {
     removeFromCart(menuId);
     renderCart();
@@ -103,7 +115,8 @@ cartList.addEventListener('click', (event) => {
 
 clearButton.addEventListener('click', () => {
   if (getCart().length === 0) return;
-  if (!window.confirm('장바구니를 모두 비울까요?')) return;
+  const shouldClear = window.confirm('장바구니를 모두 비울까요?');
+  if (!shouldClear) return;
 
   clearCart();
   renderCart();

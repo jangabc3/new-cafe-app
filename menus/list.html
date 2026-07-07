@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Menu | Cafe</title>
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="list.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="../index.html" aria-label="Cafe home">
+        <span class="brand-mark">C</span>
+        <span>Cafe</span>
+      </a>
+      <nav class="site-nav" aria-label="Customer navigation">
+        <a class="is-active" href="list.html">Menu</a>
+        <a href="../basket/list.html">Basket <span id="cartCount" class="cart-badge">0</span></a>
+        <a href="../orders/list.html">Orders</a>
+      </nav>
+    </header>
+
+    <main class="menu-shell">
+      <section class="menu-hero">
+        <div>
+          <p class="eyebrow">Freshly Prepared</p>
+          <h1>메뉴</h1>
+          <p class="hero-copy">오늘 마실 커피와 함께할 디저트를 골라보세요.</p>
+        </div>
+        <div class="hero-panel" aria-label="Cafe menu highlight">
+          <span class="hero-kicker">Popular</span>
+          <strong id="heroMenuName">Cafe Latte</strong>
+          <span id="heroMenuPrice">4,200 KRW</span>
+        </div>
+      </section>
+
+      <section class="menu-controls" aria-label="Menu filters">
+        <label class="search-field">
+          <span>검색</span>
+          <input id="searchInput" type="search" placeholder="메뉴명 또는 설명">
+        </label>
+        <div id="categoryTabs" class="category-tabs" role="tablist" aria-label="Categories"></div>
+      </section>
+
+      <section class="menu-summary" aria-live="polite">
+        <strong id="visibleCount">0</strong>
+        <span>개의 메뉴가 준비되어 있습니다.</span>
+      </section>
+
+      <section id="menuGrid" class="menu-grid" aria-label="Menu list"></section>
+      <p id="emptyState" class="empty-state" hidden>조건에 맞는 메뉴가 없습니다.</p>
+    </main>
+
+    <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+
+    <script src="../js/data.js"></script>
+    <script src="../js/utils.js"></script>
+    <script src="list.js"></script>
+  </body>
+</html>

@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Basket | Cafe</title>
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="list.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="../index.html" aria-label="Cafe home">
+        <span class="brand-mark">C</span>
+        <span>Cafe</span>
+      </a>
+      <nav class="site-nav" aria-label="Customer navigation">
+        <a href="../menus/list.html">Menu</a>
+        <a class="is-active" href="list.html">Basket <span id="cartCount" class="cart-badge">0</span></a>
+        <a href="../orders/list.html">Orders</a>
+      </nav>
+    </header>
+
+    <main class="basket-shell">
+      <section class="page-heading">
+        <div>
+          <p class="eyebrow">Your Basket</p>
+          <h1>장바구니</h1>
+        </div>
+        <a class="secondary-button" href="../menus/list.html">메뉴 더 보기</a>
+      </section>
+
+      <section id="emptyState" class="empty-state" hidden>
+        <strong>장바구니가 비어 있습니다.</strong>
+        <p>메뉴를 둘러보고 원하는 음료와 디저트를 담아보세요.</p>
+        <a class="primary-button" href="../menus/list.html">메뉴 보러가기</a>
+      </section>
+
+      <section id="basketLayout" class="basket-layout" hidden>
+        <div class="basket-panel">
+          <div class="panel-topline">
+            <strong id="itemSummary">0 items</strong>
+            <button id="clearButton" class="text-button" type="button">전체 비우기</button>
+          </div>
+          <div id="cartList" class="cart-list" aria-label="Basket items"></div>
+        </div>
+
+        <aside class="summary-panel" aria-label="Order summary">
+          <h2>주문 요약</h2>
+          <dl class="summary-list">
+            <div>
+              <dt>상품 금액</dt>
+              <dd id="subtotalPrice">0 KRW</dd>
+            </div>
+            <div>
+              <dt>할인</dt>
+              <dd>0 KRW</dd>
+            </div>
+            <div class="summary-total">
+              <dt>총 결제 금액</dt>
+              <dd id="totalPrice">0 KRW</dd>
+            </div>
+          </dl>
+          <button id="orderButton" class="primary-button order-button" type="button">주문하기</button>
+          <p class="summary-note">주문하면 현재 장바구니가 주문 내역으로 저장됩니다.</p>
+        </aside>
+      </section>
+
+      <section id="orderComplete" class="complete-panel" hidden>
+        <p class="eyebrow">Order Created</p>
+        <h2>주문이 접수되었습니다.</h2>
+        <p id="orderMessage"></p>
+        <div class="complete-actions">
+          <a id="orderDetailLink" class="primary-button" href="../orders/list.html">주문 상세</a>
+          <a class="secondary-button" href="../menus/list.html">메뉴 더 보기</a>
+        </div>
+      </section>
+    </main>
+
+    <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+
+    <script src="../js/data.js"></script>
+    <script src="../js/utils.js"></script>
+    <script src="list.js"></script>
+  </body>
+</html>

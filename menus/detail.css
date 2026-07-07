@@ -1,0 +1,141 @@
+@import url("list.css");
+
+.detail-shell {
+  width: min(1040px, calc(100% - 32px));
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  margin-bottom: var(--sp-md);
+  color: #294842;
+  font-weight: 900;
+}
+
+.detail-panel {
+  display: grid;
+  grid-template-columns: minmax(280px, 420px) 1fr;
+  gap: var(--sp-xl);
+  align-items: stretch;
+  padding: var(--sp-xl);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.78);
+  box-shadow: var(--shadow-md);
+}
+
+.detail-media {
+  display: grid;
+  min-height: 420px;
+  place-items: center;
+  border-radius: 8px;
+  color: #294842;
+  background:
+    linear-gradient(135deg, rgba(41, 72, 66, 0.12), rgba(184, 80, 66, 0.12)),
+    #fff7f0;
+  overflow: hidden;
+}
+
+.detail-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.detail-initial {
+  font-size: 72px;
+  font-weight: 900;
+}
+
+.detail-content {
+  display: grid;
+  align-content: center;
+  gap: var(--sp-md);
+}
+
+.detail-content h1 {
+  font-size: var(--font-size-3xl);
+}
+
+.detail-price {
+  color: #294842;
+  font-size: var(--font-size-xl);
+  font-weight: 900;
+}
+
+.detail-description {
+  color: var(--text-secondary);
+}
+
+.order-panel {
+  display: grid;
+  gap: var(--sp-md);
+  margin-top: var(--sp-md);
+  padding: var(--sp-md);
+  border: 1px solid rgba(41, 72, 66, 0.18);
+  border-radius: 8px;
+  background: rgba(41, 72, 66, 0.06);
+}
+
+.quantity-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-md);
+}
+
+.quantity-row span {
+  color: var(--text-secondary);
+  font-weight: 800;
+}
+
+.quantity-control {
+  gap: 8px;
+}
+
+.icon-button {
+  width: 42px;
+  padding: 0;
+  font-size: var(--font-size-lg);
+}
+
+.quantity-value {
+  min-width: 34px;
+  text-align: center;
+  font-weight: 900;
+}
+
+.detail-actions {
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.missing-panel {
+  grid-template-columns: 1fr;
+}
+
+@media (max-width: 820px) {
+  .detail-panel {
+    grid-template-columns: 1fr;
+    padding: var(--sp-lg);
+  }
+
+  .detail-media {
+    min-height: 280px;
+  }
+}
+
+@media (max-width: 520px) {
+  .quantity-row,
+  .detail-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .quantity-control,
+  .primary-button,
+  .secondary-button {
+    width: 100%;
+  }
+}

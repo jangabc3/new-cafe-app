@@ -123,12 +123,12 @@ cafe-app/
 
 ### 3단계: 고객 - 메뉴 조회 시스템
 
-- [ ] `menus/list.html` — 메뉴 목록
-- [ ] `menus/list.css`
-- [ ] `menus/list.js`
-- [ ] `menus/detail.html` — 메뉴 상세
-- [ ] `menus/detail.css`
-- [ ] `menus/detail.js`
+- [x] `menus/list.html` — 메뉴 목록
+- [x] `menus/list.css`
+- [x] `menus/list.js`
+- [x] `menus/detail.html` — 메뉴 상세
+- [x] `menus/detail.css`
+- [x] `menus/detail.js`
 
 ### 4단계: 고객 - 장바구니 관리 시스템
 

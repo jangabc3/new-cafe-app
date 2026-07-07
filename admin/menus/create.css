@@ -1,0 +1,44 @@
+@import url("list.css");
+
+.form-shell {
+  width: min(860px, calc(100% - 32px));
+}
+
+.form-panel {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--sp-md);
+  padding: var(--sp-xl);
+}
+
+.form-field {
+  display: grid;
+  gap: 6px;
+}
+
+.form-field-wide,
+.form-error,
+.form-actions {
+  grid-column: 1 / -1;
+}
+
+.form-error {
+  padding: 10px 12px;
+  border: 1px solid #f3b3a7;
+  border-radius: 8px;
+  color: #8a1f11;
+  background: #fff1ed;
+}
+
+.form-actions {
+  gap: 8px;
+  justify-content: flex-end;
+  padding-top: var(--sp-sm);
+}
+
+@media (max-width: 720px) {
+  .form-panel {
+    grid-template-columns: 1fr;
+    padding: var(--sp-lg);
+  }
+}

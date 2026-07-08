@@ -1,73 +1,75 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="ko">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Basket | Cafe</title>
+    <title>장바구니 | 모모커피</title>
     <link rel="stylesheet" href="../css/variables.css">
     <link rel="stylesheet" href="list.css">
+    <link rel="stylesheet" href="../css/nav.css">
   </head>
   <body>
     <header class="site-header">
-      <a class="brand" href="../index.html" aria-label="Cafe home">
-        <span class="brand-mark">C</span>
-        <span>Cafe</span>
+      <a class="brand" href="../index.html" aria-label="모모커피 홈">
+        <span class="brand-mark" aria-hidden="true"><img src="../assets/images/momo-cutout-tight.png" alt=""></span>
+        <span><strong>MOMO COFFEE</strong><small>한 잔의 커피, 하루의 행복.</small></span>
       </a>
-      <nav class="site-nav" aria-label="Customer navigation">
-        <a href="../menus/list.html">Menu</a>
-        <a class="is-active" href="list.html">Basket <span id="cartCount" class="cart-badge">0</span></a>
-        <a href="../orders/list.html">Orders</a>
+      <nav class="site-nav" aria-label="주요 메뉴">
+        <div class="nav-group"><a class="nav-trigger" href="../story/brand.html">모모 스토리</a><div class="nav-menu"><a href="../story/brand.html">브랜드 소개</a><a href="../story/bi.html">Brand Identity (BI)</a></div></div>
+        <div class="nav-group"><a class="nav-trigger" href="../menu/drinks.html">메뉴</a><div class="nav-menu"><span>음료</span><a href="../menu/drinks.html">음료 전체</a><a href="../menus/list.html?category=coffee">커피</a><a href="../menus/list.html?category=noncoffee">논커피</a><a href="../menus/list.html?category=tea">티</a><a href="../menus/list.html?category=season">시즌 음료</a><span>푸드</span><a href="../menu/foods.html">푸드 전체</a><a href="../menus/list.html?category=dessert">디저트</a><a href="../menus/list.html?category=bakery">베이커리</a><span>상품(Goods)</span><a href="../menu/goods.html">상품 전체</a></div></div>
+        <div class="nav-group"><a class="nav-trigger" href="../stores/finder.html">매장</a><div class="nav-menu"><a href="../stores/finder.html">매장 찾기</a></div></div>
+        <div class="nav-group"><a class="nav-trigger" href="../community/notice.html">커뮤니티</a><div class="nav-menu"><a href="../community/notice.html">공지사항</a><a href="../community/faq.html">자주 묻는 질문</a><a href="../community/event.html">이벤트</a></div></div>
       </nav>
+      <a class="cart-link is-active" href="list.html">장바구니 <span id="cartCount" class="cart-badge">0</span></a>
     </header>
 
     <main class="basket-shell">
       <section class="page-heading">
         <div>
-          <p class="eyebrow">Your Basket</p>
+          <p class="eyebrow">Momo Basket</p>
           <h1>장바구니</h1>
         </div>
         <a class="secondary-button" href="../menus/list.html">메뉴 더 보기</a>
       </section>
 
       <section id="emptyState" class="empty-state" hidden>
+        <span class="momo-face sad" aria-hidden="true"><span></span></span>
         <strong>장바구니가 비어 있습니다.</strong>
-        <p>메뉴를 둘러보고 원하는 음료와 디저트를 담아보세요.</p>
+        <p>모모가 작은 컵을 들고 기다리고 있어요. 좋아하는 커피와 디저트를 담아보세요.</p>
         <a class="primary-button" href="../menus/list.html">메뉴 보러가기</a>
       </section>
 
       <section id="basketLayout" class="basket-layout" hidden>
         <div class="basket-panel">
           <div class="panel-topline">
-            <strong id="itemSummary">0 items</strong>
+            <strong id="itemSummary">0개 메뉴</strong>
             <button id="clearButton" class="text-button" type="button">전체 비우기</button>
           </div>
-          <div id="cartList" class="cart-list" aria-label="Basket items"></div>
+          <div id="cartList" class="cart-list" aria-label="장바구니 상품"></div>
         </div>
 
-        <aside class="summary-panel" aria-label="Order summary">
+        <aside class="summary-panel" aria-label="주문 요약">
+          <div class="momo-reaction" id="momoReaction">
+            <span class="mini-momo" aria-hidden="true"><span></span></span>
+            <p>모모가 주문서를 차분히 확인하고 있어요.</p>
+          </div>
           <h2>주문 요약</h2>
           <dl class="summary-list">
-            <div>
-              <dt>상품 금액</dt>
-              <dd id="subtotalPrice">0 KRW</dd>
-            </div>
-            <div>
-              <dt>할인</dt>
-              <dd>0 KRW</dd>
-            </div>
-            <div class="summary-total">
-              <dt>총 결제 금액</dt>
-              <dd id="totalPrice">0 KRW</dd>
-            </div>
+            <div><dt>상품 금액</dt><dd id="subtotalPrice">0 KRW</dd></div>
+            <div><dt>쿠폰 적용</dt><dd>0 KRW</dd></div>
+            <div><dt>포인트 사용</dt><dd>0 KRW</dd></div>
+            <div class="summary-total"><dt>총 결제 금액</dt><dd id="totalPrice">0 KRW</dd></div>
           </dl>
           <button id="orderButton" class="primary-button order-button" type="button">주문하기</button>
-          <p class="summary-note">주문하면 현재 장바구니가 주문 내역으로 저장됩니다.</p>
+          <p class="summary-note">주문하면 모모가 바로 제조 준비를 시작합니다.</p>
         </aside>
       </section>
 
       <section id="orderComplete" class="complete-panel" hidden>
-        <p class="eyebrow">Order Created</p>
-        <h2>주문이 접수되었습니다.</h2>
+        <span class="momo-face celebrate" aria-hidden="true"><span></span></span>
+        <p class="eyebrow">Order Complete</p>
+        <h2>주문이 완료되었습니다.</h2>
+        <p>모모가 기쁘게 하트를 날렸어요. 맛있는 커피를 정성껏 준비하고 있습니다.</p>
         <p id="orderMessage"></p>
         <div class="complete-actions">
           <a id="orderDetailLink" class="primary-button" href="../orders/list.html">주문 상세</a>

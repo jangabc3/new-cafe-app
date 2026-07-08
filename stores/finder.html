@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>매장 찾기 | 모모커피</title>
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="list.css">
+    <link rel="stylesheet" href="../css/nav.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="../index.html" aria-label="모모커피 홈">
+        <span class="brand-mark" aria-hidden="true"><img src="../assets/images/momo-cutout-tight.png" alt=""></span>
+        <span>
+          <strong>MOMO COFFEE</strong>
+          <small>한 잔의 커피, 하루의 행복.</small>
+        </span>
+      </a>
+      <nav class="site-nav" aria-label="주요 메뉴">
+        <div class="nav-group">
+          <a class="nav-trigger" href="../story/brand.html">모모 스토리</a>
+          <div class="nav-menu">
+            <a href="../story/brand.html">브랜드 소개</a>
+            <a href="../story/bi.html">Brand Identity (BI)</a>
+          </div>
+        </div>
+        <div class="nav-group">
+          <a class="nav-trigger" href="../menu/drinks.html">메뉴</a>
+          <div class="nav-menu">
+            <span>음료</span>
+            <a href="../menu/drinks.html">음료 전체</a>
+            <a href="../menus/list.html?category=coffee">커피</a>
+            <a href="../menus/list.html?category=noncoffee">논커피</a>
+            <a href="../menus/list.html?category=tea">티</a>
+            <a href="../menus/list.html?category=season">시즌 음료</a>
+            <span>푸드</span>
+            <a href="../menu/foods.html">푸드 전체</a>
+            <a href="../menus/list.html?category=dessert">디저트</a>
+            <a href="../menus/list.html?category=bakery">베이커리</a>
+            <span>상품(Goods)</span>
+            <a href="../menu/goods.html">상품 전체</a>
+          </div>
+        </div>
+        <div class="nav-group">
+          <a class="nav-trigger is-active" href="finder.html">매장</a>
+          <div class="nav-menu">
+            <a class="is-active" href="finder.html">매장 찾기</a>
+          </div>
+        </div>
+        <div class="nav-group">
+          <a class="nav-trigger" href="../community/notice.html">커뮤니티</a>
+          <div class="nav-menu">
+            <a href="../community/notice.html">공지사항</a>
+            <a href="../community/faq.html">자주 묻는 질문</a>
+            <a href="../community/event.html">이벤트</a>
+          </div>
+        </div>
+      </nav>
+      <a class="cart-link" href="../basket/list.html">장바구니 <span id="cartCount" class="cart-badge">0</span></a>
+    </header>
+
+    <main class="store-shell">
+      <section class="store-hero">
+        <div>
+          <p class="eyebrow">MOMO STORE LOCATOR</p>
+          <h1>전국 매장 안내</h1>
+          <p>가까운 모모커피를 찾아보세요.<br>지역이나 매장명을 검색하면 가까운 매장을 확인할 수 있습니다.</p>
+        </div>
+        <img src="../assets/images/momo-cutout-tight.png" alt="" aria-hidden="true">
+      </section>
+
+      <section class="search-panel" aria-label="매장 검색">
+        <form id="storeSearchForm" class="search-form">
+          <label class="search-field">
+            <span>매장 검색</span>
+            <input id="storeSearchInput" type="search" placeholder="지역 또는 매장명을 입력하세요." autocomplete="off">
+          </label>
+          <button class="primary-button" type="submit">검색</button>
+          <button id="nearbyButton" class="secondary-button" type="button">현재 위치</button>
+          <button id="mapFocusButton" class="secondary-button" type="button">지도에서 찾기</button>
+        </form>
+        <div id="quickKeywords" class="quick-keywords" aria-label="빠른 검색어">
+          <button type="button" data-keyword="까치산역">까치산역</button>
+          <button type="button" data-keyword="강남역">강남역</button>
+          <button type="button" data-keyword="홍대입구">홍대입구</button>
+          <button type="button" data-keyword="성수">성수</button>
+          <button type="button" data-keyword="잠실">잠실</button>
+        </div>
+      </section>
+
+      <section class="locator-layout">
+        <div class="map-panel">
+          <div class="map-toolbar">
+            <span>지도</span>
+            <strong id="mapCenterLabel">서울 전체</strong>
+          </div>
+          <div id="storeMap" class="store-map" tabindex="0" aria-label="모모커피 매장 지도">
+            <div class="map-grid" aria-hidden="true"></div>
+            <div class="map-water" aria-hidden="true"></div>
+            <div class="map-road road-a" aria-hidden="true"></div>
+            <div class="map-road road-b" aria-hidden="true"></div>
+            <div class="map-road road-c" aria-hidden="true"></div>
+            <div id="mapPins" class="map-pins"></div>
+            <article id="mapInfoCard" class="map-info-card"></article>
+            <div class="zoom-control" aria-hidden="true"><span>+</span><span>-</span></div>
+          </div>
+        </div>
+
+        <aside class="store-results" aria-label="매장 목록">
+          <div class="results-head">
+            <div>
+              <span class="label">STORE LIST</span>
+              <h2>매장 목록</h2>
+            </div>
+            <p><strong id="storeCount">0</strong>개 매장</p>
+          </div>
+          <div id="recommendBox" class="recommend-box" hidden></div>
+          <div id="storeList" class="store-list"></div>
+          <p id="emptyState" class="empty-state" hidden>검색 조건에 맞는 매장이 없습니다.</p>
+        </aside>
+      </section>
+    </main>
+
+    <div id="detailModal" class="detail-modal" hidden>
+      <section class="detail-dialog" role="dialog" aria-modal="true" aria-labelledby="detailTitle">
+        <button id="detailCloseButton" class="close-button" type="button" aria-label="상세보기 닫기">×</button>
+        <div id="detailContent"></div>
+      </section>
+    </div>
+
+    <script src="../js/data.js"></script>
+    <script src="../js/utils.js"></script>
+    <script src="list.js"></script>
+  </body>
+</html>

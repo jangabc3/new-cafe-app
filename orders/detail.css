@@ -38,6 +38,61 @@
   gap: var(--sp-md);
 }
 
+.momo-progress {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: var(--sp-md);
+  border: 1px dashed rgba(233, 137, 128, 0.5);
+  border-radius: 16px;
+  background: #fffdf9;
+}
+
+.momo-progress p {
+  color: var(--text-secondary);
+}
+
+.mini-momo {
+  position: relative;
+  display: inline-grid;
+  flex: 0 0 42px;
+  width: 42px;
+  height: 38px;
+  place-items: center;
+  border: 2px solid #3d2619;
+  border-radius: 44% 44% 48% 48%;
+  background: #fffdf9;
+}
+
+.mini-momo::before,
+.mini-momo::after {
+  content: "";
+  position: absolute;
+  top: -8px;
+  width: 14px;
+  height: 14px;
+  border: 2px solid #3d2619;
+  border-radius: 50%;
+  background: #fffdf9;
+}
+
+.mini-momo::before { left: 5px; }
+.mini-momo::after { right: 5px; }
+.mini-momo span,
+.mini-momo span::before,
+.mini-momo span::after {
+  position: absolute;
+  content: "";
+  display: block;
+  border-radius: 50%;
+  background: #3d2619;
+}
+.mini-momo span { width: 5px; height: 4px; top: 20px; left: 17px; }
+.mini-momo span::before,
+.mini-momo span::after { width: 4px; height: 4px; top: -9px; }
+.mini-momo span::before { left: -10px; }
+.mini-momo span::after { left: 14px; }
+
 .detail-meta article {
   padding: var(--sp-md);
   border: 1px solid var(--border-color);
@@ -140,4 +195,22 @@ th {
   .detail-meta {
     grid-template-columns: 1fr;
   }
+}
+
+.mini-momo {
+  flex-basis: 46px;
+  width: 46px;
+  height: 46px;
+  border: 0;
+  border-radius: 0;
+  background: url("../assets/images/momo-cutout-tight.png") center / contain no-repeat;
+}
+
+.mini-momo::before,
+.mini-momo::after,
+.mini-momo span,
+.mini-momo span::before,
+.mini-momo span::after {
+  content: none;
+  display: none;
 }

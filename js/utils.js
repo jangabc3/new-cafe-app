@@ -26,7 +26,7 @@ function formatDate(date) {
   return `${y}-${m}-${day} ${h}:${min}`;
 }
 
-const MENU_STORAGE_KEY = 'new_cafe_admin_menus';
+const MENU_STORAGE_KEY = 'momo_coffee_menus_v6';
 
 function getMenus() {
   const stored = localStorage.getItem(MENU_STORAGE_KEY);
@@ -89,7 +89,7 @@ function deleteMenu(id) {
   saveMenus(menus);
 }
 
-const CART_KEY = 'new_cafe_cart';
+const CART_KEY = 'momo_coffee_cart_v1';
 
 function getCart() {
   const data = localStorage.getItem(CART_KEY);
@@ -147,7 +147,7 @@ function clearCart() {
   saveCart([]);
 }
 
-const ORDERS_KEY = 'new_cafe_orders';
+const ORDERS_KEY = 'momo_coffee_orders_v1';
 
 function getOrders() {
   const data = localStorage.getItem(ORDERS_KEY);

@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>상품(Goods) | 모모커피</title>
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="../css/content-page.css">
+    <link rel="stylesheet" href="../css/nav.css">
+    <link rel="stylesheet" href="goods.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="../index.html" aria-label="모모커피 홈"><span class="brand-mark" aria-hidden="true"><img src="../assets/images/momo-cutout-tight.png" alt=""></span><span><strong>MOMO COFFEE</strong><small>한 잔의 커피, 하루의 행복.</small></span></a>
+      <nav class="site-nav" aria-label="주요 메뉴">
+        <div class="nav-group"><a class="nav-trigger" href="../story/brand.html">모모 스토리</a><div class="nav-menu"><a href="../story/brand.html">브랜드 소개</a><a href="../story/bi.html">Brand Identity (BI)</a></div></div>
+        <div class="nav-group"><a class="nav-trigger is-active" href="drinks.html">메뉴</a><div class="nav-menu"><span>음료</span><a href="drinks.html">음료 전체</a><a href="../menus/list.html?category=coffee">커피</a><a href="../menus/list.html?category=noncoffee">논커피</a><a href="../menus/list.html?category=tea">티</a><a href="../menus/list.html?category=season">시즌 음료</a><span>푸드</span><a href="foods.html">푸드 전체</a><a href="../menus/list.html?category=dessert">디저트</a><a href="../menus/list.html?category=bakery">베이커리</a><span>상품(Goods)</span><a class="is-active" href="goods.html">상품 전체</a></div></div>
+        <div class="nav-group"><a class="nav-trigger" href="../stores/finder.html">매장</a><div class="nav-menu"><a href="../stores/finder.html">매장 찾기</a></div></div>
+        <div class="nav-group"><a class="nav-trigger" href="../community/notice.html">커뮤니티</a><div class="nav-menu"><a href="../community/notice.html">공지사항</a><a href="../community/faq.html">자주 묻는 질문</a><a href="../community/event.html">이벤트</a></div></div>
+      </nav>
+      <a class="cart-link" href="../basket/list.html">장바구니 <span id="cartCount" class="cart-badge">0</span></a>
+    </header>
+    <main class="goods-shell">
+      <section class="goods-hero">
+        <div>
+          <p class="eyebrow">MOMO GOODS</p>
+          <h1>상품(Goods)</h1>
+          <p>가방에 달아두는 키링부터 매일 쓰는 머그컵, 노트, 에코백까지 모모와 함께하는 일상 굿즈를 준비했습니다.</p>
+        </div>
+        <img src="../assets/images/momo-cutout-tight.png" alt="" aria-hidden="true">
+      </section>
+
+      <section id="goodsGrid" class="goods-grid" aria-label="모모커피 상품 목록"></section>
+    </main>
+
+    <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+
+    <script src="../js/data.js"></script>
+    <script src="../js/utils.js"></script>
+    <script src="goods.js"></script>
+  </body>
+</html>

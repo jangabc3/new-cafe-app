@@ -1,0 +1,24 @@
+{
+  "name": "new-cafe-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "serve -l 3123"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jangabc3/new-cafe-app.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/jangabc3/new-cafe-app/issues"
+  },
+  "homepage": "https://github.com/jangabc3/new-cafe-app#readme",
+  "dependencies": {
+    "serve": "^14.2.6"
+  }
+}

@@ -1,4 +1,4 @@
-const cartCount = $('#cartCount');
+﻿const cartCount = $('#cartCount');
 const ordersList = $('#ordersList');
 const emptyState = $('#emptyState');
 const totalOrders = $('#totalOrders');

@@ -1,23 +1,27 @@
 :root {
-  --color-primary: #5c3d2e;
-  --color-primary-light: #8b6b5b;
-  --color-primary-dark: #3e2723;
-  --color-secondary: #d7ccc8;
-  --color-accent: #ffab40;
+  --color-primary: #3b2a22;
+  --color-primary-light: #7b6f64;
+  --color-primary-dark: #241915;
+  --color-secondary: #f6dfd7;
+  --color-accent: #e98980;
+  --color-sage: #aab89a;
+  --color-cream: #fff8ee;
+  --color-latte: #ead6c0;
+  --color-pink: #f7c9c2;
 
-  --bg-page: #faf6f1;
-  --bg-card: rgba(255, 255, 255, 0.72);
-  --bg-card-hover: rgba(255, 255, 255, 0.94);
-  --bg-overlay: rgba(0, 0, 0, 0.32);
+  --bg-page: #fff9f3;
+  --bg-card: rgba(255, 255, 255, 0.82);
+  --bg-card-hover: rgba(255, 255, 255, 0.96);
+  --bg-overlay: rgba(59, 42, 34, 0.32);
 
-  --text-primary: #3e2723;
-  --text-secondary: #795548;
-  --text-muted: #9c8174;
+  --text-primary: #3b2a22;
+  --text-secondary: #7d6a5c;
+  --text-muted: #a99789;
   --text-on-primary: #ffffff;
 
-  --border-color: #d7ccc8;
-  --border-radius: 12px;
-  --border-radius-sm: 8px;
+  --border-color: #eaded3;
+  --border-radius: 18px;
+  --border-radius-sm: 12px;
 
   --sp-xs: 4px;
   --sp-sm: 8px;
@@ -27,19 +31,19 @@
   --sp-2xl: 48px;
   --sp-3xl: 64px;
 
-  --font-heading: "Noto Sans KR", Arial, sans-serif;
-  --font-body: "Noto Sans KR", Arial, sans-serif;
+  --font-heading: "Pretendard", "Noto Sans KR", "Apple SD Gothic Neo", Arial, sans-serif;
+  --font-body: "Pretendard", "Noto Sans KR", "Apple SD Gothic Neo", Arial, sans-serif;
   --font-size-xs: 12px;
   --font-size-sm: 14px;
   --font-size-base: 16px;
   --font-size-lg: 18px;
   --font-size-xl: 24px;
   --font-size-2xl: 32px;
-  --font-size-3xl: 40px;
+  --font-size-3xl: 48px;
 
-  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.06);
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
-  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+  --shadow-sm: 0 8px 20px rgba(75, 52, 39, 0.06);
+  --shadow-md: 0 16px 38px rgba(75, 52, 39, 0.1);
+  --shadow-lg: 0 24px 64px rgba(75, 52, 39, 0.14);
 
   --glass-bg: rgba(255, 255, 255, 0.46);
   --glass-border: rgba(255, 255, 255, 0.62);
@@ -61,7 +65,9 @@ html {
 body {
   min-height: 100vh;
   color: var(--text-primary);
-  background: var(--bg-page);
+  background:
+    radial-gradient(circle at top left, rgba(247, 201, 194, 0.28), transparent 32%),
+    linear-gradient(180deg, #fffaf5 0%, #fff7ef 48%, #fffaf6 100%);
   font-family: var(--font-body);
   font-size: var(--font-size-base);
   line-height: 1.6;
@@ -86,6 +92,11 @@ select {
 
 button {
   cursor: pointer;
+}
+
+button,
+a {
+  transition: transform 180ms ease, box-shadow 180ms ease, background-color 180ms ease, color 180ms ease;
 }
 
 h1,

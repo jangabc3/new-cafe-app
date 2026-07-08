@@ -1,6 +1,6 @@
-const state = {
+﻿const state = {
   search: '',
-  category: 'all'
+  category: getQueryParam('category') || 'all'
 };
 
 const searchInput = $('#searchInput');
@@ -15,21 +15,33 @@ const heroMenuPrice = $('#heroMenuPrice');
 
 let toastTimer;
 
+function getMenuImagePath(menu) {
+  if (!menu.image) return '';
+  if (menu.image.startsWith('http') || menu.image.startsWith('../')) return menu.image;
+  return `../${menu.image}`;
+}
+
 function updateCartCount() {
   cartCount.textContent = getCart().reduce((sum, item) => sum + item.quantity, 0);
 }
 
-function showToast(message) {
+function showToast(message, mood = 'happy') {
   window.clearTimeout(toastTimer);
-  toast.textContent = message;
+  toast.innerHTML = `
+    <span class="mini-momo ${mood}" aria-hidden="true"><span></span></span>
+    <span>${escapeHtml(message)}</span>
+    <i aria-hidden="true">♡</i>
+  `;
   toast.hidden = false;
+  toast.classList.add('is-floating');
   toastTimer = window.setTimeout(() => {
     toast.hidden = true;
+    toast.classList.remove('is-floating');
   }, 2200);
 }
 
 function renderCategoryTabs() {
-  const tabs = [{ id: 'all', name: 'All' }, ...CATEGORIES];
+  const tabs = [{ id: 'all', name: '전체', icon: '✦' }, ...CATEGORIES];
   categoryTabs.innerHTML = tabs
     .map(
       (category) => `
@@ -40,6 +52,7 @@ function renderCategoryTabs() {
           role="tab"
           aria-selected="${category.id === state.category}"
         >
+          <span>${escapeHtml(category.icon)}</span>
           ${escapeHtml(category.name)}
         </button>
       `
@@ -59,7 +72,7 @@ function getFilteredMenus() {
 }
 
 function renderHero(menus) {
-  const featured = menus.find((menu) => menu.name.toLowerCase().includes('latte')) || menus[0];
+  const featured = menus.find((menu) => menu.category === 'signature') || menus[0];
   if (!featured) return;
 
   heroMenuName.textContent = featured.name;
@@ -79,20 +92,21 @@ function renderMenus() {
         <a class="menu-thumb" href="detail.html?id=${encodeURIComponent(menu.id)}" aria-label="${escapeHtml(menu.name)} 상세 보기">
           ${
             menu.image
-              ? `<img src="${escapeHtml(menu.image)}" alt="${escapeHtml(menu.name)}">`
-              : `<span class="menu-initial">${escapeHtml(menu.name.slice(0, 1))}</span>`
+              ? `<img src="${escapeHtml(getMenuImagePath(menu))}" alt="${escapeHtml(menu.name)}">`
+              : `<span>${escapeHtml(menu.emoji || menu.name.slice(0, 1))}</span>`
           }
         </a>
         <div class="menu-card-body">
           <span class="category-pill">${escapeHtml(getCategoryName(menu.category))}</span>
-          <div class="card-title-row">
-            <h2>${escapeHtml(menu.name)}</h2>
-            <strong>${formatPrice(menu.price)}</strong>
-          </div>
+          <button class="like-button" type="button" aria-label="${escapeHtml(menu.name)} 좋아요">♡</button>
+          <h2>${escapeHtml(menu.name)}</h2>
           <p class="menu-description">${escapeHtml(menu.description)}</p>
           <div class="card-actions">
-            <a class="secondary-button" href="detail.html?id=${encodeURIComponent(menu.id)}">상세</a>
-            <button class="primary-button" type="button" data-cart-id="${escapeHtml(menu.id)}">담기</button>
+            <strong>${formatPrice(menu.price)}</strong>
+            <div>
+              <a class="secondary-button" href="detail.html?id=${encodeURIComponent(menu.id)}">상세</a>
+              <button class="primary-button" type="button" data-cart-id="${escapeHtml(menu.id)}">담기</button>
+            </div>
           </div>
         </div>
       </article>
@@ -115,6 +129,13 @@ categoryTabs.addEventListener('click', (event) => {
 });
 
 menuGrid.addEventListener('click', (event) => {
+  const likeButton = event.target.closest('.like-button');
+  if (likeButton) {
+    likeButton.classList.toggle('is-liked');
+    likeButton.textContent = likeButton.classList.contains('is-liked') ? '♥' : '♡';
+    return;
+  }
+
   const button = event.target.closest('[data-cart-id]');
   if (!button) return;
 
@@ -123,7 +144,7 @@ menuGrid.addEventListener('click', (event) => {
 
   addToCart(menu.id);
   updateCartCount();
-  showToast(`${menu.name} 1개를 장바구니에 담았습니다.`);
+  showToast(`모모가 ${menu.name} 1개를 포근히 담았어요.`);
 });
 
 renderHero(getMenus());

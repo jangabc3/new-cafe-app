@@ -1,162 +1,38 @@
-const CATEGORIES = [
-  { id: 'coffee', name: 'Coffee' },
-  { id: 'tea', name: 'Tea' },
-  { id: 'bakery', name: 'Bakery' },
-  { id: 'dessert', name: 'Dessert' }
+﻿const CATEGORIES = [
+  { id: 'coffee', name: '커피', icon: '☕' },
+  { id: 'signature', name: '시그니처', icon: '♡' },
+  { id: 'noncoffee', name: '논커피', icon: '🥛' },
+  { id: 'tea', name: '티', icon: '🍵' },
+  { id: 'dessert', name: '디저트', icon: '🍰' },
+  { id: 'bakery', name: '베이커리', icon: '🥐' },
+  { id: 'season', name: '시즌메뉴', icon: '✦' },
+  { id: 'goods', name: '상품', icon: '🛍️' }
 ];
 
 const MENU_ITEMS = [
-  {
-    id: 1,
-    name: 'Espresso',
-    category: 'coffee',
-    price: 2500,
-    description: 'A concentrated shot with a deep roasted aroma.',
-    image: ''
-  },
-  {
-    id: 2,
-    name: 'Americano',
-    category: 'coffee',
-    price: 3500,
-    description: 'Smooth espresso lengthened with hot water.',
-    image: ''
-  },
-  {
-    id: 3,
-    name: 'Cafe Latte',
-    category: 'coffee',
-    price: 4200,
-    description: 'Espresso with steamed milk and a soft finish.',
-    image: ''
-  },
-  {
-    id: 4,
-    name: 'Cappuccino',
-    category: 'coffee',
-    price: 4500,
-    description: 'Espresso, warm milk, and a thick foam cap.',
-    image: ''
-  },
-  {
-    id: 5,
-    name: 'Mocha',
-    category: 'coffee',
-    price: 4800,
-    description: 'Coffee and chocolate blended into a rich cup.',
-    image: ''
-  },
-  {
-    id: 6,
-    name: 'Vanilla Latte',
-    category: 'coffee',
-    price: 4800,
-    description: 'Cafe latte with fragrant vanilla syrup.',
-    image: ''
-  },
-  {
-    id: 7,
-    name: 'Green Tea',
-    category: 'tea',
-    price: 3200,
-    description: 'Clean, fragrant green tea served warm.',
-    image: ''
-  },
-  {
-    id: 8,
-    name: 'Iced Tea',
-    category: 'tea',
-    price: 3500,
-    description: 'Chilled black tea with a refreshing finish.',
-    image: ''
-  },
-  {
-    id: 9,
-    name: 'Chamomile',
-    category: 'tea',
-    price: 3500,
-    description: 'A gentle herbal tea for a quiet break.',
-    image: ''
-  },
-  {
-    id: 10,
-    name: 'Matcha Latte',
-    category: 'tea',
-    price: 4500,
-    description: 'Uji matcha blended with creamy milk.',
-    image: ''
-  },
-  {
-    id: 11,
-    name: 'Croissant',
-    category: 'bakery',
-    price: 2800,
-    description: 'A flaky butter croissant baked until golden.',
-    image: ''
-  },
-  {
-    id: 12,
-    name: 'Bagel',
-    category: 'bakery',
-    price: 2500,
-    description: 'A chewy plain bagel with a crisp crust.',
-    image: ''
-  },
-  {
-    id: 13,
-    name: 'Blueberry Muffin',
-    category: 'bakery',
-    price: 3000,
-    description: 'Soft muffin filled with blueberries.',
-    image: ''
-  },
-  {
-    id: 14,
-    name: 'Chocolate Cookie',
-    category: 'bakery',
-    price: 2200,
-    description: 'A crisp cookie with chocolate chips.',
-    image: ''
-  },
-  {
-    id: 15,
-    name: 'Tiramisu',
-    category: 'dessert',
-    price: 5500,
-    description: 'Classic Italian dessert with coffee and mascarpone.',
-    image: ''
-  },
-  {
-    id: 16,
-    name: 'Cheesecake',
-    category: 'dessert',
-    price: 4800,
-    description: 'A rich cheesecake on a crisp base.',
-    image: ''
-  },
-  {
-    id: 17,
-    name: 'Gelato',
-    category: 'dessert',
-    price: 4200,
-    description: 'Dense Italian-style ice cream.',
-    image: ''
-  },
-  {
-    id: 18,
-    name: 'Strawberry Cake',
-    category: 'dessert',
-    price: 5200,
-    description: 'Fresh cream cake layered with strawberries.',
-    image: ''
-  }
+  { id: 1, name: '바닐라 라떼', category: 'signature', price: 4500, description: '부드러운 라떼에 바닐라 빈 향을 더한 모모커피의 대표 메뉴입니다.', image: 'assets/images/menu-vanilla-latte.png', emoji: '☕' },
+  { id: 2, name: '크림 슈페너', category: 'signature', price: 5200, description: '쌉싸름한 커피 위에 고소한 수제 크림을 얹은 시그니처 커피입니다.', image: 'assets/images/menu-cream-supener.png', emoji: '☁' },
+  { id: 3, name: '아메리카노', category: 'coffee', price: 3500, description: '매일 볶는 원두의 깔끔한 향과 고소함을 담았습니다.', image: 'assets/images/menu-americano.png', emoji: '☕' },
+  { id: 4, name: '카페 라떼', category: 'coffee', price: 4200, description: '진한 에스프레소와 따뜻한 우유가 균형 있게 어우러집니다.', image: 'assets/images/menu-cafe-latte.png', emoji: '☕' },
+  { id: 5, name: '말차 라떼', category: 'noncoffee', price: 4800, description: '진한 말차와 우유의 크리미한 풍미가 편안함을 줍니다.', image: 'assets/images/menu-matcha-latte.png', emoji: '🍵' },
+  { id: 6, name: '딸기 크림 라떼', category: 'season', price: 5600, description: '상큼한 딸기와 부드러운 크림을 올린 시즌 한정 음료입니다.', image: 'assets/images/menu-strawberry-cream-latte.png', emoji: '🍓' },
+  { id: 7, name: '유자 캐모마일 티', category: 'tea', price: 4300, description: '향긋한 캐모마일과 유자의 달콤함이 기분 좋게 번집니다.', image: 'assets/images/menu-yuja-chamomile-tea.png', emoji: '🍵' },
+  { id: 8, name: '피치 아이스티', category: 'season', price: 3900, description: '은은한 홍차와 복숭아의 산뜻함이 시원하게 어울리는 여름 시즌 음료입니다.', image: 'assets/images/menu-peach-iced-tea.png', emoji: '🍑' },
+  { id: 9, name: '딸기 생크림 케이크', category: 'dessert', price: 6200, description: '폭신한 시트 사이에 생크림과 딸기를 포근히 넣었습니다.', image: 'assets/images/menu-strawberry-cake.png', emoji: '🍰' },
+  { id: 10, name: '초코 케이크', category: 'dessert', price: 5800, description: '진한 초콜릿 무스와 촉촉한 시트가 어우러진 디저트입니다.', image: 'assets/images/menu-choco-cake.png', emoji: '🍫' },
+  { id: 11, name: '버터 크루아상', category: 'bakery', price: 3400, description: '겹겹의 바삭한 결이 살아 있는 고소한 크루아상입니다.', image: 'assets/images/menu-butter-croissant.png', emoji: '🥐' },
+  { id: 12, name: '모모 허니 브레드', category: 'bakery', price: 6900, description: '따뜻한 브레드에 꿀과 크림을 올린 함께 먹기 좋은 메뉴입니다.', image: 'assets/images/menu-honey-bread.png', emoji: '🍞' },
+  { id: 13, name: '모모 키링', category: 'goods', price: 9900, description: '가방에 달아두고 매일 함께하는 포근한 모모 키링입니다.', image: 'assets/images/goods-momo-keyring.png', emoji: '🐻' },
+  { id: 14, name: '모모 머그컵', category: 'goods', price: 14900, description: '매일의 커피 한 잔이 더 따뜻해지는 모모 머그입니다.', image: 'assets/images/goods-momo-mug.png', emoji: '☕' },
+  { id: 15, name: '모모 노트', category: 'goods', price: 13900, description: '넉넉한 사이즈로 데일리 기록에 활용하기 좋은 모모 노트입니다.', image: 'assets/images/goods-momo-note.png', emoji: '📓' },
+  { id: 16, name: '모모 에코백', category: 'goods', price: 13900, description: '지구를 생각한 튼튼한 친환경 모모 에코백입니다.', image: 'assets/images/goods-momo-eco-bag.png', emoji: '👜' }
 ];
 
 const ORDER_STATUS = {
-  PENDING: { value: 'pending', label: 'Pending' },
-  CONFIRMED: { value: 'confirmed', label: 'Confirmed' },
-  PREPARING: { value: 'preparing', label: 'Preparing' },
-  READY: { value: 'ready', label: 'Ready' },
-  COMPLETED: { value: 'completed', label: 'Completed' },
-  CANCELLED: { value: 'cancelled', label: 'Cancelled' }
+  PENDING: { value: 'pending', label: '주문 접수' },
+  CONFIRMED: { value: 'confirmed', label: '확인 완료' },
+  PREPARING: { value: 'preparing', label: '준비 중' },
+  READY: { value: 'ready', label: '픽업 가능' },
+  COMPLETED: { value: 'completed', label: '완료' },
+  CANCELLED: { value: 'cancelled', label: '취소' }
 };

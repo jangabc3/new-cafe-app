@@ -1,53 +1,93 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="ko">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Menu | Cafe</title>
+    <title>메뉴 | 모모커피</title>
     <link rel="stylesheet" href="../css/variables.css">
     <link rel="stylesheet" href="list.css">
+    <link rel="stylesheet" href="../css/nav.css">
   </head>
   <body>
     <header class="site-header">
-      <a class="brand" href="../index.html" aria-label="Cafe home">
-        <span class="brand-mark">C</span>
-        <span>Cafe</span>
+      <a class="brand" href="../index.html" aria-label="모모커피 홈">
+        <span class="brand-mark" aria-hidden="true"><img src="../assets/images/momo-cutout-tight.png" alt=""></span>
+        <span>
+          <strong>MOMO COFFEE</strong>
+          <small>한 잔의 커피, 하루의 행복.</small>
+        </span>
       </a>
-      <nav class="site-nav" aria-label="Customer navigation">
-        <a class="is-active" href="list.html">Menu</a>
-        <a href="../basket/list.html">Basket <span id="cartCount" class="cart-badge">0</span></a>
-        <a href="../orders/list.html">Orders</a>
+      <nav class="site-nav" aria-label="주요 메뉴">
+        <div class="nav-group">
+          <a class="nav-trigger" href="../story/brand.html">모모 스토리</a>
+          <div class="nav-menu">
+            <a href="../story/brand.html">브랜드 소개</a>
+            <a href="../story/bi.html">Brand Identity (BI)</a>
+          </div>
+        </div>
+        <div class="nav-group">
+          <a class="nav-trigger is-active" href="../menu/drinks.html">메뉴</a>
+          <div class="nav-menu">
+            <span>음료</span>
+            <a href="../menu/drinks.html">음료 전체</a>
+            <a href="list.html?category=coffee">커피</a>
+            <a href="list.html?category=noncoffee">논커피</a>
+            <a href="list.html?category=tea">티</a>
+            <a href="list.html?category=season">시즌 음료</a>
+            <span>푸드</span>
+            <a href="../menu/foods.html">푸드 전체</a>
+            <a href="list.html?category=dessert">디저트</a>
+            <a href="list.html?category=bakery">베이커리</a>
+            <span>상품(Goods)</span>
+            <a href="../menu/goods.html">상품 전체</a>
+          </div>
+        </div>
+        <div class="nav-group">
+          <a class="nav-trigger" href="../stores/finder.html">매장</a>
+          <div class="nav-menu">
+            <a href="../stores/finder.html">매장 찾기</a>
+          </div>
+        </div>
+        <div class="nav-group">
+          <a class="nav-trigger" href="../community/notice.html">커뮤니티</a>
+          <div class="nav-menu">
+            <a href="../community/notice.html">공지사항</a>
+            <a href="../community/faq.html">자주 묻는 질문</a>
+            <a href="../community/event.html">이벤트</a>
+          </div>
+        </div>
       </nav>
+      <a class="cart-link" href="../basket/list.html">장바구니 <span id="cartCount" class="cart-badge">0</span></a>
     </header>
 
     <main class="menu-shell">
       <section class="menu-hero">
         <div>
-          <p class="eyebrow">Freshly Prepared</p>
-          <h1>메뉴</h1>
-          <p class="hero-copy">오늘 마실 커피와 함께할 디저트를 골라보세요.</p>
+          <p class="eyebrow">MOMO MENU</p>
+          <h1>오늘의 기분에 맞는<br>모모 한 잔</h1>
+          <p>커피, 티, 디저트까지 따뜻한 감성으로 준비했어요.</p>
         </div>
-        <div class="hero-panel" aria-label="Cafe menu highlight">
-          <span class="hero-kicker">Popular</span>
-          <strong id="heroMenuName">Cafe Latte</strong>
-          <span id="heroMenuPrice">4,200 KRW</span>
+        <div class="momo-bubble">
+          <span>모모가 추천해요</span>
+          <strong id="heroMenuName">모모 바닐라 라떼</strong>
+          <small id="heroMenuPrice">4,500 KRW</small>
         </div>
       </section>
 
-      <section class="menu-controls" aria-label="Menu filters">
+      <section class="menu-controls" aria-label="메뉴 필터">
         <label class="search-field">
-          <span>검색</span>
-          <input id="searchInput" type="search" placeholder="메뉴명 또는 설명">
+          <span>메뉴 검색</span>
+          <input id="searchInput" type="search" placeholder="메뉴명 또는 설명을 검색하세요">
         </label>
-        <div id="categoryTabs" class="category-tabs" role="tablist" aria-label="Categories"></div>
+        <div id="categoryTabs" class="category-tabs" role="tablist" aria-label="카테고리"></div>
       </section>
 
-      <section class="menu-summary" aria-live="polite">
-        <strong id="visibleCount">0</strong>
-        <span>개의 메뉴가 준비되어 있습니다.</span>
+      <section class="section-title">
+        <h2>추천 메뉴</h2>
+        <p><strong id="visibleCount">0</strong>개의 메뉴</p>
       </section>
 
-      <section id="menuGrid" class="menu-grid" aria-label="Menu list"></section>
+      <section id="menuGrid" class="menu-grid" aria-label="메뉴 목록"></section>
       <p id="emptyState" class="empty-state" hidden>조건에 맞는 메뉴가 없습니다.</p>
     </main>
 

@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>마이페이지 | 모모커피</title>
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="../css/nav.css">
+    <link rel="stylesheet" href="index.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="../index.html" aria-label="모모커피 홈">
+        <span class="brand-mark" aria-hidden="true"><img src="../assets/images/momo-cutout-tight.png" alt=""></span>
+        <span><strong>MOMO COFFEE</strong><small>한 잔의 커피, 하루의 행복.</small></span>
+      </a>
+      <nav class="site-nav" aria-label="주요 메뉴">
+        <div class="nav-group"><a class="nav-trigger" href="../story/brand.html">모모 스토리</a><div class="nav-menu"><a href="../story/brand.html">브랜드 소개</a><a href="../story/bi.html">Brand Identity (BI)</a></div></div>
+        <div class="nav-group"><a class="nav-trigger" href="../menu/drinks.html">메뉴</a><div class="nav-menu"><span>음료</span><a href="../menu/drinks.html">음료 전체</a><a href="../menus/list.html?category=coffee">커피</a><a href="../menus/list.html?category=noncoffee">논커피</a><a href="../menus/list.html?category=tea">티</a><a href="../menus/list.html?category=season">시즌 음료</a><span>푸드</span><a href="../menu/foods.html">푸드 전체</a><a href="../menus/list.html?category=dessert">디저트</a><a href="../menus/list.html?category=bakery">베이커리</a><span>상품(Goods)</span><a href="../menu/goods.html">상품 전체</a></div></div>
+        <div class="nav-group"><a class="nav-trigger" href="../stores/finder.html">매장</a><div class="nav-menu"><a href="../stores/finder.html">매장 찾기</a></div></div>
+        <div class="nav-group"><a class="nav-trigger" href="../community/notice.html">커뮤니티</a><div class="nav-menu"><a href="../community/notice.html">공지사항</a><a href="../community/faq.html">자주 묻는 질문</a><a href="../community/event.html">이벤트</a></div></div>
+        <div class="nav-group"><a class="nav-trigger is-active" href="index.html">마이페이지</a></div>
+      </nav>
+      <a class="cart-link" href="../basket/list.html">장바구니 <span id="cartCount" class="cart-badge">0</span></a>
+    </header>
+
+    <main class="my-shell">
+      <section class="my-hero" aria-labelledby="myTitle">
+        <div class="my-hero-copy">
+          <p class="eyebrow">MOMO MY PAGE</p>
+          <h1 id="myTitle">오늘의 모모커피<br>기록을 확인해보세요.</h1>
+          <p>주문 내역, 스탬프, 쿠폰과 추천 메뉴를 한눈에 볼 수 있습니다.</p>
+          <div class="hero-actions">
+            <a class="primary-button" href="../menus/list.html">메뉴 주문하기</a>
+            <a class="secondary-button" href="../orders/list.html">주문 내역 보기</a>
+          </div>
+        </div>
+        <div class="profile-card">
+          <img src="../assets/images/momo-cutout-tight.png" alt="모모커피 캐릭터 모모">
+          <div>
+            <span>Welcome Back</span>
+            <strong>모모 고객님</strong>
+            <p id="memberMessage">모모가 오늘의 커피 기록을 준비하고 있어요.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="summary-grid" aria-label="마이페이지 요약">
+        <article><span>전체 주문</span><strong id="totalOrders">0</strong><p>모모와 함께한 횟수</p></article>
+        <article><span>진행 중 주문</span><strong id="activeOrders">0</strong><p>준비 중인 메뉴</p></article>
+        <article><span>누적 금액</span><strong id="totalSpent">0원</strong><p>총 이용 금액</p></article>
+        <article><span>장바구니</span><strong id="cartItems">0</strong><p>담아둔 메뉴</p></article>
+      </section>
+
+      <section class="my-layout">
+        <div class="main-column">
+          <section class="panel stamp-panel" aria-labelledby="stampTitle">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">MOMO STAMP</p>
+                <h2 id="stampTitle">스탬프</h2>
+              </div>
+              <strong id="stampCount">0 / 10</strong>
+            </div>
+            <div id="stampBoard" class="stamp-board" aria-label="스탬프 현황"></div>
+            <p id="stampMessage" class="panel-note">10잔마다 모모가 작은 선물을 준비해요.</p>
+          </section>
+
+          <section class="panel" aria-labelledby="recentOrderTitle">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">RECENT ORDERS</p>
+                <h2 id="recentOrderTitle">최근 주문</h2>
+              </div>
+              <a class="text-link" href="../orders/list.html">전체 보기</a>
+            </div>
+            <div id="recentOrders" class="recent-orders"></div>
+            <div id="emptyOrders" class="empty-box" hidden>
+              <strong>아직 주문 내역이 없습니다.</strong>
+              <p>첫 주문을 완료하면 이곳에 모모가 기록해둘게요.</p>
+              <a class="primary-button" href="../menus/list.html">메뉴 보러가기</a>
+            </div>
+          </section>
+        </div>
+
+        <aside class="side-column">
+          <section class="panel coupon-panel" aria-labelledby="couponTitle">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">COUPON</p>
+                <h2 id="couponTitle">나의 쿠폰</h2>
+              </div>
+            </div>
+            <div id="couponList" class="coupon-list"></div>
+          </section>
+
+          <section class="panel recommend-panel" aria-labelledby="recommendTitle">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">MOMO PICK</p>
+                <h2 id="recommendTitle">추천 메뉴</h2>
+              </div>
+            </div>
+            <div id="recommendList" class="recommend-list"></div>
+          </section>
+        </aside>
+      </section>
+    </main>
+
+    <script src="../js/data.js"></script>
+    <script src="../js/utils.js"></script>
+    <script src="index.js"></script>
+  </body>
+</html>

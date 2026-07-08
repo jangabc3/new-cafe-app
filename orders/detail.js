@@ -69,7 +69,7 @@ function renderOrderDetail() {
 
     <dl class="summary-list">
       <div><dt>상품 금액</dt><dd>${formatPrice(order.total)}</dd></div>
-      <div><dt>할인</dt><dd>0 KRW</dd></div>
+      <div><dt>할인</dt><dd>0원</dd></div>
       <div class="summary-total"><dt>총 결제 금액</dt><dd>${formatPrice(order.total)}</dd></div>
     </dl>
 

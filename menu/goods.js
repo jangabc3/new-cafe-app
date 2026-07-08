@@ -35,7 +35,7 @@ function renderGoods() {
         <div class="goods-info">
           <h2>${escapeHtml(item.name)}</h2>
           <p>${escapeHtml(item.description)}</p>
-          <strong class="goods-price">${formatPrice(item.price).replace(' KRW', '원')}</strong>
+          <strong class="goods-price">${formatPrice(item.price)}</strong>
           <button class="goods-cart-button" type="button" data-cart-id="${escapeHtml(item.id)}">장바구니</button>
         </div>
       </article>

@@ -1,5 +1,5 @@
 function formatPrice(price) {
-  return Number(price).toLocaleString('ko-KR') + ' KRW';
+  return Number(price).toLocaleString('ko-KR') + '원';
 }
 
 function generateId() {

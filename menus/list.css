@@ -153,6 +153,26 @@ input:focus { outline: 3px solid rgba(233, 137, 128, 0.18); border-color: var(--
   box-shadow: var(--shadow-sm);
 }
 .menu-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+.menu-card.is-goods-card {
+  grid-template-rows: 150px minmax(292px, 1fr);
+  min-height: 462px;
+}
+
+.menu-card.is-goods-card .menu-thumb img {
+  object-position: center 42%;
+}
+
+.menu-card.is-goods-card .menu-card-body {
+  grid-template-rows: auto auto minmax(72px, 1fr) auto;
+  gap: 12px;
+  padding-top: 18px;
+}
+
+.menu-card.is-goods-card .menu-description {
+  min-height: 64px;
+  background: #fff;
+}
+
 .menu-thumb {
   display: grid;
   place-items: center;
@@ -318,4 +338,51 @@ input:focus { outline: 3px solid rgba(233, 137, 128, 0.18); border-color: var(--
 .mini-momo span::after {
   content: none;
   display: none;
+}
+
+/* Goods cards need a deeper white content area because product photos are wide crops. */
+.menu-card.is-goods-card {
+  grid-template-rows: 230px 330px !important;
+  min-height: 560px !important;
+  background: #fff !important;
+}
+
+.menu-card.is-goods-card .menu-thumb {
+  height: 230px !important;
+  overflow: hidden !important;
+}
+
+.menu-card.is-goods-card .menu-thumb img {
+  width: 100% !important;
+  height: 230px !important;
+  object-fit: cover !important;
+  object-position: center center !important;
+}
+
+.menu-card.is-goods-card .menu-card-body {
+  z-index: 2;
+  display: grid !important;
+  grid-template-rows: auto auto minmax(96px, 1fr) auto !important;
+  gap: 14px !important;
+  min-height: 330px !important;
+  padding: 18px 18px 20px !important;
+  background: #fff !important;
+}
+
+.menu-card.is-goods-card .category-pill,
+.menu-card.is-goods-card h2,
+.menu-card.is-goods-card .menu-description,
+.menu-card.is-goods-card .card-actions {
+  position: relative;
+  z-index: 3;
+}
+
+.menu-card.is-goods-card h2 {
+  min-height: 48px !important;
+  margin-top: 0 !important;
+}
+
+.menu-card.is-goods-card .menu-description {
+  min-height: 74px !important;
+  background: #fff !important;
 }

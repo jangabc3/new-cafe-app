@@ -1,0 +1,363 @@
+[hidden] { display: none !important; }
+
+.my-shell {
+  width: min(1240px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: var(--sp-xl) 0 var(--sp-3xl);
+  color: var(--text-primary);
+}
+
+.my-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 420px);
+  gap: var(--sp-lg);
+  align-items: stretch;
+  margin-bottom: var(--sp-lg);
+}
+
+.my-hero-copy,
+.profile-card,
+.panel,
+.summary-grid article {
+  border: 1px solid var(--border-color);
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.82);
+  box-shadow: var(--shadow-sm);
+}
+
+.my-hero-copy {
+  display: grid;
+  align-content: center;
+  gap: 18px;
+  min-height: 420px;
+  padding: clamp(34px, 6vw, 72px);
+  background:
+    radial-gradient(circle at 86% 18%, rgba(247, 201, 194, 0.26), transparent 28%),
+    linear-gradient(135deg, #fffdf9, #fff4ea);
+}
+
+.eyebrow {
+  color: var(--color-accent);
+  font-size: var(--font-size-sm);
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.my-hero h1 {
+  max-width: 720px;
+  color: #3e2d25;
+  font-size: clamp(40px, 5vw, 68px);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.14;
+  word-break: keep-all;
+}
+
+.my-hero-copy > p:not(.eyebrow) {
+  color: var(--text-secondary);
+  font-size: clamp(17px, 1.8vw, 21px);
+  font-weight: 700;
+}
+
+.hero-actions,
+.panel-heading,
+.order-card,
+.recommend-card,
+.coupon-card {
+  display: flex;
+  align-items: center;
+}
+
+.hero-actions {
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.primary-button,
+.secondary-button,
+.text-link {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 16px;
+  font-weight: 900;
+}
+
+.primary-button {
+  padding: 0 18px;
+  color: #fff;
+  background: linear-gradient(135deg, #ef9b94, #e77f78);
+  box-shadow: var(--shadow-sm);
+}
+
+.secondary-button,
+.text-link {
+  padding: 0 14px;
+  border: 1px solid var(--border-color);
+  color: var(--color-primary);
+  background: #fffdf9;
+}
+
+.primary-button:hover,
+.secondary-button:hover,
+.text-link:hover,
+.order-card:hover,
+.recommend-card:hover,
+.coupon-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+}
+
+.profile-card {
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: 18px;
+  min-height: 420px;
+  padding: var(--sp-xl);
+  text-align: center;
+  background:
+    radial-gradient(circle at center 34%, rgba(255,255,255,.82), transparent 36%),
+    linear-gradient(160deg, #fff8f3, #f2dfcd);
+}
+
+.profile-card img {
+  width: min(260px, 82%);
+  filter: drop-shadow(0 18px 28px rgba(75, 52, 39, 0.12));
+}
+
+.profile-card span {
+  color: #c79a7b;
+  font-size: var(--font-size-sm);
+  font-weight: 900;
+}
+
+.profile-card strong {
+  display: block;
+  margin-top: 2px;
+  color: #3e2d25;
+  font-size: var(--font-size-2xl);
+}
+
+.profile-card p,
+.panel-note,
+.empty-box p,
+.coupon-card p,
+.recommend-card p,
+.summary-grid p {
+  color: var(--text-secondary);
+  font-weight: 700;
+}
+
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--sp-md);
+  margin-bottom: var(--sp-lg);
+}
+
+.summary-grid article {
+  padding: var(--sp-md);
+  background: linear-gradient(135deg, #fffdf9, #f8f2eb);
+}
+
+.summary-grid span {
+  color: var(--text-secondary);
+  font-size: var(--font-size-sm);
+  font-weight: 900;
+}
+
+.summary-grid strong {
+  display: block;
+  margin: 4px 0;
+  color: #3e2d25;
+  font-size: clamp(26px, 3vw, 38px);
+}
+
+.my-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 360px;
+  gap: var(--sp-lg);
+  align-items: start;
+}
+
+.main-column,
+.side-column {
+  display: grid;
+  gap: var(--sp-lg);
+}
+
+.panel {
+  padding: var(--sp-lg);
+}
+
+.panel-heading {
+  justify-content: space-between;
+  gap: var(--sp-md);
+  margin-bottom: var(--sp-md);
+}
+
+.panel-heading h2 {
+  margin-top: 4px;
+  color: #3e2d25;
+  font-size: var(--font-size-xl);
+}
+
+.stamp-board {
+  display: grid;
+  grid-template-columns: repeat(10, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.stamp {
+  display: grid;
+  aspect-ratio: 1;
+  place-items: center;
+  border: 1px dashed #e7cfc3;
+  border-radius: 50%;
+  background: #fffdf9;
+  color: #d6b9a8;
+  font-weight: 900;
+}
+
+.stamp.is-filled {
+  border-style: solid;
+  color: #fff;
+  background: linear-gradient(135deg, #f5b2ac, #e98980);
+  box-shadow: 0 8px 16px rgba(233, 137, 128, 0.2);
+}
+
+.panel-note {
+  margin-top: 14px;
+}
+
+.recent-orders,
+.recommend-list,
+.coupon-list {
+  display: grid;
+  gap: 12px;
+}
+
+.order-card,
+.recommend-card,
+.coupon-card {
+  justify-content: space-between;
+  gap: var(--sp-md);
+  padding: 16px;
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  background: #fffdf9;
+}
+
+.order-card h3,
+.recommend-card h3,
+.coupon-card strong {
+  color: #3e2d25;
+  font-size: var(--font-size-lg);
+}
+
+.order-card p,
+.order-card span {
+  color: var(--text-secondary);
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+}
+
+.status-pill {
+  display: inline-flex;
+  width: fit-content;
+  min-height: 28px;
+  align-items: center;
+  padding: 2px 10px;
+  border-radius: 999px;
+  color: #8b5e3c;
+  background: #fff0ed;
+  font-size: var(--font-size-sm);
+  font-weight: 900;
+}
+
+.recommend-card img {
+  flex: 0 0 78px;
+  width: 78px;
+  height: 78px;
+  border-radius: 18px;
+  object-fit: cover;
+}
+
+.recommend-card > div {
+  min-width: 0;
+}
+
+.recommend-card a {
+  flex: 0 0 auto;
+}
+
+.coupon-card {
+  display: grid;
+  align-items: start;
+  background:
+    linear-gradient(90deg, rgba(255,255,255,.86), rgba(255,255,255,.64)),
+    radial-gradient(circle at 92% 20%, rgba(247, 201, 194, 0.34), transparent 20%),
+    #fff8f3;
+}
+
+.coupon-card span {
+  color: var(--color-accent);
+  font-size: var(--font-size-sm);
+  font-weight: 900;
+}
+
+.empty-box {
+  display: grid;
+  gap: 10px;
+  justify-items: start;
+  padding: var(--sp-lg);
+  border: 1px dashed #e7cfc3;
+  border-radius: 20px;
+  background: #fffdf9;
+}
+
+@media (max-width: 960px) {
+  .my-hero,
+  .my-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .summary-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 620px) {
+  .my-shell {
+    width: calc(100% - 18px);
+    padding-top: var(--sp-md);
+  }
+
+  .my-hero-copy,
+  .profile-card,
+  .panel {
+    padding: 24px;
+    border-radius: 22px;
+  }
+
+  .summary-grid,
+  .stamp-board {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .hero-actions,
+  .order-card,
+  .recommend-card {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .primary-button,
+  .secondary-button,
+  .text-link {
+    width: 100%;
+  }
+}

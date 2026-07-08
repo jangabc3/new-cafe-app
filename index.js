@@ -26,7 +26,7 @@ function renderFeaturedMenus() {
         <span class="featured-info">
           <h3>${escapeHtml(menu.name)}</h3>
           <span class="featured-desc">${escapeHtml(menu.description)}</span>
-          <p>${formatPrice(menu.price).replace(' KRW', '')}</p>
+          <p>${formatPrice(menu.price)}</p>
         </span>
         <span class="quick-action" aria-hidden="true">${index >= 3 ? '+' : '♡'}</span>
       </a>

@@ -88,7 +88,7 @@ function renderMenus() {
     menuGrid,
     filteredMenus,
     (menu) => `
-      <article class="menu-card">
+      <article class="menu-card ${menu.category === 'goods' ? 'is-goods-card' : ''}">
         <a class="menu-thumb" href="detail.html?id=${encodeURIComponent(menu.id)}" aria-label="${escapeHtml(menu.name)} 상세 보기">
           ${
             menu.image

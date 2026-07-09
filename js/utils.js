@@ -53,7 +53,11 @@ function saveMenus(menus) {
 }
 
 function getMenuById(id) {
-  return getMenus().find((menu) => String(menu.id) === String(id));
+  if (id === null || id === undefined || id === '') return null;
+  const normalizedId = decodeURIComponent(String(id)).trim();
+  return getMenus().find((menu) => String(menu.id).trim() === normalizedId)
+    || MENU_ITEMS.find((menu) => String(menu.id) === normalizedId)
+    || null;
 }
 
 function normalizeMenu(menu) {
@@ -110,12 +114,16 @@ function saveCart(cart) {
   localStorage.setItem(CART_KEY, JSON.stringify(cart));
 }
 
-function addToCart(menuId, quantity = 1) {
+function addToCart(menuId, quantity = 1, options = {}) {
   const cart = getCart();
   const item = getMenuById(menuId);
   if (!item) return;
 
-  const existing = cart.find((cartItem) => String(cartItem.menuId) === String(menuId));
+  const optionKey = JSON.stringify(options);
+  const existing = cart.find((cartItem) =>
+    String(cartItem.menuId) === String(menuId)
+    && JSON.stringify(cartItem.options || {}) === optionKey
+  );
   if (existing) {
     existing.quantity += quantity;
   } else {
@@ -124,6 +132,7 @@ function addToCart(menuId, quantity = 1) {
       name: item.name,
       price: item.price,
       category: item.category,
+      options,
       quantity
     });
   }

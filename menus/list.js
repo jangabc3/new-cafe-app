@@ -137,14 +137,20 @@ menuGrid.addEventListener('click', (event) => {
   }
 
   const button = event.target.closest('[data-cart-id]');
-  if (!button) return;
+  const detailLink = event.target.closest('a[href*="detail.html"]');
 
+  if (detailLink) {
+    const id = new URL(detailLink.href, window.location.href).searchParams.get('id');
+    if (id) sessionStorage.setItem('momo_selected_menu_id', id);
+    return;
+  }
+
+  if (!button) return;
   const menu = getMenuById(button.dataset.cartId);
   if (!menu) return;
 
-  addToCart(menu.id);
-  updateCartCount();
-  showToast(`모모가 ${menu.name} 1개를 포근히 담았어요.`);
+  sessionStorage.setItem('momo_selected_menu_id', String(menu.id));
+  window.location.href = `detail.html?id=${encodeURIComponent(menu.id)}`;
 });
 
 renderHero(getMenus());

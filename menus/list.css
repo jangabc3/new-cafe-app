@@ -386,3 +386,71 @@ input:focus { outline: 3px solid rgba(233, 137, 128, 0.18); border-color: var(--
   min-height: 74px !important;
   background: #fff !important;
 }
+
+/* Unified menu-card specification: every category follows the same geometry. */
+.menu-grid .menu-card,
+.menu-grid .menu-card.is-goods-card {
+  grid-template-rows: 220px 300px !important;
+  width: 100% !important;
+  min-height: 520px !important;
+  height: 520px !important;
+  background: #fff !important;
+}
+
+.menu-grid .menu-thumb,
+.menu-grid .menu-card.is-goods-card .menu-thumb {
+  width: 100% !important;
+  height: 220px !important;
+  overflow: hidden !important;
+}
+
+.menu-grid .menu-thumb img,
+.menu-grid .menu-card.is-goods-card .menu-thumb img {
+  display: block !important;
+  width: 100% !important;
+  height: 220px !important;
+  object-fit: cover !important;
+  object-position: center center !important;
+}
+
+.menu-grid .menu-card-body,
+.menu-grid .menu-card.is-goods-card .menu-card-body {
+  display: grid !important;
+  grid-template-rows: 30px 48px 64px 1fr !important;
+  gap: 10px !important;
+  min-height: 300px !important;
+  height: 300px !important;
+  padding: 16px 16px 18px !important;
+  background: #fff !important;
+}
+
+.menu-grid .menu-card h2,
+.menu-grid .menu-card.is-goods-card h2 {
+  display: -webkit-box !important;
+  min-height: 48px !important;
+  max-height: 48px !important;
+  margin: 0 !important;
+  overflow: hidden !important;
+  line-height: 1.35 !important;
+  -webkit-box-orient: vertical !important;
+  -webkit-line-clamp: 2 !important;
+}
+
+.menu-grid .menu-description,
+.menu-grid .menu-card.is-goods-card .menu-description {
+  display: -webkit-box !important;
+  min-height: 64px !important;
+  max-height: 64px !important;
+  margin: 0 !important;
+  overflow: hidden !important;
+  background: #fff !important;
+  line-height: 1.65 !important;
+  -webkit-box-orient: vertical !important;
+  -webkit-line-clamp: 2 !important;
+}
+
+.menu-grid .card-actions {
+  width: 100% !important;
+  align-self: end !important;
+  margin-top: auto !important;
+}

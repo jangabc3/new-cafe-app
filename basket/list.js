@@ -97,7 +97,7 @@ function renderCart() {
           <div class="item-info">
             <h2>${escapeHtml(item.name)}</h2>
             <p class="item-meta">${escapeHtml(getCategoryName(item.category))} · ${formatPrice(item.price)}</p>
-            <p class="item-meta">옵션: 기본</p>
+            <p class="item-meta">옵션: ${escapeHtml(formatCartOptions(item.options))}</p>
           </div>
         </div>
         <div class="cart-item-controls">
@@ -112,6 +112,16 @@ function renderCart() {
       </article>
     `
   );
+}
+
+function formatCartOptions(options = {}) {
+  const labels = [];
+  if (options.temperature) labels.push(options.temperature);
+  if (options.size) labels.push(options.size);
+  if (options.bean) labels.push(options.bean);
+  if (options.shot) labels.push(`샷 ${options.shot}회 추가`);
+  if (options.syrup) labels.push(`시럽 ${options.syrup}회 추가`);
+  return labels.length ? labels.join(' · ') : '기본';
 }
 
 function changeQuantity(menuId, amount) {

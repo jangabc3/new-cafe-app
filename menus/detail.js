@@ -1,16 +1,21 @@
 ﻿const detailPanel = $('#detailPanel');
 const cartCount = $('#cartCount');
 const toast = $('#toast');
-const menuId = getQueryParam('id');
-const menu = getMenuById(menuId);
+const queryMenuId = getQueryParam('id');
+const savedMenuId = sessionStorage.getItem('momo_selected_menu_id');
+const menuId = queryMenuId || savedMenuId;
+const menu = getMenuById(menuId) || getMenuById(savedMenuId);
 
 const optionState = {
   temperature: 'ICE',
   size: 'Regular',
   shot: 0,
   syrup: 0,
+  bean: '산미 있는 원두',
   quantity: 1
 };
+
+if (menu) sessionStorage.setItem('momo_selected_menu_id', String(menu.id));
 
 let toastTimer;
 
@@ -26,7 +31,8 @@ function updateCartCount() {
 
 function getOptionPrice() {
   const sizePrice = optionState.size === 'Large' ? 700 : 0;
-  return sizePrice + optionState.shot * 500 + optionState.syrup * 300;
+  const beanPrice = optionState.bean === '디카페인' ? 500 : 0;
+  return sizePrice + optionState.shot * 500 + optionState.syrup * 300 + beanPrice;
 }
 
 function showToast(message, mood = 'happy') {
@@ -71,9 +77,27 @@ function renderTotals() {
   });
 }
 
+function getSelectedOptions() {
+  if (['coffee', 'signature'].includes(menu.category)) {
+    return {
+      temperature: optionState.temperature,
+      size: optionState.size,
+      bean: optionState.bean,
+      shot: optionState.shot,
+      syrup: optionState.syrup
+    };
+  }
+  if (['noncoffee', 'tea', 'season'].includes(menu.category)) {
+    return { temperature: optionState.temperature, size: optionState.size };
+  }
+  return {};
+}
+
 function renderMenuDetail() {
   document.title = `${menu.name} | 모모커피`;
   const isGoods = menu.category === 'goods';
+  const isCoffee = ['coffee', 'signature'].includes(menu.category);
+  const isDrink = ['coffee', 'signature', 'noncoffee', 'tea', 'season'].includes(menu.category);
   detailPanel.innerHTML = `
     <div class="detail-media">
       ${
@@ -93,7 +117,7 @@ function renderMenuDetail() {
       </div>
       <div class="option-panel">
         ${
-          isGoods
+          !isDrink
             ? ''
             : `
               <div class="option-group">
@@ -104,11 +128,25 @@ function renderMenuDetail() {
                 <span class="option-label">사이즈</span>
                 <div class="segmented"><button type="button" data-option="size" data-value="Regular">Regular</button><button type="button" data-option="size" data-value="Large">Large +700</button></div>
               </div>
+            `
+        }
+        ${
+          isCoffee
+            ? `
               <div class="option-group">
-                <span class="option-label">추가 옵션</span>
+                <span class="option-label">원두 선택</span>
+                <div class="segmented bean-options">
+                  <button type="button" data-option="bean" data-value="산미 있는 원두">산미 있는 원두</button>
+                  <button type="button" data-option="bean" data-value="고소한 원두">고소한 원두</button>
+                  <button type="button" data-option="bean" data-value="디카페인">디카페인 +500</button>
+                </div>
+              </div>
+              <div class="option-group">
+                <span class="option-label">커피 추가 옵션</span>
                 <div class="segmented"><button type="button" data-adjust="shot" data-delta="1">샷 추가 +500</button><button type="button" data-adjust="syrup" data-delta="1">시럽 추가 +300</button></div>
               </div>
             `
+            : ''
         }
         <div class="option-group">
           <span class="option-label">수량</span>
@@ -148,14 +186,14 @@ detailPanel.addEventListener('click', (event) => {
   }
 
   if (event.target.closest('#addToCartButton')) {
-    addToCart(menu.id, optionState.quantity);
+    addToCart(menu.id, optionState.quantity, getSelectedOptions());
     updateCartCount();
     $('#momoReaction p').textContent = `모모가 ${menu.name}을 장바구니에 포근히 담았어요.`;
     showToast(`모모가 ${menu.name}을 장바구니에 담았어요.`);
   }
 
   if (event.target.closest('#orderNowButton')) {
-    addToCart(menu.id, optionState.quantity);
+    addToCart(menu.id, optionState.quantity, getSelectedOptions());
     window.location.href = '../basket/list.html';
   }
 });

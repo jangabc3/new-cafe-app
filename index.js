@@ -183,39 +183,43 @@ function setSingleHeroCarousel() {
   const seasonText = $('.hero-content .campaign-support small');
   const button = $('.hero-content .primary-button');
   const dots = $$('.hero-dots button');
+  const counter = $('.hero-counter');
   const prevButton = $('.hero-arrow-prev');
   const nextButton = $('.hero-arrow-next');
 
   const slides = [
     {
+      theme: 'berry',
       image: 'assets/images/momo-strawberry-cream-latte-campaign.png',
-      label: 'MOMO COFFEE',
-      bigTitle: 'CREAM LATTE',
+      label: 'MOMO COFFEE · SEASON COLLECTION',
+      bigTitle: 'CREAM|LATTE',
       scriptTitle: 'Sweet Berry',
-      koreanTitle: '딸기 가득 크림 라떼',
-      description: '봄이 한 잔에 담겼어요',
+      koreanTitle: '딸기 크림 라떼',
+      description: '상큼한 딸기와 부드러운 크림을 담은 달콤한 한 잔',
       seasonText: '2026 SPRING SEASON LIMITED',
       buttonText: '시즌 메뉴 보기',
       href: 'menus/list.html?category=season',
       alt: 'MOMO COFFEE 딸기 크림 라떼 배너',
     },
     {
+      theme: 'matcha',
       image: 'assets/images/momo-matcha-latte-campaign.png',
-      label: 'MOMO COFFEE',
-      bigTitle: 'MATCHA CREAM LATTE',
+      label: 'MOMO COFFEE · SEASON COLLECTION',
+      bigTitle: 'MATCHA|LATTE',
       scriptTitle: 'Fresh Green',
       koreanTitle: '말차 크림 라떼',
-      description: '진한 말차와 달콤한 크림이 조화를 이루는 프리미엄 시즌 음료',
+      description: '진한 말차와 달콤한 크림이 만드는 차분한 한 잔',
       seasonText: '2026 SPRING SEASON LIMITED',
       buttonText: '시즌 메뉴 보기',
       href: 'menus/list.html?category=noncoffee',
       alt: 'MOMO COFFEE 말차 크림 라떼 배너',
     },
     {
+      theme: 'peach',
       image: 'assets/images/momo-peach-iced-tea-campaign.png',
-      label: 'MOMO COFFEE',
-      bigTitle: 'PEACH ICED TEA',
-      scriptTitle: 'Summer Limited',
+      label: 'MOMO COFFEE · SUMMER COLLECTION',
+      bigTitle: 'SUMMER|CAMPAIGN',
+      scriptTitle: 'Summer Mood',
       koreanTitle: '여름 한정 피치 아이스 티',
       description: '복숭아 가득, 시원하게!',
       seasonText: '2026 SUMMER SEASON LIMITED',
@@ -224,10 +228,11 @@ function setSingleHeroCarousel() {
       alt: 'MOMO COFFEE 복숭아 아이스티 배너',
     },
     {
+      theme: 'mango',
       image: 'assets/images/momo-cup-bingsu-campaign.png',
-      label: 'MOMO COFFEE',
-      bigTitle: 'SUMMER DESSERT',
-      scriptTitle: 'New Dessert',
+      label: 'MOMO COFFEE · SUMMER COLLECTION',
+      bigTitle: 'MANGO|BINGSU',
+      scriptTitle: 'Sweet Summer',
       koreanTitle: '모모커피 여름 신메뉴 컵빙수',
       description: '달콤하게, 시원하게, 한 컵 가득 행복을 담았어요!',
       seasonText: '2026 SUMMER NEW DESSERT',
@@ -244,14 +249,15 @@ function setSingleHeroCarousel() {
 
   const renderSlide = (index) => {
     const slide = slides[index];
-    const [firstWord, ...restWords] = slide.bigTitle.split(' ');
+    const [firstLine, ...restLines] = slide.bigTitle.split('|');
 
+    singleHero.dataset.campaignTheme = slide.theme;
     singleHeroBg.src = slide.image;
     singleHeroBg.alt = slide.alt;
     if (label) label.textContent = slide.label;
-    if (title) title.setAttribute('aria-label', `${slide.scriptTitle} ${slide.bigTitle}`);
-    if (bigTitleTop) bigTitleTop.textContent = firstWord;
-    if (bigTitleBottom) bigTitleBottom.textContent = restWords.join(' ') || firstWord;
+    if (title) title.setAttribute('aria-label', `${slide.scriptTitle} ${slide.bigTitle.replace('|', ' ')}`);
+    if (bigTitleTop) bigTitleTop.textContent = firstLine;
+    if (bigTitleBottom) bigTitleBottom.textContent = restLines.join(' ') || firstLine;
     if (scriptTitle) scriptTitle.textContent = slide.scriptTitle;
     if (koreanTitle) koreanTitle.textContent = slide.koreanTitle;
     if (description) description.textContent = slide.description;
@@ -266,6 +272,7 @@ function setSingleHeroCarousel() {
       dot.classList.toggle('is-active', active);
       dot.setAttribute('aria-selected', String(active));
     });
+    if (counter) counter.textContent = `${index + 1} / ${slides.length}`;
   };
 
   const showSlide = (nextIndex) => {

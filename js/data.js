@@ -25,7 +25,9 @@ const MENU_ITEMS = [
   { id: 13, name: '모모 키링', category: 'goods', price: 9900, description: '가방에 달아두고 매일 함께하는 포근한 모모 키링입니다.', image: 'assets/images/goods-momo-keyring.png', emoji: '🐻' },
   { id: 14, name: '모모 머그컵', category: 'goods', price: 14900, description: '매일의 커피 한 잔이 더 따뜻해지는 모모 머그입니다.', image: 'assets/images/goods-momo-mug.png', emoji: '☕' },
   { id: 15, name: '모모 노트', category: 'goods', price: 13900, description: '넉넉한 사이즈로 데일리 기록에 활용하기 좋은 모모 노트입니다.', image: 'assets/images/goods-momo-note.png', emoji: '📓' },
-  { id: 16, name: '모모 에코백', category: 'goods', price: 13900, description: '지구를 생각한 튼튼한 친환경 모모 에코백입니다.', image: 'assets/images/goods-momo-eco-bag.png', emoji: '👜' }
+  { id: 16, name: '모모 에코백', category: 'goods', price: 13900, description: '지구를 생각한 튼튼한 친환경 모모 에코백입니다.', image: 'assets/images/goods-momo-eco-bag.png', emoji: '👜' },
+  { id: 17, name: '오리지널 컵빙수', category: 'dessert', price: 6500, description: '우유 얼음 위에 팥, 콩고물, 떡, 바닐라 아이스크림과 체리를 올린 여름 신메뉴입니다.', image: 'assets/images/menu-original-cup-bingsu.png', emoji: '🍧' },
+  { id: 18, name: '망고 컵빙수', category: 'dessert', price: 6800, description: '부드러운 우유 얼음에 생망고 큐브, 떡, 바닐라 아이스크림과 민트를 더한 컵빙수입니다.', image: 'assets/images/menu-mango-cup-bingsu.png', emoji: '🥭' }
 ];
 
 const ORDER_STATUS = {

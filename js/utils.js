@@ -31,7 +31,17 @@ const MENU_STORAGE_KEY = 'momo_coffee_menus_v6';
 function getMenus() {
   const stored = localStorage.getItem(MENU_STORAGE_KEY);
   if (stored) {
-    return JSON.parse(stored);
+    const storedMenus = JSON.parse(stored);
+    const storedIds = new Set(storedMenus.map((menu) => String(menu.id)));
+    const missingDefaultMenus = MENU_ITEMS.filter((menu) => !storedIds.has(String(menu.id)));
+
+    if (missingDefaultMenus.length > 0) {
+      const mergedMenus = [...storedMenus, ...missingDefaultMenus];
+      saveMenus(mergedMenus);
+      return mergedMenus;
+    }
+
+    return storedMenus;
   }
 
   saveMenus(MENU_ITEMS);

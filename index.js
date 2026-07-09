@@ -1,5 +1,4 @@
 ﻿const cartCount = $('#cartCount');
-const featuredGrid = $('#featuredGrid');
 const hero = $('.hero');
 const heroTrack = $('.hero-track');
 const heroSlides = $$('.hero-slide');
@@ -7,31 +6,56 @@ const heroDots = $$('.hero-dots button');
 const heroPrevButton = $('.hero-arrow-prev');
 const heroNextButton = $('.hero-arrow-next');
 
-function updateCartCount() {
-  cartCount.textContent = getCart().reduce((sum, item) => sum + item.quantity, 0);
+function setMegaNavigation() {
+  const header = document.querySelector('[data-mega-header]');
+  if (!header) return;
+  const dropdown = header.querySelector('.mega-dropdown');
+  const triggers = [...header.querySelectorAll('.mega-trigger')];
+  const columns = [...header.querySelectorAll('[data-mega-column]')];
+  let activeCategory = '';
+
+  const openDropdown = (category) => {
+    activeCategory = category;
+    header.classList.add('is-mega-open');
+    dropdown.setAttribute('aria-hidden', 'false');
+    triggers.forEach((trigger) => {
+      const active = trigger.dataset.megaCategory === category;
+      trigger.classList.toggle('is-active', active);
+      trigger.setAttribute('aria-expanded', String(active));
+    });
+    columns.forEach((column) => column.classList.toggle('is-active', column.dataset.megaColumn === category));
+  };
+
+  const closeDropdown = () => {
+    activeCategory = '';
+    header.classList.remove('is-mega-open');
+    dropdown.setAttribute('aria-hidden', 'true');
+    triggers.forEach((trigger) => {
+      trigger.classList.remove('is-active');
+      trigger.setAttribute('aria-expanded', 'false');
+    });
+    columns.forEach((column) => column.classList.remove('is-active'));
+  };
+
+  triggers.forEach((trigger) => {
+    trigger.addEventListener('mouseenter', () => openDropdown(trigger.dataset.megaCategory));
+    trigger.addEventListener('focus', () => openDropdown(trigger.dataset.megaCategory));
+    trigger.addEventListener('click', (event) => {
+      if (!header.classList.contains('is-mega-open') || activeCategory !== trigger.dataset.megaCategory) {
+        event.preventDefault();
+        openDropdown(trigger.dataset.megaCategory);
+      }
+    });
+  });
+  header.addEventListener('mouseleave', closeDropdown);
+  header.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') closeDropdown();
+  });
 }
 
-function renderFeaturedMenus() {
-  const featuredIds = [1, 6, 2, 9, 5, 12];
-  const featured = featuredIds.map((id) => getMenuById(id)).filter(Boolean);
-  renderList(
-    featuredGrid,
-    featured,
-    (menu, index) => `
-      <a class="featured-card" href="menus/detail.html?id=${encodeURIComponent(menu.id)}">
-        <span class="menu-rank">${index < 3 ? `BEST ${index + 1}` : 'NEW'}</span>
-        <span class="item-art">
-          ${menu.image ? `<img src="${escapeHtml(menu.image)}" alt="${escapeHtml(menu.name)}">` : `<span>${escapeHtml(menu.emoji || menu.name.slice(0, 1))}</span>`}
-        </span>
-        <span class="featured-info">
-          <h3>${escapeHtml(menu.name)}</h3>
-          <span class="featured-desc">${escapeHtml(menu.description)}</span>
-          <p>${formatPrice(menu.price)}</p>
-        </span>
-        <span class="quick-action" aria-hidden="true">${index >= 3 ? '+' : '♡'}</span>
-      </a>
-    `
-  );
+function updateCartCount() {
+  if (!cartCount) return;
+  cartCount.textContent = getCart().reduce((sum, item) => sum + item.quantity, 0);
 }
 
 function setHeroCarousel() {
@@ -66,7 +90,7 @@ function setHeroCarousel() {
   };
   const startAutoPlay = () => {
     stopAutoPlay();
-    timerId = window.setInterval(nextSlide, 5200);
+    timerId = window.setInterval(nextSlide, 5600);
   };
 
   heroDots.forEach((dot, index) => {
@@ -119,7 +143,7 @@ function setHeroCarousel() {
 }
 
 function setRevealObserver() {
-  const revealTargets = $$('.reveal, .section-panel, .campaign-strip, .momo-pick, .season-showcase, .signature-story');
+  const revealTargets = $$('.reveal, .landing-section, .summer-campaign, .story-band, .app-section');
 
   if (!('IntersectionObserver' in window)) {
     revealTargets.forEach((item) => item.classList.add('is-visible'));
@@ -135,13 +159,155 @@ function setRevealObserver() {
         }
       });
     },
-    { threshold: 0.18 }
+    { threshold: 0.14 }
   );
 
   revealTargets.forEach((item) => observer.observe(item));
 }
 
 updateCartCount();
+setMegaNavigation();
 setHeroCarousel();
-renderFeaturedMenus();
 setRevealObserver();
+
+function setSingleHeroCarousel() {
+  const singleHero = $('.hero');
+  const singleHeroBg = $('.hero > .hero-image');
+  const label = $('.hero-content .eyebrow');
+  const title = $('.hero-content .campaign-title');
+  const bigTitleTop = $('.hero-content .title-cream');
+  const bigTitleBottom = $('.hero-content .title-latte');
+  const scriptTitle = $('.hero-content .title-script');
+  const koreanTitle = $('.hero-content .campaign-support strong');
+  const description = $('.hero-content .campaign-support span');
+  const seasonText = $('.hero-content .campaign-support small');
+  const button = $('.hero-content .primary-button');
+  const dots = $$('.hero-dots button');
+  const prevButton = $('.hero-arrow-prev');
+  const nextButton = $('.hero-arrow-next');
+
+  const slides = [
+    {
+      image: 'assets/images/momo-strawberry-cream-latte-campaign.png',
+      label: 'MOMO COFFEE',
+      bigTitle: 'CREAM LATTE',
+      scriptTitle: 'Sweet Berry',
+      koreanTitle: '딸기 가득 크림 라떼',
+      description: '봄이 한 잔에 담겼어요',
+      seasonText: '2026 SPRING SEASON LIMITED',
+      buttonText: '시즌 메뉴 보기',
+      href: 'menus/list.html?category=season',
+      alt: 'MOMO COFFEE 딸기 크림 라떼 배너',
+    },
+    {
+      image: 'assets/images/momo-matcha-latte-campaign.png',
+      label: 'MOMO COFFEE',
+      bigTitle: 'MATCHA CREAM LATTE',
+      scriptTitle: 'Fresh Green',
+      koreanTitle: '말차 크림 라떼',
+      description: '진한 말차와 달콤한 크림이 조화를 이루는 프리미엄 시즌 음료',
+      seasonText: '2026 SPRING SEASON LIMITED',
+      buttonText: '시즌 메뉴 보기',
+      href: 'menus/list.html?category=noncoffee',
+      alt: 'MOMO COFFEE 말차 크림 라떼 배너',
+    },
+    {
+      image: 'assets/images/momo-peach-iced-tea-campaign.png',
+      label: 'MOMO COFFEE',
+      bigTitle: 'PEACH ICED TEA',
+      scriptTitle: 'Summer Limited',
+      koreanTitle: '여름 한정 피치 아이스 티',
+      description: '복숭아 가득, 시원하게!',
+      seasonText: '2026 SUMMER SEASON LIMITED',
+      buttonText: '시즌 메뉴 보기',
+      href: 'menus/list.html?category=season',
+      alt: 'MOMO COFFEE 복숭아 아이스티 배너',
+    },
+    {
+      image: 'assets/images/momo-cup-bingsu-campaign.png',
+      label: 'MOMO COFFEE',
+      bigTitle: 'SUMMER DESSERT',
+      scriptTitle: 'New Dessert',
+      koreanTitle: '모모커피 여름 신메뉴 컵빙수',
+      description: '달콤하게, 시원하게, 한 컵 가득 행복을 담았어요!',
+      seasonText: '2026 SUMMER NEW DESSERT',
+      buttonText: '시즌 디저트 보기',
+      href: 'menus/list.html?category=dessert',
+      alt: 'MOMO COFFEE 컵빙수 여름 디저트 배너',
+    },
+  ];
+
+  if (!singleHero || !singleHeroBg || !prevButton || !nextButton || slides.length <= 1) return;
+
+  let currentIndex = 0;
+  let timerId = null;
+
+  const renderSlide = (index) => {
+    const slide = slides[index];
+    const [firstWord, ...restWords] = slide.bigTitle.split(' ');
+
+    singleHeroBg.src = slide.image;
+    singleHeroBg.alt = slide.alt;
+    if (label) label.textContent = slide.label;
+    if (title) title.setAttribute('aria-label', `${slide.scriptTitle} ${slide.bigTitle}`);
+    if (bigTitleTop) bigTitleTop.textContent = firstWord;
+    if (bigTitleBottom) bigTitleBottom.textContent = restWords.join(' ') || firstWord;
+    if (scriptTitle) scriptTitle.textContent = slide.scriptTitle;
+    if (koreanTitle) koreanTitle.textContent = slide.koreanTitle;
+    if (description) description.textContent = slide.description;
+    if (seasonText) seasonText.textContent = slide.seasonText;
+    if (button) {
+      button.textContent = slide.buttonText;
+      button.href = slide.href;
+    }
+
+    dots.forEach((dot, dotIndex) => {
+      const active = dotIndex === index;
+      dot.classList.toggle('is-active', active);
+      dot.setAttribute('aria-selected', String(active));
+    });
+  };
+
+  const showSlide = (nextIndex) => {
+    currentIndex = (nextIndex + slides.length) % slides.length;
+    singleHero.classList.add('is-changing');
+
+    window.setTimeout(() => {
+      renderSlide(currentIndex);
+      singleHero.classList.remove('is-changing');
+    }, 180);
+  };
+
+  const nextSlide = () => showSlide(currentIndex + 1);
+  const prevSlide = () => showSlide(currentIndex - 1);
+  const stopAutoPlay = () => {
+    if (timerId) window.clearInterval(timerId);
+  };
+  const startAutoPlay = () => {
+    stopAutoPlay();
+    timerId = window.setInterval(nextSlide, 3500);
+  };
+  const restartAutoPlay = () => startAutoPlay();
+
+  prevButton.addEventListener('click', () => {
+    prevSlide();
+    restartAutoPlay();
+  });
+
+  nextButton.addEventListener('click', () => {
+    nextSlide();
+    restartAutoPlay();
+  });
+
+  dots.forEach((dot, index) => {
+    dot.addEventListener('click', () => {
+      showSlide(index);
+      restartAutoPlay();
+    });
+  });
+
+  renderSlide(0);
+  startAutoPlay();
+}
+
+setSingleHeroCarousel();

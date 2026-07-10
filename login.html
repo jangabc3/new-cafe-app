@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>로그인 | MOMO COFFEE</title>
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/auth.css">
+  </head>
+  <body class="auth-page">
+    <header class="auth-header">
+      <a class="auth-brand" href="index.html" aria-label="MOMO COFFEE 홈">
+        <img src="assets/images/momo-header-logo.png?v=5" alt="MOMO COFFEE" class="site-logo-image">
+        <strong>MOMO COFFEE</strong>
+      </a>
+      <a class="auth-home-link" href="index.html">홈으로</a>
+    </header>
+
+    <main class="auth-main">
+      <section class="auth-card" aria-labelledby="loginTitle">
+        <div class="auth-heading">
+          <span>WELCOME BACK</span>
+          <h1 id="loginTitle">다시 만나서<br>반가워요.</h1>
+          <p>모모커피 계정으로 로그인하고<br>더 편리한 주문과 혜택을 만나보세요.</p>
+        </div>
+
+        <div id="authNotice" class="auth-notice" role="status" aria-live="polite" hidden></div>
+
+        <form id="loginForm" class="auth-form" novalidate>
+          <div class="auth-field">
+            <label for="loginEmail">이메일</label>
+            <input id="loginEmail" name="email" type="email" autocomplete="email" placeholder="momo@coffee.com" required>
+            <small class="field-error" data-error-for="email"></small>
+          </div>
+          <div class="auth-field">
+            <label for="loginPassword">비밀번호</label>
+            <input id="loginPassword" name="password" type="password" autocomplete="current-password" placeholder="비밀번호를 입력해주세요" required>
+            <small class="field-error" data-error-for="password"></small>
+          </div>
+          <button class="auth-submit" type="submit">로그인</button>
+        </form>
+
+        <p class="auth-switch">아직 모모커피 회원이 아니신가요? <a href="signup.html">회원가입</a></p>
+      </section>
+    </main>
+
+    <script src="js/auth.js"></script>
+    <script src="js/footer.js"></script>
+  </body>
+</html>
+
+
+
+

@@ -33,15 +33,28 @@
 .brand { gap: 12px; }
 
 .brand-mark {
-  display: grid;
-  width: 54px;
-  height: 54px;
-  place-items: center;
+  display: contents;
 }
 
-.brand-mark img {
-  width: 54px;
-  height: 54px;
+.brand-mark::before,
+.brand-mark::after {
+  content: none !important;
+}
+
+.site-logo-image {
+  display: block;
+  width: 38px;
+  height: 38px;
+  object-fit: contain;
+  object-position: center;
+  flex: 0 0 auto;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  clip-path: none;
+  filter: none;
+  mask-image: none;
+  -webkit-mask-image: none;
 }
 
 .brand strong,

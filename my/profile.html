@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>&#xD68C;&#xC6D0; &#xC815;&#xBCF4; &#xC218;&#xC815; | MOMO COFFEE</title>
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="../css/nav.css">
+    <link rel="stylesheet" href="profile.css">
+  </head>
+  <body class="profile-page">
+    <header class="site-header">
+      <a class="brand" href="../index.html" aria-label="MOMO COFFEE home">
+        <img src="../assets/images/momo-header-logo.png?v=5" alt="MOMO COFFEE" class="site-logo-image">
+        <strong>MOMO COFFEE</strong>
+      </a>
+      <nav class="site-nav" aria-label="main menu"><a href="index.html">MY PAGE</a></nav>
+      <a class="cart-link" href="../basket/list.html">&#xC7A5;&#xBC14;&#xAD6C;&#xB2C8;</a>
+    </header>
+
+    <main class="profile-shell">
+      <section class="profile-intro" aria-labelledby="profileTitle">
+        <div>
+          <span>MY MOMO PROFILE</span>
+          <h1 id="profileTitle">&#xD68C;&#xC6D0; &#xC815;&#xBCF4; &#xC218;&#xC815;</h1>
+          <p>&#xBAA8;&#xBAA8;&#xCEE4;&#xD53C;&#xC5D0;&#xC11C; &#xC0AC;&#xC6A9;&#xD560; &#xAE30;&#xBCF8; &#xC815;&#xBCF4;&#xB97C; &#xAD00;&#xB9AC;&#xD574;&#xBCF4;&#xC138;&#xC694;.<br>&#xC774;&#xBA54;&#xC77C;&#xC740; &#xD68C;&#xC6D0; &#xAD6C;&#xBD84;&#xC744; &#xC704;&#xD574; &#xC218;&#xC815;&#xD560; &#xC218; &#xC5C6;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
+        </div>
+        <img src="../assets/images/momo-app-character-cutout.png" alt="MOMO mascot">
+      </section>
+
+      <section class="profile-card" aria-label="profile edit form">
+        <div id="profileNotice" class="profile-notice" role="status" aria-live="polite" hidden></div>
+        <form id="profileForm" class="profile-form" novalidate>
+          <div class="profile-field">
+            <label for="profileEmail">&#xC774;&#xBA54;&#xC77C;</label>
+            <input id="profileEmail" name="email" type="email" autocomplete="email" readonly>
+            <small>&#xC774;&#xBA54;&#xC77C;&#xC740; &#xD68C;&#xC6D0; &#xAD6C;&#xBD84;&#xC744; &#xC704;&#xD574; &#xC218;&#xC815;&#xD560; &#xC218; &#xC5C6;&#xC2B5;&#xB2C8;&#xB2E4;.</small>
+          </div>
+          <div class="profile-field">
+            <label for="profileName">&#xC774;&#xB984;</label>
+            <input id="profileName" name="name" type="text" autocomplete="name" required>
+            <small class="profile-error" data-error-for="name"></small>
+          </div>
+          <div class="profile-field">
+            <label for="profilePhone">&#xC5F0;&#xB77D;&#xCC98;</label>
+            <input id="profilePhone" name="phone" type="tel" autocomplete="tel" inputmode="tel" required>
+            <small class="profile-error" data-error-for="phone"></small>
+          </div>
+          <div class="profile-field">
+            <label for="profilePassword">&#xC0C8; &#xBE44;&#xBC00;&#xBC88;&#xD638;</label>
+            <input id="profilePassword" name="password" type="password" autocomplete="new-password" placeholder="&#xBCC0;&#xACBD;&#xD560; &#xB54C;&#xB9CC; &#xC785;&#xB825;&#xD574;&#xC8FC;&#xC138;&#xC694;">
+            <small class="profile-error" data-error-for="password"></small>
+          </div>
+          <div class="profile-field">
+            <label for="profilePasswordConfirm">&#xC0C8; &#xBE44;&#xBC00;&#xBC88;&#xD638; &#xD655;&#xC778;</label>
+            <input id="profilePasswordConfirm" name="passwordConfirm" type="password" autocomplete="new-password" placeholder="&#xC0C8; &#xBE44;&#xBC00;&#xBC88;&#xD638;&#xB97C; &#xD55C; &#xBC88; &#xB354; &#xC785;&#xB825;&#xD574;&#xC8FC;&#xC138;&#xC694;">
+            <small class="profile-error" data-error-for="passwordConfirm"></small>
+          </div>
+          <div class="profile-actions">
+            <a href="index.html">&#xB3CC;&#xC544;&#xAC00;&#xAE30;</a>
+            <button type="submit">&#xC815;&#xBCF4; &#xC218;&#xC815;&#xD558;&#xAE30;</button>
+          </div>
+        </form>
+      </section>
+    </main>
+
+    <script src="profile.js"></script>
+    <script src="../js/nav.js"></script>
+    <script src="../js/footer.js"></script>
+  </body>
+</html>

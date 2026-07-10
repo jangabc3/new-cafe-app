@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>찜한 메뉴 | MOMO COFFEE</title>
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/nav.css">
+    <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="liked-menu.css">
+    <script>
+      if (!localStorage.getItem('momoCurrentUser')) {
+        window.location.replace('login.html?redirect=liked-menu.html&message=login-required');
+      }
+    </script>
+  </head>
+  <body class="liked-page">
+    <header class="site-header">
+      <a class="brand" href="index.html" aria-label="MOMO COFFEE 홈">
+        <img src="assets/images/momo-header-logo.png?v=5" alt="MOMO COFFEE" class="site-logo-image">
+        <span><strong>MOMO COFFEE</strong><small>한 잔의 커피, 하루의 행복.</small></span>
+      </a>
+    </header>
+
+    <main class="liked-shell">
+      <section class="liked-hero" aria-labelledby="likedTitle">
+        <div>
+          <p class="liked-label">LIKED MENU</p>
+          <h1 id="likedTitle">찜한 메뉴 <span aria-hidden="true">♥</span></h1>
+          <p>모모님이 찜한 메뉴를 확인해보세요.</p>
+        </div>
+        <img class="liked-momo" src="assets/images/momo-app-character-cutout.png" alt="커피를 들고 있는 모모 캐릭터">
+      </section>
+
+      <section class="liked-summary" aria-label="찜한 메뉴 요약">
+        <article><span>♡</span><p>찜한 메뉴</p><strong><b id="likedCount">8</b>개</strong><em>좋아하는 메뉴</em></article>
+        <article><span>▤</span><p>최근 찜한 메뉴</p><strong id="recentLiked">바닐라 라떼</strong><em>2026.07.08</em></article>
+        <article><span>▥</span><p>총 찜 횟수</p><strong>27회</strong><em>전체 기간</em></article>
+        <article><span>▣</span><p>찜 쿠폰 보유</p><strong>3장</strong><em>찜한 메뉴 전용 쿠폰</em></article>
+      </section>
+
+      <section class="liked-board" aria-label="찜한 메뉴 대시보드">
+        <aside class="liked-sidebar" aria-label="마이페이지 메뉴">
+          <h2 class="sidebar-title">MY PAGE</h2>
+          <a class="side-link" href="my/index.html"><span class="side-icon side-icon-user" aria-hidden="true"></span>마이페이지</a>
+          <a class="side-link" href="orders/list.html"><span class="side-icon side-icon-bag" aria-hidden="true"></span>주문 내역</a>
+          <a class="side-link is-active" href="liked-menu.html" aria-current="page"><span class="side-icon side-icon-heart" aria-hidden="true"></span>찜한 메뉴</a>
+          <a class="side-link" href="basket/list.html"><span class="side-icon side-icon-cart" aria-hidden="true"></span>장바구니</a>
+          <a class="side-link" href="my/index.html#couponBox"><span class="side-icon side-icon-ticket" aria-hidden="true"></span>쿠폰함</a>
+          <a class="side-link" href="my/profile.html"><span class="side-icon side-icon-profile" aria-hidden="true"></span>회원 정보 수정</a>
+          <button class="side-link side-logout" type="button" id="logoutButton"><span class="side-icon side-icon-logout" aria-hidden="true"></span>로그아웃</button>
+        </aside>
+
+        <section class="liked-panel" aria-labelledby="likedListTitle">
+          <div class="panel-heading">
+            <div>
+              <h2 id="likedListTitle">찜한 메뉴 목록</h2>
+              <p>총 <span id="gridCount">8</span>개의 메뉴</p>
+            </div>
+            <select id="sortSelect" aria-label="찜한 메뉴 정렬">
+              <option value="latest">최신순</option>
+              <option value="price-low">가격 낮은순</option>
+              <option value="price-high">가격 높은순</option>
+            </select>
+          </div>
+
+          <div class="liked-grid" id="likedGrid"></div>
+
+          <div class="liked-pagination" aria-label="페이지">
+            <a class="is-active" href="#">1</a>
+            <a href="#">2</a>
+            <a href="#">›</a>
+          </div>
+
+          <div class="liked-notice">
+            찜한 메뉴는 최대 50개까지 저장할 수 있어요.<br>
+            메뉴 정보는 변경될 수 있습니다.
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <footer class="landing-footer">
+      <div class="footer-inner">
+        <div class="footer-main">
+          <section class="footer-brand" aria-label="MOMO COFFEE 브랜드 정보">
+            <a class="footer-logo" href="index.html" aria-label="MOMO COFFEE 홈">
+              <span class="footer-logo-mark" aria-hidden="true"><img src="assets/images/momo-face-cute.png" alt=""></span>
+              <strong>MOMO COFFEE</strong>
+            </a>
+            <p class="footer-slogan">한 잔의 커피,<br>하루의 <em>행복.</em></p>
+            <p class="footer-description">따뜻한 커피와 달콤한 디저트로<br>당신의 하루에 작은 행복을 전합니다.</p>
+          </section>
+          <nav class="footer-navigation" aria-label="푸터 내비게이션">
+            <section class="footer-column"><h2>MENU</h2><a href="menus/list.html?category=drink">음료</a><a href="menus/list.html?category=season">시즌 메뉴</a><a href="menus/list.html?category=dessert">디저트</a></section>
+            <section class="footer-column"><h2>STORE</h2><a href="stores/finder.html">매장 찾기</a><a href="stores/finder.html">신규 매장</a></section>
+            <section class="footer-column"><h2>COMMUNITY</h2><a href="community/notice.html">공지사항</a><a href="community/event.html">이벤트</a><a href="community/faq.html">FAQ</a></section>
+            <section class="footer-column"><h2>BRAND</h2><a href="story/brand.html">브랜드 소개</a><a href="story/brand.html">Brand Identity</a></section>
+            <section class="footer-column footer-customer"><h2>CUSTOMER CENTER</h2><a href="tel:1234-5678">1234-5678</a><p>09:00 - 18:00</p><a href="mailto:momo@coffee.com">momo@coffee.com</a></section>
+          </nav>
+        </div>
+        <div class="footer-bottom"><small>© 2026 MOMO COFFEE. ALL RIGHTS RESERVED.</small><nav aria-label="약관 및 정책"><a href="#">이용약관</a><a href="#">개인정보처리방침</a></nav></div>
+      </div>
+    </footer>
+
+    <div class="liked-toast" id="toast" hidden role="status"></div>
+
+    <script src="js/data.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="liked-menu.js"></script>
+    <script src="js/nav.js"></script>
+    <script src="js/footer.js"></script>
+  </body>
+</html>
+
+
+
+

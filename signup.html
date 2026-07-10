@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>회원가입 | MOMO COFFEE</title>
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/auth.css">
+  </head>
+  <body class="auth-page">
+    <header class="auth-header">
+      <a class="auth-brand" href="index.html" aria-label="MOMO COFFEE 홈">
+        <img src="assets/images/momo-header-logo.png?v=5" alt="MOMO COFFEE" class="site-logo-image">
+        <strong>MOMO COFFEE</strong>
+      </a>
+      <a class="auth-home-link" href="index.html">홈으로</a>
+    </header>
+
+    <main class="auth-main">
+      <section class="auth-card auth-card-wide" aria-labelledby="signupTitle">
+        <div class="auth-heading">
+          <span>JOIN MOMO COFFEE</span>
+          <h1 id="signupTitle">모모커피와 함께<br>달콤한 하루를 시작해요.</h1>
+          <p>간단한 정보 입력으로 가입하고<br>모모커피의 다양한 혜택을 만나보세요.</p>
+        </div>
+
+        <div id="authNotice" class="auth-notice" role="status" aria-live="polite" hidden></div>
+
+        <form id="signupForm" class="auth-form" novalidate>
+          <div class="auth-field">
+            <label for="signupEmail">이메일</label>
+            <input id="signupEmail" name="email" type="email" autocomplete="email" placeholder="momo@coffee.com" required>
+            <small class="field-error" data-error-for="email"></small>
+          </div>
+          <div class="auth-field">
+            <label for="signupPassword">비밀번호</label>
+            <input id="signupPassword" name="password" type="password" autocomplete="new-password" placeholder="비밀번호를 입력해주세요" required>
+            <small class="field-error" data-error-for="password"></small>
+          </div>
+          <div class="auth-field">
+            <label for="signupPasswordConfirm">비밀번호 확인</label>
+            <input id="signupPasswordConfirm" name="passwordConfirm" type="password" autocomplete="new-password" placeholder="비밀번호를 다시 입력해주세요" required>
+            <small class="field-error" data-error-for="passwordConfirm"></small>
+          </div>
+          <div class="auth-field">
+            <label for="signupName">이름</label>
+            <input id="signupName" name="name" type="text" autocomplete="name" placeholder="이름을 입력해주세요" required>
+            <small class="field-error" data-error-for="name"></small>
+          </div>
+          <div class="auth-field">
+            <label for="signupPhone">휴대폰 번호</label>
+            <input id="signupPhone" name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="010-1234-5678" required>
+            <small class="field-error" data-error-for="phone"></small>
+          </div>
+          <button class="auth-submit" type="submit">회원가입</button>
+        </form>
+
+        <p class="auth-switch">이미 계정이 있으신가요? <a href="login.html">로그인</a></p>
+      </section>
+    </main>
+
+    <script src="js/auth.js"></script>
+    <script src="js/footer.js"></script>
+  </body>
+</html>
+
+
+
+

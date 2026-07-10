@@ -23,26 +23,32 @@
   min-width: 0;
 }
 
-.brand-mark {
-  display: grid;
-  flex: 0 0 58px;
-  width: 58px;
-  height: 58px;
-  place-items: center;
-  border: 0;
-  border-radius: 0;
-  background: transparent;
-  box-shadow: none;
+.brand-mark,
+.unified-brand-mark {
+  display: contents;
 }
 
 .brand-mark::before,
-.brand-mark::after {
-  content: none;
+.brand-mark::after,
+.unified-brand-mark::before,
+.unified-brand-mark::after {
+  content: none !important;
 }
 
-.brand-mark img {
-  width: 58px;
-  height: 58px;
+.site-logo-image {
+  display: block;
+  width: 38px;
+  height: 38px;
+  object-fit: contain;
+  object-position: center;
+  flex: 0 0 auto;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  clip-path: none;
+  filter: none;
+  mask-image: none;
+  -webkit-mask-image: none;
 }
 
 .brand strong,
@@ -52,7 +58,7 @@
 
 .brand strong {
   color: var(--color-primary, #3b2a22);
-  font-size: 23px;
+  font-size: 20px;
   font-weight: 900;
   line-height: 1.05;
 }
@@ -289,18 +295,12 @@
   display: inline-flex;
   height: 80px;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   color: #3f291f;
 }
 
-.unified-brand img {
-  display: block;
-  width: 46px;
-  height: 46px;
-  object-fit: contain;
-}
-
 .unified-brand strong {
+  color: #3b291f;
   font-size: 20px;
   font-weight: 900;
   letter-spacing: -0.03em;
@@ -362,6 +362,43 @@
   color: #3f291f;
   font-size: 14px;
   font-weight: 750;
+}
+
+.header-actions .auth-greeting,
+.unified-actions .auth-greeting {
+  overflow: hidden;
+  max-width: 170px;
+  color: #3f291f;
+  font-size: 13px;
+  font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.header-actions .auth-logout,
+.unified-actions .auth-logout {
+  padding: 0;
+  color: #8a6f63;
+  border: 0;
+  background: transparent;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.header-actions .auth-logout:hover,
+.unified-actions .auth-logout:hover,
+.header-actions .auth-greeting:hover,
+.unified-actions .auth-greeting:hover {
+  color: #ef6f87;
+}
+
+.header-actions .auth-logout:focus-visible,
+.unified-actions .auth-logout:focus-visible,
+.header-actions .auth-greeting:focus-visible,
+.unified-actions .auth-greeting:focus-visible {
+  border-radius: 4px;
+  outline: 2px solid #ef6f87;
+  outline-offset: 4px;
 }
 
 .unified-order {

@@ -168,3 +168,13 @@ cafe-app/
 - [x] `admin/orders/detail.html` — 주문 상세
 - [x] `admin/orders/detail.css`
 - [x] `admin/orders/detail.js`
+
+### 9단계: 고객 - 회원가입 및 로그인
+
+- [x] `signup.html` — 회원가입 및 중복 이메일 검증
+- [x] `login.html` — 로그인 및 인증 검증
+- [x] `css/auth.css` — 인증 페이지 디자인 시스템
+- [x] `js/auth.js` — localStorage 회원·세션 관리
+- [x] Header 로그인 상태 및 로그아웃 연결
+- [x] My Page 로그인 접근 제어
+- [x] `my/profile.html` — 회원 정보 조회 및 수정

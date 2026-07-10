@@ -3,55 +3,55 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>주문 내역 | 모모커피</title>
+    <title>&#xC8FC;&#xBB38; &#xB0B4;&#xC5ED; | MOMO COFFEE</title>
     <link rel="stylesheet" href="../css/variables.css">
     <link rel="stylesheet" href="list.css">
     <link rel="stylesheet" href="../css/nav.css">
   </head>
   <body>
     <header class="site-header">
-      <a class="brand" href="../index.html" aria-label="모모커피 홈">
-        <span class="brand-mark" aria-hidden="true"><img src="../assets/images/momo-cutout-tight.png" alt=""></span>
-        <span><strong>MOMO COFFEE</strong><small>한 잔의 커피, 하루의 행복.</small></span>
+      <a class="brand" href="../index.html" aria-label="MOMO COFFEE home">
+        <img src="../assets/images/momo-header-logo.png?v=5" alt="MOMO COFFEE" class="site-logo-image">
+        <span><strong>MOMO COFFEE</strong><small>&#xD55C; &#xC794;&#xC758; &#xCEE4;&#xD53C;, &#xD558;&#xB8E8;&#xC758; &#xD589;&#xBCF5;.</small></span>
       </a>
-      <nav class="site-nav" aria-label="주요 메뉴">
-        <div class="nav-group"><a class="nav-trigger" href="../story/brand.html">모모 스토리</a><div class="nav-menu"><a href="../story/brand.html">브랜드 소개</a><a href="../story/bi.html">Brand Identity (BI)</a></div></div>
-        <div class="nav-group"><a class="nav-trigger" href="../menu/drinks.html">메뉴</a><div class="nav-menu"><span>음료</span><a href="../menu/drinks.html">음료 전체</a><a href="../menus/list.html?category=coffee">커피</a><a href="../menus/list.html?category=noncoffee">논커피</a><a href="../menus/list.html?category=tea">티</a><a href="../menus/list.html?category=season">시즌 음료</a><span>푸드</span><a href="../menu/foods.html">푸드 전체</a><a href="../menus/list.html?category=dessert">디저트</a><a href="../menus/list.html?category=bakery">베이커리</a><span>상품(Goods)</span><a href="../menu/goods.html">상품 전체</a></div></div>
-        <div class="nav-group"><a class="nav-trigger" href="../stores/finder.html">매장</a><div class="nav-menu"><a href="../stores/finder.html">매장 찾기</a></div></div>
-        <div class="nav-group"><a class="nav-trigger" href="../community/notice.html">커뮤니티</a><div class="nav-menu"><a href="../community/notice.html">공지사항</a><a href="../community/faq.html">자주 묻는 질문</a><a href="../community/event.html">이벤트</a></div></div>
-        <div class="nav-group"><a class="nav-trigger" href="../my/index.html">마이페이지</a></div>
-      </nav>
-      <a class="cart-link" href="../basket/list.html">장바구니 <span id="cartCount" class="cart-badge">0</span></a>
     </header>
 
-    <main class="orders-shell">
-      <section class="page-heading">
-        <div>
-          <p class="eyebrow">Order History</p>
-          <h1>주문 내역</h1>
+    <main class="orders-page">
+      <section class="orders-hero" aria-labelledby="ordersTitle">
+        <div class="orders-hero-copy"><p class="orders-label">ORDER HISTORY</p><h1 id="ordersTitle">&#xC8FC;&#xBB38; &#xB0B4;&#xC5ED;</h1><p>&#xBAA8;&#xBAA8;&#xCEE4;&#xD53C;&#xC640; &#xD568;&#xAED8;&#xD55C; &#xC8FC;&#xBB38; &#xAE30;&#xB85D;&#xC744; &#xD655;&#xC778;&#xD574;&#xBCF4;&#xC138;&#xC694;.</p></div>
+        <img class="orders-momo" src="../assets/images/momo-app-character-cutout.png" alt="MOMO mascot">
+      </section>
+      <section class="orders-dashboard">
+        <aside class="orders-sidebar" aria-label="mypage menu">
+          <h2 class="sidebar-title">MY PAGE</h2>
+          <a class="side-link" href="../my/index.html"><span class="side-icon side-icon-user" aria-hidden="true"></span>&#xB9C8;&#xC774;&#xD398;&#xC774;&#xC9C0;</a>
+          <a class="side-link is-active" href="list.html"><span class="side-icon side-icon-bag" aria-hidden="true"></span>&#xC8FC;&#xBB38; &#xB0B4;&#xC5ED;</a>
+          <a class="side-link" href="../liked-menu.html"><span class="side-icon side-icon-heart" aria-hidden="true"></span>&#xCC1C;&#xD55C; &#xBA54;&#xB274;</a>
+          <a class="side-link" href="../basket/list.html"><span class="side-icon side-icon-cart" aria-hidden="true"></span>&#xC7A5;&#xBC14;&#xAD6C;&#xB2C8;</a>
+          <a class="side-link" href="../my/index.html#couponBox"><span class="side-icon side-icon-ticket" aria-hidden="true"></span>&#xCFE0;&#xD3F0;&#xD568;</a>
+          <a class="side-link" href="../my/profile.html"><span class="side-icon side-icon-profile" aria-hidden="true"></span>&#xD68C;&#xC6D0; &#xC815;&#xBCF4; &#xC218;&#xC815;</a>
+          <button class="side-link side-logout" type="button" id="logoutButton"><span class="side-icon side-icon-logout" aria-hidden="true"></span>&#xB85C;&#xADF8;&#xC544;&#xC6C3;</button>
+        </aside>
+        <div class="orders-content">
+          <section class="order-stats" aria-label="order summary">
+            <article class="stat-card"><span class="stat-icon" aria-hidden="true">&#x25A7;</span><div><p>&#xC804;&#xCCB4; &#xC8FC;&#xBB38;</p><strong><span id="totalOrders">0</span><small>&#xAC74;</small></strong></div></article>
+            <article class="stat-card"><span class="stat-icon" aria-hidden="true">&#x25F7;</span><div><p>&#xC9C4;&#xD589; &#xC911;</p><strong><span id="activeOrders">0</span><small>&#xAC74;</small></strong></div></article>
+            <article class="stat-card"><span class="stat-icon" aria-hidden="true">&#x20A9;</span><div><p>&#xB204;&#xC801; &#xAE08;&#xC561;</p><strong id="totalSpent">0&#xC6D0;</strong></div></article>
+            <article class="stat-card"><span class="stat-icon" aria-hidden="true">&#x2615;</span><div><p>&#xCD5C;&#xADFC; &#xC8FC;&#xBB38;</p><strong id="recentDate">-</strong></div></article>
+          </section>
+          <section class="orders-panel" aria-labelledby="ordersListTitle">
+            <div class="orders-panel-head"><div><h2 id="ordersListTitle">&#xC8FC;&#xBB38; &#xB0B4;&#xC5ED; &#xBAA9;&#xB85D;</h2><p>&#xCD5C;&#xADFC; &#xC8FC;&#xBB38;&#xBD80;&#xD130; &#xCC28;&#xB840;&#xB300;&#xB85C; &#xBCF4;&#xC5EC;&#xB4DC;&#xB824;&#xC694;.</p></div><a class="filter-button" href="../menus/list.html">&#xBA54;&#xB274; &#xC8FC;&#xBB38;&#xD558;&#xAE30;</a></div>
+            <section id="emptyState" class="empty-state" hidden><span class="mini-momo" aria-hidden="true"><span></span></span><strong>&#xC544;&#xC9C1; &#xC8FC;&#xBB38; &#xB0B4;&#xC5ED;&#xC774; &#xC5C6;&#xC2B5;&#xB2C8;&#xB2E4;.</strong><p>&#xC7A5;&#xBC14;&#xAD6C;&#xB2C8;&#xC5D0;&#xC11C; &#xC8FC;&#xBB38;&#xC744; &#xC644;&#xB8CC;&#xD558;&#xBA74; &#xBAA8;&#xBAA8;&#xAC00; &#xC774;&#xACF3;&#xC5D0; &#xAE30;&#xB85D;&#xD574;&#xB458;&#xAC8C;&#xC694;.</p><a class="primary-button" href="../menus/list.html">&#xBA54;&#xB274; &#xBCF4;&#xB7EC;&#xAC00;&#xAE30;</a></section>
+            <section id="ordersList" class="orders-list" aria-label="orders"></section>
+            <div id="pagination" class="order-pagination" aria-label="pagination"></div>
+          </section>
         </div>
-        <a class="secondary-button" href="../menus/list.html">메뉴 주문하기</a>
       </section>
-
-      <section class="summary-grid" aria-label="주문 요약">
-        <article><span>전체 주문</span><strong id="totalOrders">0</strong></article>
-        <article><span>진행 중</span><strong id="activeOrders">0</strong></article>
-        <article><span>누적 금액</span><strong id="totalSpent">0원</strong></article>
-      </section>
-
-      <section id="emptyState" class="empty-state" hidden>
-        <span class="mini-momo" aria-hidden="true"><span></span></span>
-        <strong>아직 주문 내역이 없습니다.</strong>
-        <p>장바구니에서 주문을 완료하면 모모가 이곳에 기록해둘게요.</p>
-        <a class="primary-button" href="../menus/list.html">메뉴 보러가기</a>
-      </section>
-
-      <section id="ordersList" class="orders-list" aria-label="주문 목록"></section>
     </main>
-
     <script src="../js/data.js"></script>
     <script src="../js/utils.js"></script>
     <script src="list.js"></script>
     <script src="../js/nav.js"></script>
+    <script src="../js/footer.js"></script>
   </body>
 </html>

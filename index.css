@@ -3188,7 +3188,7 @@ main,
   min-height: 640px !important;
   margin: 0 !important;
   padding: 0 !important;
-  overflow: hidden !important;
+  overflow: visible !important;
 }
 
 .hero-track {
@@ -3204,7 +3204,7 @@ main,
   min-height: 640px !important;
   margin: 0 !important;
   padding: 0 !important;
-  overflow: hidden !important;
+  overflow: visible !important;
 }
 
 .hero-bg {
@@ -6835,4 +6835,67 @@ main,
   #app .app-character {
     display: none !important;
   }
+}
+#app .phone-order-button {
+  position: absolute;
+}
+
+/* Shared header logo lock: use the same MOMO mascot mark as every subpage. */
+.landing-header .brand,
+.mega-header .brand {
+  gap: 12px !important;
+}
+
+.landing-header .brand-mark,
+.mega-header .brand-mark {
+  display: contents !important;
+}
+
+.landing-header .brand-mark::before,
+.landing-header .brand-mark::after,
+.mega-header .brand-mark::before,
+.mega-header .brand-mark::after {
+  content: none !important;
+}
+
+.landing-header .brand-mark img,
+.mega-header .brand-mark img {
+  display: block !important;
+  width: 38px !important;
+  max-width: 38px !important;
+  height: 38px !important;
+  object-fit: contain !important;
+  object-position: center !important;
+  flex: 0 0 auto !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  clip-path: none !important;
+  filter: none !important;
+  mask-image: none !important;
+  -webkit-mask-image: none !important;
+}
+
+.site-logo-image {
+  display: block !important;
+  width: 38px !important;
+  height: 38px !important;
+  object-fit: contain !important;
+  object-position: center !important;
+  flex: 0 0 auto !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  clip-path: none !important;
+  filter: none !important;
+  mask-image: none !important;
+  -webkit-mask-image: none !important;
+}
+
+.landing-header .brand strong,
+.mega-header .brand strong {
+  color: #3b291f !important;
+  font-size: 20px !important;
+  font-weight: 900 !important;
+  letter-spacing: -0.03em !important;
 }

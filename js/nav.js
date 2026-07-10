@@ -2,10 +2,12 @@
   const oldHeader = document.querySelector('.site-header');
   if (!oldHeader || oldHeader.matches('[data-mega-header]')) return;
 
-  const root = '../';
-  const path = window.location.pathname;
+  const scriptUrl = document.currentScript?.src || new URL('../js/nav.js', document.baseURI).href;
+  const projectRoot = new URL('../', scriptUrl);
+  const root = projectRoot.href;
+  const path = window.location.pathname.replace(/\\/g, '/');
   const activeCategory =
-    path.includes('/menus/') || path.includes('/menu/') ? 'menu'
+    path.includes('/menus/') || path.includes('/menu/') || path.endsWith('/liked-menu.html') ? 'menu'
       : path.includes('/stores/') ? 'store'
         : path.includes('/community/') ? 'community'
           : path.includes('/story/') ? 'brand'
@@ -16,11 +18,11 @@
   header.dataset.megaHeader = '';
   header.innerHTML = `
     <div class="unified-header-inner">
-      <a class="unified-brand" href="${root}index.html" aria-label="모모커피 홈">
-        <img src="${root}assets/images/momo-cutout-tight.png" alt="">
+      <a class="unified-brand" href="${root}index.html" aria-label="MOMO COFFEE home">
+        <img src="${root}assets/images/momo-header-logo.png?v=5" alt="MOMO COFFEE" class="site-logo-image">
         <strong>MOMO COFFEE</strong>
       </a>
-      <nav class="unified-nav" aria-label="주요 메뉴">
+      <nav class="unified-nav" aria-label="main menu">
         <a href="${root}menus/list.html" data-mega-category="menu" aria-controls="globalMegaDropdown" aria-expanded="false">MENU</a>
         <a href="${root}stores/finder.html" data-mega-category="store" aria-controls="globalMegaDropdown" aria-expanded="false">STORE</a>
         <a href="${root}community/event.html" data-mega-category="community" aria-controls="globalMegaDropdown" aria-expanded="false">COMMUNITY</a>
@@ -36,14 +38,14 @@
       <div class="global-mega-inner">
         <section class="global-mega-column global-menu-column" data-mega-column="menu">
           <h2>MENU</h2>
-          <div class="global-menu-group"><h3>음료</h3><a href="${root}menus/list.html?category=coffee">커피</a><a href="${root}menus/list.html?category=noncoffee">논커피</a><a href="${root}menus/list.html?category=tea">티</a><a href="${root}menus/list.html?category=season">시즌 메뉴</a></div>
-          <div class="global-menu-group"><h3>푸드</h3><a href="${root}menus/list.html?category=dessert">디저트</a><a href="${root}menus/list.html?category=bakery">베이커리</a></div>
-          <div class="global-menu-group"><h3>상품</h3><a href="${root}menu/goods.html">MD</a></div>
+          <div class="global-menu-group"><h3>&#xC74C;&#xB8CC;</h3><a href="${root}menus/list.html?category=coffee">&#xCEE4;&#xD53C;</a><a href="${root}menus/list.html?category=noncoffee">&#xB17C;&#xCEE4;&#xD53C;</a><a href="${root}menus/list.html?category=tea">&#xD2F0;</a><a href="${root}menus/list.html?category=season">&#xC2DC;&#xC98C; &#xBA54;&#xB274;</a></div>
+          <div class="global-menu-group"><h3>&#xD478;&#xB4DC;</h3><a href="${root}menus/list.html?category=dessert">&#xB514;&#xC800;&#xD2B8;</a><a href="${root}menus/list.html?category=bakery">&#xBCA0;&#xC774;&#xCEE4;&#xB9AC;</a></div>
+          <div class="global-menu-group"><h3>&#xC0C1;&#xD488;</h3><a href="${root}menu/goods.html">MD</a></div>
         </section>
-        <section class="global-mega-column" data-mega-column="store"><h2>STORE</h2><a href="${root}stores/finder.html">매장 찾기</a></section>
-        <section class="global-mega-column" data-mega-column="community"><h2>COMMUNITY</h2><a href="${root}community/notice.html">공지사항</a><a href="${root}community/faq.html">자주 묻는 질문</a><a href="${root}community/event.html">이벤트</a></section>
-        <section class="global-mega-column" data-mega-column="brand"><h2>BRAND</h2><a href="${root}story/brand.html">브랜드 소개</a><a href="${root}story/bi.html">Brand Identity (BI)</a></section>
-        <section class="global-mega-column" data-mega-column="mypage"><h2>MY PAGE</h2><a href="${root}my/index.html">마이페이지</a><a href="${root}orders/list.html">주문 내역</a><a href="${root}basket/list.html">장바구니</a><a href="${root}my/index.html#coupons">쿠폰</a><a href="${root}my/index.html#profile">회원 정보 수정</a></section>
+        <section class="global-mega-column" data-mega-column="store"><h2>STORE</h2><a href="${root}stores/finder.html">&#xB9E4;&#xC7A5; &#xCC3E;&#xAE30;</a><a href="${root}stores/list.html">&#xC2E0;&#xADDC; &#xB9E4;&#xC7A5;</a></section>
+        <section class="global-mega-column" data-mega-column="community"><h2>COMMUNITY</h2><a href="${root}community/notice.html">&#xACF5;&#xC9C0;&#xC0AC;&#xD56D;</a><a href="${root}community/event.html">&#xC774;&#xBCA4;&#xD2B8;</a><a href="${root}community/faq.html">FAQ</a></section>
+        <section class="global-mega-column" data-mega-column="brand"><h2>BRAND</h2><a href="${root}story/brand.html">&#xBE0C;&#xB79C;&#xB4DC; &#xC18C;&#xAC1C;</a><a href="${root}story/bi.html">Brand Identity</a></section>
+        <section class="global-mega-column" data-mega-column="mypage"><h2>MY PAGE</h2><a href="${root}my/index.html">&#xB9C8;&#xC774;&#xD398;&#xC774;&#xC9C0;</a><a href="${root}orders/list.html">&#xC8FC;&#xBB38; &#xB0B4;&#xC5ED;</a><a href="${root}liked-menu.html">&#xCC1C;&#xD55C; &#xBA54;&#xB274;</a><a href="${root}basket/list.html">&#xC7A5;&#xBC14;&#xAD6C;&#xB2C8;</a><a href="${root}my/index.html#coupons">&#xCFE0;&#xD3F0;&#xD568;</a><a href="${root}my/profile.html">&#xD68C;&#xC6D0; &#xC815;&#xBCF4; &#xC218;&#xC815;</a></section>
       </div>
     </div>`;
 

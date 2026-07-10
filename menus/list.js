@@ -14,6 +14,48 @@ const heroMenuName = $('#heroMenuName');
 const heroMenuPrice = $('#heroMenuPrice');
 
 let toastTimer;
+const LIKED_KEY = 'momoLikedMenuIds';
+
+function getLikedRecords() {
+  try {
+    const records = JSON.parse(localStorage.getItem(LIKED_KEY));
+    if (!Array.isArray(records)) return [];
+    return records.map((record) => {
+      if (record && typeof record === 'object') {
+        return {
+          id: String(record.id),
+          likedAt: record.likedAt || new Date().toISOString()
+        };
+      }
+      return {
+        id: String(record),
+        likedAt: new Date().toISOString()
+      };
+    }).filter((record) => record.id);
+  } catch {
+    return [];
+  }
+}
+
+function saveLikedRecords(records) {
+  localStorage.setItem(LIKED_KEY, JSON.stringify(records));
+  localStorage.setItem('momoFavoriteCount', String(records.length));
+}
+
+function isLiked(menuId) {
+  return getLikedRecords().some((record) => String(record.id) === String(menuId));
+}
+
+function toggleLiked(menuId) {
+  const records = getLikedRecords();
+  const exists = records.some((record) => String(record.id) === String(menuId));
+  const nextRecords = exists
+    ? records.filter((record) => String(record.id) !== String(menuId))
+    : [{ id: String(menuId), likedAt: new Date().toISOString() }, ...records];
+
+  saveLikedRecords(nextRecords);
+  return !exists;
+}
 
 function getMenuImagePath(menu) {
   if (!menu.image) return '';
@@ -98,7 +140,13 @@ function renderMenus() {
         </a>
         <div class="menu-card-body">
           <span class="category-pill">${escapeHtml(getCategoryName(menu.category))}</span>
-          <button class="like-button" type="button" aria-label="${escapeHtml(menu.name)} 좋아요">♡</button>
+          <button
+            class="like-button ${isLiked(menu.id) ? 'is-liked' : ''}"
+            type="button"
+            data-like-id="${escapeHtml(menu.id)}"
+            aria-label="${escapeHtml(menu.name)} 찜하기"
+            aria-pressed="${isLiked(menu.id)}"
+          >${isLiked(menu.id) ? '♥' : '♡'}</button>
           <h2>${escapeHtml(menu.name)}</h2>
           <p class="menu-description">${escapeHtml(menu.description)}</p>
           <div class="card-actions">
@@ -131,8 +179,13 @@ categoryTabs.addEventListener('click', (event) => {
 menuGrid.addEventListener('click', (event) => {
   const likeButton = event.target.closest('.like-button');
   if (likeButton) {
-    likeButton.classList.toggle('is-liked');
-    likeButton.textContent = likeButton.classList.contains('is-liked') ? '♥' : '♡';
+    const menuId = likeButton.dataset.likeId;
+    const liked = toggleLiked(menuId);
+    likeButton.classList.toggle('is-liked', liked);
+    likeButton.textContent = liked ? '♥' : '♡';
+    likeButton.setAttribute('aria-pressed', String(liked));
+    const menu = getMenuById(menuId);
+    showToast(liked ? `${menu?.name || '메뉴'}를 찜했어요.` : `${menu?.name || '메뉴'}를 찜 해제했어요.`);
     return;
   }
 

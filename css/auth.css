@@ -1,0 +1,232 @@
+.auth-page {
+  min-height: 100vh;
+  color: #3b2a22;
+  background:
+    radial-gradient(circle at 12% 20%, rgba(255, 210, 214, 0.34), transparent 28%),
+    radial-gradient(circle at 88% 78%, rgba(246, 223, 215, 0.48), transparent 30%),
+    #fffaf7;
+}
+
+.auth-header {
+  display: flex;
+  width: min(1180px, calc(100% - 48px));
+  min-height: 84px;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 auto;
+}
+
+.auth-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.auth-brand > span {
+  display: contents;
+}
+
+.site-logo-image,
+.auth-brand img.site-logo-image {
+  display: block;
+  width: 38px;
+  height: 38px;
+  object-fit: contain;
+  object-position: center;
+  flex: 0 0 auto;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  clip-path: none;
+  filter: none;
+  mask-image: none;
+  -webkit-mask-image: none;
+}
+
+.auth-brand img:not(.site-logo-image) {
+  width: 58px;
+  max-width: 58px;
+  height: 58px;
+  object-fit: contain;
+}
+
+.auth-brand strong {
+  color: #3b2a22;
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.auth-home-link {
+  padding: 10px 17px;
+  color: #765f54;
+  border: 1px solid #eadbd3;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.6);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.auth-main {
+  display: grid;
+  min-height: calc(100vh - 84px);
+  padding: 36px 24px 72px;
+  place-items: center;
+}
+
+.auth-card {
+  width: min(100%, 520px);
+  padding: 48px;
+  border: 1px solid rgba(234, 216, 208, 0.9);
+  border-radius: 30px;
+  background: rgba(255, 253, 251, 0.94);
+  box-shadow: 0 24px 70px rgba(80, 52, 40, 0.11);
+}
+
+.auth-card-wide {
+  width: min(100%, 580px);
+}
+
+.auth-heading > span {
+  color: #ef7890;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 3px;
+}
+
+.auth-heading h1 {
+  margin-top: 18px;
+  color: #3b2a22;
+  font-size: clamp(34px, 5vw, 48px);
+  font-weight: 800;
+  line-height: 1.18;
+  letter-spacing: -1.8px;
+}
+
+.auth-heading p {
+  margin-top: 18px;
+  color: #806b61;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.8;
+}
+
+.auth-notice {
+  margin-top: 26px;
+  padding: 13px 15px;
+  color: #8d4f5d;
+  border: 1px solid #f2cad3;
+  border-radius: 13px;
+  background: #fff0f3;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.auth-notice.is-success {
+  color: #586b43;
+  border-color: #dce7ca;
+  background: #f4f8ed;
+}
+
+.auth-form {
+  display: grid;
+  gap: 19px;
+  margin-top: 32px;
+}
+
+.auth-field {
+  display: grid;
+  gap: 8px;
+}
+
+.auth-field label {
+  color: #4a352c;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.auth-field input {
+  width: 100%;
+  height: 54px;
+  padding: 0 16px;
+  color: #3b2a22;
+  border: 1px solid #e7d8d0;
+  border-radius: 14px;
+  outline: none;
+  background: #fff;
+  font-size: 15px;
+  transition: border-color 200ms ease, box-shadow 200ms ease, background 200ms ease;
+}
+
+.auth-field input::placeholder {
+  color: #baa9a0;
+}
+
+.auth-field input:focus {
+  border-color: #ef7890;
+  box-shadow: 0 0 0 4px rgba(239, 120, 144, 0.12);
+}
+
+.auth-field input[aria-invalid="true"] {
+  border-color: #dc6479;
+  background: #fffafa;
+}
+
+.field-error {
+  min-height: 18px;
+  color: #cf526a;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.auth-submit {
+  width: 100%;
+  height: 56px;
+  margin-top: 4px;
+  color: #fff;
+  border: 0;
+  border-radius: 999px;
+  background: #ef7890;
+  box-shadow: 0 13px 28px rgba(229, 103, 128, 0.24);
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.auth-submit:hover {
+  background: #e6657f;
+  transform: translateY(-2px);
+}
+
+.auth-submit:focus-visible,
+.auth-home-link:focus-visible,
+.auth-switch a:focus-visible {
+  outline: 3px solid rgba(239, 120, 144, 0.4);
+  outline-offset: 3px;
+}
+
+.auth-switch {
+  margin-top: 27px;
+  color: #8b776d;
+  font-size: 14px;
+  text-align: center;
+}
+
+.auth-switch a {
+  color: #e6657f;
+  font-weight: 800;
+}
+
+@media (max-width: 600px) {
+  .auth-header {
+    width: calc(100% - 32px);
+  }
+
+  .auth-main {
+    align-items: start;
+    padding: 24px 16px 50px;
+  }
+
+  .auth-card {
+    padding: 34px 24px;
+    border-radius: 24px;
+  }
+}

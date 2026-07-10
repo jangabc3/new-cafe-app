@@ -1,160 +1,221 @@
-const cartCount = $('#cartCount');
-const memberMessage = $('#memberMessage');
-const totalOrders = $('#totalOrders');
-const activeOrders = $('#activeOrders');
-const totalSpent = $('#totalSpent');
-const cartItems = $('#cartItems');
-const stampCount = $('#stampCount');
-const stampBoard = $('#stampBoard');
-const stampMessage = $('#stampMessage');
-const recentOrders = $('#recentOrders');
-const emptyOrders = $('#emptyOrders');
-const couponList = $('#couponList');
-const recommendList = $('#recommendList');
+﻿const currentUser = JSON.parse(localStorage.getItem('momoCurrentUser') || 'null');
 
-function getImagePath(item) {
-  if (!item.image) return '../assets/images/momo-cutout-tight.png';
-  if (item.image.startsWith('http') || item.image.startsWith('../')) return item.image;
-  return `../${item.image}`;
+if (!currentUser) {
+  window.location.href = '../login.html?redirect=my/index.html&message=login-required';
 }
 
-function getSortedOrders() {
-  return getOrders().sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+const demoOrders = [
+  {
+    id: 'demo-1',
+    name: '바닐라 라떼',
+    detail: 'ICED | Tall',
+    date: '2026.07.08',
+    price: 4500,
+    image: '../assets/images/menu-vanilla-latte.png'
+  },
+  {
+    id: 'demo-2',
+    name: '크림 슈페너',
+    detail: 'ICED | Tall',
+    date: '2026.07.07',
+    price: 5200,
+    image: '../assets/images/menu-cream-supener.png'
+  },
+  {
+    id: 'demo-3',
+    name: '딸기 크림 라떼',
+    detail: 'ICED | Tall',
+    date: '2026.07.06',
+    price: 5600,
+    image: '../assets/images/menu-strawberry-cream-latte.png'
+  }
+];
+
+const coupons = [
+  {
+    value: '10%',
+    unit: 'OFF',
+    title: '모모 멤버 감사 쿠폰',
+    description: '10,000원 이상 주문 시 사용 가능',
+    until: '2026.07.31까지'
+  },
+  {
+    value: '3,000원',
+    unit: 'OFF',
+    title: '생일 축하 쿠폰',
+    description: '15,000원 이상 주문 시 사용 가능',
+    until: '2026.08.15까지'
+  },
+  {
+    value: '무료 배송',
+    unit: 'FREE',
+    title: '무료 배송 쿠폰',
+    description: '모든 주문 사용 가능',
+    until: '2026.07.20까지'
+  }
+];
+
+const won = (value) => `${Number(value || 0).toLocaleString('ko-KR')}원`;
+const safe = (value) => String(value ?? '').replace(/[&<>"]/g, (char) => ({
+  '&': '&amp;',
+  '<': '&lt;',
+  '>': '&gt;',
+  '"': '&quot;'
+}[char]));
+
+function normalizeImagePath(image) {
+  if (!image) return '../assets/images/momo-face-cute.png';
+  if (image.startsWith('../') || image.startsWith('http')) return image;
+  return `../${image}`;
 }
 
-function getCartQuantity() {
-  return getCart().reduce((sum, item) => sum + item.quantity, 0);
+function getOrdersSafely() {
+  try {
+    return typeof getOrders === 'function' ? getOrders() : [];
+  } catch {
+    return [];
+  }
 }
 
-function getOrderQuantity(order) {
-  return order.items.reduce((sum, item) => sum + item.quantity, 0);
+function getCartSafely() {
+  try {
+    return typeof getCart === 'function' ? getCart() : [];
+  } catch {
+    return [];
+  }
 }
 
-function getItemSummary(order) {
-  const firstItem = order.items[0];
-  const quantity = getOrderQuantity(order);
-  if (!firstItem) return '주문 상품 없음';
-  if (order.items.length === 1) return `${firstItem.name} ${quantity}개`;
-  return `${firstItem.name} 외 ${order.items.length - 1}개 · 총 ${quantity}개`;
+function getFirstOrderItem(order) {
+  const first = order?.items?.[0];
+  if (!first) return null;
+  const menu = typeof getMenuById === 'function' ? getMenuById(first.menuId) : null;
+  return {
+    name: first.name || menu?.name || '모모 메뉴',
+    detail: `${first.options?.temperature || 'ICED'} | Tall`,
+    date: new Date(order.createdAt || Date.now()).toISOString().slice(0, 10).replaceAll('-', '.'),
+    price: Number(first.price || menu?.price || order.total || 0),
+    image: normalizeImagePath(menu?.image)
+  };
 }
 
-function getFavoriteCategory(orders) {
-  const categoryCount = orders.flatMap((order) => order.items).reduce((acc, item) => {
-    acc[item.category] = (acc[item.category] || 0) + item.quantity;
-    return acc;
-  }, {});
-  const [category] = Object.entries(categoryCount).sort((a, b) => b[1] - a[1])[0] || [];
-  return category || 'signature';
+function renderUser() {
+  const name = currentUser?.name || '모모';
+  const email = currentUser?.email || 'momo@example.com';
+  const phone = currentUser?.phone || '010-1234-5678';
+  const joined = currentUser?.createdAt
+    ? new Date(currentUser.createdAt).toISOString().slice(0, 10).replaceAll('-', '.')
+    : '2026.06.01';
+
+  document.querySelector('#memberName').textContent = `${name}님`;
+  document.querySelector('#profileName').textContent = `${name} 고객님`;
+  document.querySelector('#profileEmail').textContent = email;
+  document.querySelector('#profilePhone').textContent = phone;
+  document.querySelector('#profileJoined').textContent = `${joined} 가입`;
 }
 
-function renderSummary(orders) {
-  const active = orders.filter((order) => !['completed', 'cancelled'].includes(order.status));
-  const spent = orders.reduce((sum, order) => sum + Number(order.total || 0), 0);
-  const cartQuantity = getCartQuantity();
-
-  cartCount.textContent = cartQuantity;
-  totalOrders.textContent = orders.length;
-  activeOrders.textContent = active.length;
-  totalSpent.textContent = formatPrice(spent);
-  cartItems.textContent = cartQuantity;
-
-  memberMessage.textContent = orders.length
-    ? `모모와 함께한 주문이 ${orders.length}번 쌓였어요.`
-    : '첫 주문을 기다리고 있어요. 모모가 따뜻하게 준비할게요.';
-}
-
-function renderStamps(orders) {
-  const cups = orders.reduce((sum, order) => sum + getOrderQuantity(order), 0);
-  const filled = cups % 10;
-  const displayCount = cups > 0 && filled === 0 ? 10 : filled;
-
-  stampCount.textContent = `${displayCount} / 10`;
-  stampBoard.innerHTML = Array.from({ length: 10 }, (_, index) => {
-    const active = index < displayCount;
-    return `<span class="stamp ${active ? 'is-filled' : ''}" aria-label="스탬프 ${index + 1}">${active ? 'M' : index + 1}</span>`;
-  }).join('');
-
-  const remaining = displayCount === 10 ? 0 : 10 - displayCount;
-  stampMessage.textContent = remaining === 0
-    ? '스탬프가 가득 찼어요. 다음 방문에 쿠폰을 확인해보세요.'
-    : `${remaining}잔 더 마시면 모모 쿠폰에 가까워져요.`;
-}
-
-function renderRecentOrders(orders) {
-  const recent = orders.slice(0, 3);
-  emptyOrders.hidden = recent.length > 0;
-  recentOrders.hidden = recent.length === 0;
-
-  recentOrders.innerHTML = recent.map((order) => `
-    <article class="order-card">
-      <div>
-        <span class="status-pill">${escapeHtml(getStatusLabel(order.status))}</span>
-        <h3>주문번호 ${escapeHtml(order.id)}</h3>
-        <p>${escapeHtml(formatDate(order.createdAt))}</p>
-        <p>${escapeHtml(getItemSummary(order))}</p>
-      </div>
-      <div>
-        <strong>${formatPrice(order.total)}</strong>
-        <a class="text-link" href="../orders/detail.html?id=${encodeURIComponent(order.id)}">상세</a>
-      </div>
-    </article>
-  `).join('');
-}
-
-function renderCoupons(orders) {
-  const cups = orders.reduce((sum, order) => sum + getOrderQuantity(order), 0);
-  const hasWelcome = orders.length === 0;
-  const hasStampCoupon = cups >= 10;
-
-  const coupons = [
-    {
-      label: hasWelcome ? 'WELCOME' : 'MEMBER',
-      title: hasWelcome ? '첫 주문 500원 할인' : '모모 멤버 감사 쿠폰',
-      description: hasWelcome ? '첫 주문을 시작하면 사용할 수 있어요.' : '다음 방문에도 따뜻한 하루를 준비할게요.'
-    },
-    {
-      label: hasStampCoupon ? 'READY' : 'STAMP',
-      title: hasStampCoupon ? '스탬프 완성 쿠폰' : '스탬프 적립 중',
-      description: hasStampCoupon ? '스탬프 10개 달성 혜택을 확인하세요.' : '10잔을 채우면 모모 쿠폰이 열려요.'
+function renderStats() {
+  const orders = getOrdersSafely();
+  const cart = getCartSafely();
+  const orderCount = orders.length || 17;
+  const total = orders.reduce((sum, order) => sum + Number(order.total || 0), 0) || 333200;
+  const likedMenus = (() => {
+    try {
+      const records = JSON.parse(localStorage.getItem('momoLikedMenuIds'));
+      return Array.isArray(records) ? records.length : 0;
+    } catch {
+      return 0;
     }
-  ];
+  })();
+  const favoriteCount = Number(localStorage.getItem('momoFavoriteCount') || 0) || likedMenus;
 
-  couponList.innerHTML = coupons.map((coupon) => `
-    <article class="coupon-card">
-      <span>${escapeHtml(coupon.label)}</span>
-      <strong>${escapeHtml(coupon.title)}</strong>
-      <p>${escapeHtml(coupon.description)}</p>
-    </article>
-  `).join('');
+  document.querySelector('#totalOrders').textContent = orderCount;
+  document.querySelector('#favoriteCount').textContent = favoriteCount;
+  document.querySelector('#couponCount').textContent = coupons.length;
+  document.querySelector('#totalSpent').textContent = won(total);
 }
 
-function renderRecommendations(orders) {
-  const favoriteCategory = getFavoriteCategory(orders);
-  const menus = getMenus();
-  const picks = [
-    ...menus.filter((menu) => menu.category === favoriteCategory),
-    ...menus.filter((menu) => ['signature', 'season'].includes(menu.category))
-  ].filter((menu, index, arr) => arr.findIndex((item) => String(item.id) === String(menu.id)) === index).slice(0, 3);
+function renderRecentOrders() {
+  const realOrders = getOrdersSafely()
+    .slice()
+    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+    .map(getFirstOrderItem)
+    .filter(Boolean)
+    .slice(0, 3);
+  const list = realOrders.length ? realOrders : demoOrders;
 
-  recommendList.innerHTML = picks.map((menu) => `
-    <article class="recommend-card">
-      <img src="${escapeHtml(getImagePath(menu))}" alt="${escapeHtml(menu.name)}">
+  document.querySelector('#recentOrders').innerHTML = list.map((order) => `
+    <article class="recent-item">
+      <img src="${safe(order.image)}" alt="${safe(order.name)}">
       <div>
-        <h3>${escapeHtml(menu.name)}</h3>
-        <p>${escapeHtml(getCategoryName(menu.category))} · ${formatPrice(menu.price)}</p>
+        <span class="order-status">주문 완료</span>
+        <h3>${safe(order.name)}</h3>
+        <p>${safe(order.detail)}</p>
+        <p>${safe(order.date)}</p>
       </div>
-      <a class="text-link" href="../menus/detail.html?id=${encodeURIComponent(menu.id)}">보기</a>
+      <strong class="recent-price">${won(order.price)}</strong>
     </article>
   `).join('');
 }
 
-function renderMyPage() {
-  const orders = getSortedOrders();
-  renderSummary(orders);
-  renderStamps(orders);
-  renderRecentOrders(orders);
-  renderCoupons(orders);
-  renderRecommendations(orders);
+function renderCoupons() {
+  document.querySelector('#couponList').innerHTML = coupons.map((coupon) => `
+    <article class="coupon-ticket">
+      <div class="coupon-value">${safe(coupon.value)}<small>${safe(coupon.unit)}</small></div>
+      <div class="coupon-info">
+        <strong>${safe(coupon.title)}</strong>
+        <p>${safe(coupon.description)}<br>${safe(coupon.until)}</p>
+      </div>
+    </article>
+  `).join('');
 }
 
-renderMyPage();
+function bindLogout() {
+  document.querySelector('#logoutButton')?.addEventListener('click', () => {
+    localStorage.removeItem('momoCurrentUser');
+    window.location.href = '../index.html';
+  });
+}
+
+function bindSectionNavigation() {
+  const sectionLinks = [...document.querySelectorAll('[data-section-link]')];
+  const sidebarLinks = [...document.querySelectorAll('.mypage-sidebar .side-link[href]')];
+
+  const focusSection = (hash) => {
+    const target = document.querySelector(hash);
+    if (!target) return;
+
+    document.querySelectorAll('.is-section-focused').forEach((element) => {
+      element.classList.remove('is-section-focused');
+    });
+    sidebarLinks.forEach((link) => {
+      link.classList.toggle('is-active', link.getAttribute('href') === hash);
+    });
+
+    target.classList.add('is-section-focused');
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
+  sectionLinks.forEach((link) => {
+    link.addEventListener('click', (event) => {
+      const hash = link.getAttribute('href');
+      if (!hash || !hash.startsWith('#')) return;
+
+      event.preventDefault();
+      history.replaceState(null, '', hash);
+      focusSection(hash);
+    });
+  });
+
+  if (window.location.hash) {
+    window.setTimeout(() => focusSection(window.location.hash), 80);
+  }
+}
+
+if (currentUser) {
+  renderUser();
+  renderStats();
+  renderRecentOrders();
+  renderCoupons();
+  bindLogout();
+  bindSectionNavigation();
+}

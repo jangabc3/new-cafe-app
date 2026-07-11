@@ -3,33 +3,137 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>이벤트 | 모모커피</title>
+    <title>이벤트 | MOMO COFFEE</title>
     <link rel="stylesheet" href="../css/variables.css">
-    <link rel="stylesheet" href="../css/content-page.css">
     <link rel="stylesheet" href="../css/nav.css">
+    <link rel="stylesheet" href="../css/footer.css">
+    <link rel="stylesheet" href="event.css">
+    <link rel="stylesheet" href="event-hero-v2.css">
   </head>
   <body>
-    <header class="site-header">
-      <a class="brand" href="../index.html" aria-label="모모커피 홈"><img src="../assets/images/momo-header-logo.png?v=5" alt="MOMO COFFEE" class="site-logo-image"><span><strong>MOMO COFFEE</strong><small>한 잔의 커피, 하루의 행복.</small></span></a>
-      <nav class="site-nav" aria-label="주요 메뉴">
-        <div class="nav-group"><a class="nav-trigger" href="../story/brand.html">모모 스토리</a><div class="nav-menu"><a href="../story/brand.html">브랜드 소개</a><a href="../story/bi.html">Brand Identity (BI)</a></div></div>
-        <div class="nav-group"><a class="nav-trigger" href="../menu/drinks.html">메뉴</a><div class="nav-menu"><span>음료</span><a href="../menu/drinks.html">음료 전체</a><a href="../menus/list.html?category=coffee">커피</a><a href="../menus/list.html?category=noncoffee">논커피</a><a href="../menus/list.html?category=tea">티</a><a href="../menus/list.html?category=season">시즌 음료</a><span>푸드</span><a href="../menu/foods.html">푸드 전체</a><a href="../menus/list.html?category=dessert">디저트</a><a href="../menus/list.html?category=bakery">베이커리</a><span>상품(Goods)</span><a href="../menu/goods.html">상품 전체</a></div></div>
-        <div class="nav-group"><a class="nav-trigger" href="../stores/finder.html">매장</a><div class="nav-menu"><a href="../stores/finder.html">매장 찾기</a></div></div>
-        <div class="nav-group"><a class="nav-trigger is-active" href="notice.html">커뮤니티</a><div class="nav-menu"><a href="notice.html">공지사항</a><a href="faq.html">자주 묻는 질문</a><a class="is-active" href="event.html">이벤트</a></div></div>
-        <div class="nav-group"><a class="nav-trigger" href="../my/index.html">마이페이지</a></div>
-      </nav>
-      <a class="cart-link" href="../basket/list.html">장바구니 <span class="cart-badge">0</span></a>
-    </header>
-    <main class="content-shell">
-      <section class="content-hero"><div><p class="eyebrow">MOMO EVENT</p><h1>이벤트</h1><p>시즌 메뉴, 쿠폰, 스탬프 이벤트를 한곳에서 확인하세요.</p></div><img src="../assets/images/momo-cutout-tight.png" alt="" aria-hidden="true"></section>
-      <section class="content-grid">
-        <article class="content-card"><img src="../assets/images/menu-peach-iced-tea.png" alt=""><h2>여름 한정 피치 아이스티 캠페인</h2><p>피치 아이스티 구매 시 시즌 스탬프를 추가 적립해드립니다.</p><a href="../menus/detail.html?id=8">피치 아이스티 보기</a></article>
-        <article class="content-card"><img src="../assets/images/menu-strawberry-cake.png" alt=""><h2>디저트 페어링 쿠폰</h2><p>음료와 디저트를 함께 주문하면 페어링 쿠폰을 받을 수 있습니다.</p><a href="../menu/foods.html">푸드 보기</a></article>
-        <article class="content-card"><img src="../assets/images/momo-cutout-tight.png" alt=""><h2>모모 굿즈 데이</h2><p>모모 굿즈 구매 고객에게 한정 스티커를 증정합니다.</p><a href="../menu/goods.html">상품 보기</a></article>
-      </section>
-    </main>
-    <script src="../js/nav.js"></script>
-    <script src="../js/footer.js"></script>
+    <header class="site-header"></header>
 
+    <main class="event-page">
+      <section class="event-hero reveal" aria-labelledby="event-title">
+        <img class="event-hero__photo" src="../assets/images/momo-community-hero-v2.png" alt="커피와 꽃, 모모가 함께 있는 따뜻한 테이블">
+        <div class="event-hero__shade"></div>
+        <div class="event-hero__copy">
+          <p class="event-label">MOMO EVENT</p>
+          <h1 id="event-title">이벤트</h1>
+          <p>모모커피의 다양한 혜택과<br>특별한 이벤트를 만나보세요.</p>
+        </div>
+        <img class="event-hero__momo" src="../assets/images/momo-app-character-cutout.png" alt="커피를 들고 있는 모모">
+        <span class="event-heart event-heart--one" aria-hidden="true">♡</span>
+        <span class="event-heart event-heart--two" aria-hidden="true">♡</span>
+      </section>
+
+      <section class="campaign-section event-container" aria-labelledby="campaign-title">
+        <div class="section-heading reveal">
+          <p class="event-label">CURRENT CAMPAIGNS</p>
+          <h2 id="campaign-title">모모와 함께하는 특별한 순간</h2>
+          <p>일상에 작은 기쁨을 더하는 모모커피의 멤버십 이벤트입니다.</p>
+        </div>
+
+        <div class="campaign-grid">
+          <article class="campaign-card reveal">
+            <a class="campaign-card__image" href="#" data-event-action="welcome" aria-label="신규 회원 웰컴 이벤트 혜택 받기">
+              <img src="../assets/images/event-new-member.png" alt="커피와 멤버십 카드가 놓인 테이블">
+              <span>NEW MEMBER EVENT</span>
+            </a>
+            <div class="campaign-card__body">
+              <p class="campaign-card__index">01</p>
+              <h3>신규 회원 웰컴 이벤트</h3>
+              <p>회원가입 시 웰컴 쿠폰과 스탬프 적립 혜택을 제공합니다.</p>
+              <a class="text-link" href="#" data-event-action="welcome">혜택 받기 <span aria-hidden="true">→</span></a>
+            </div>
+          </article>
+
+          <article class="campaign-card reveal">
+            <a class="campaign-card__image" href="#" data-event-action="review" aria-label="리뷰 작성 이벤트 참여하기">
+              <img src="../assets/images/event-review.png" alt="커피와 리뷰 노트가 놓인 카페 테이블">
+              <span>REVIEW EVENT</span>
+            </a>
+            <div class="campaign-card__body">
+              <p class="campaign-card__index">02</p>
+              <h3>리뷰 작성 이벤트</h3>
+              <p>주문 후 리뷰를 작성하면 포인트 적립 및 추첨 이벤트에 참여할 수 있습니다.</p>
+              <a class="text-link" href="#" data-event-action="review">리뷰 작성하기 <span aria-hidden="true">→</span></a>
+            </div>
+          </article>
+
+          <article class="campaign-card reveal">
+            <a class="campaign-card__image" href="#" data-event-action="membership" aria-label="모모 멤버십 데이 혜택 보기">
+              <img src="../assets/images/event-membership-day.png" alt="커피와 디저트, 멤버십 카드가 놓인 테이블">
+              <span>MEMBERSHIP DAY</span>
+            </a>
+            <div class="campaign-card__body">
+              <p class="campaign-card__index">03</p>
+              <h3>모모 멤버십 데이</h3>
+              <p>매월 멤버십 회원만을 위한 음료 할인과 스탬프 추가 적립 혜택을 제공합니다.</p>
+              <a class="text-link" href="#" data-event-action="membership">멤버십 보기 <span aria-hidden="true">→</span></a>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="benefits-section" aria-labelledby="benefits-title">
+        <div class="event-container benefits-layout">
+          <div class="benefits-intro reveal">
+            <p class="event-label">MEMBERSHIP BENEFITS</p>
+            <h2 id="benefits-title">모모 멤버만의<br>다정한 혜택</h2>
+            <p>커피 한 잔이 더 즐거워지는 순간을 위해 꼭 필요한 혜택만 담았습니다.</p>
+            <button class="primary-button" type="button" data-event-action="enroll">멤버십 시작하기</button>
+          </div>
+          <div class="benefit-list">
+            <article class="benefit-item reveal">
+              <span class="benefit-icon"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M4 11h24v16H4zM16 11v16M3 11h26M9 11c-4-3-2-7 1-7 3 0 6 7 6 7s3-7 6-7c3 0 5 4 1 7"/></svg></span>
+              <div><span>01</span><h3>Welcome Coupon</h3><p>가입 즉시 사용할 수 있는 웰컴 쿠폰</p></div>
+            </article>
+            <article class="benefit-item reveal">
+              <span class="benefit-icon"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M7 10h18l-2 17H9L7 10ZM5 6h22M11 6V4h10v2M12 15h8M12 20h8"/></svg></span>
+              <div><span>02</span><h3>Stamp Rewards</h3><p>마실수록 차곡차곡 쌓이는 스탬프</p></div>
+            </article>
+            <article class="benefit-item reveal">
+              <span class="benefit-icon"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5 14h22v13H5zM9 14V9h14v5M16 8V4M13 5h6M5 19h22M16 14v13"/></svg></span>
+              <div><span>03</span><h3>Birthday Coupon</h3><p>생일을 더 달콤하게 만드는 축하 쿠폰</p></div>
+            </article>
+            <article class="benefit-item reveal">
+              <span class="benefit-icon"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 27S5 21 5 12a6 6 0 0 1 11-3 6 6 0 0 1 11 3c0 9-11 15-11 15Z"/></svg></span>
+              <div><span>04</span><h3>Members Only Promotion</h3><p>멤버에게만 먼저 전하는 특별 프로모션</p></div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <nav class="quick-links event-container reveal" aria-label="이벤트 관련 바로가기">
+        <a href="event.html"><span class="quick-icon"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5 8h22v19H5zM10 4v8M22 4v8M5 13h22M10 18h4M18 18h4M10 23h4"/></svg></span><span><strong>진행 중 이벤트</strong><small>지금 참여할 수 있는 혜택</small></span><b aria-hidden="true">→</b></a>
+        <a href="notice.html"><span class="quick-icon"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5 13h22v14H5zM9 13c-4-3-2-7 1-7 3 0 6 7 6 7s3-7 6-7c3 0 5 4 1 7M16 13v14"/></svg></span><span><strong>당첨자 발표</strong><small>이벤트 당첨 결과 확인</small></span><b aria-hidden="true">→</b></a>
+        <a href="notice.html"><span class="quick-icon"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M6 17h5l12-6v14l-12-5H6zM11 20l2 7H9l-2-7M26 15v6"/></svg></span><span><strong>공지사항</strong><small>모모커피의 새로운 소식</small></span><b aria-hidden="true">→</b></a>
+        <a href="faq.html"><span class="quick-icon"><svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="12"/><path d="M12.5 12a3.7 3.7 0 1 1 5.5 3.2c-1.5.8-2 1.6-2 3M16 23h.01"/></svg></span><span><strong>FAQ</strong><small>자주 묻는 질문과 답변</small></span><b aria-hidden="true">→</b></a>
+      </nav>
+    </main>
+
+    <script src="../js/nav.js"></script>
+    <div class="event-toast" id="eventToast" role="status" aria-live="polite" hidden></div>
+    <div class="event-modal" id="reviewModal" hidden>
+      <div class="event-modal__backdrop" data-close-modal></div>
+      <section class="event-modal__panel" role="dialog" aria-modal="true" aria-labelledby="reviewModalTitle">
+        <button class="event-modal__close" type="button" data-close-modal aria-label="닫기">×</button>
+        <p class="event-label">REVIEW EVENT</p>
+        <h2 id="reviewModalTitle">리뷰를 남겨주세요</h2>
+        <p>최근 주문을 선택하고 모모커피에서의 경험을 들려주세요.</p>
+        <form id="reviewEventForm">
+          <label>리뷰할 주문<select id="reviewOrder" required></select></label>
+          <label>별점<span class="rating-buttons" id="reviewRating" aria-label="별점 선택"></span></label>
+          <label>리뷰<textarea id="reviewText" rows="5" maxlength="300" placeholder="커피와 서비스는 어떠셨나요?" required></textarea></label>
+          <div class="review-form__foot"><small><span id="reviewLength">0</span>/300</small><button class="primary-button" type="submit">리뷰 등록하기</button></div>
+        </form>
+      </section>
+    </div>
+    <script src="../js/footer.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/coupons.js"></script>
+    <script src="../js/loyalty.js"></script>
+    <script src="event.js"></script>
   </body>
 </html>

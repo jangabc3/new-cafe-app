@@ -40,14 +40,14 @@ const coupons = [
     until: '2026.07.31까지'
   },
   {
-    value: '3,000원',
-    unit: 'OFF',
+    value: '3,000',
+    unit: '원 할인',
     title: '생일 축하 쿠폰',
     description: '15,000원 이상 주문 시 사용 가능',
     until: '2026.08.15까지'
   },
   {
-    value: '무료 배송',
+    value: '무료배송',
     unit: 'FREE',
     title: '무료 배송 쿠폰',
     description: '모든 주문 사용 가능',
@@ -130,7 +130,16 @@ function renderStats() {
 
   document.querySelector('#totalOrders').textContent = orderCount;
   document.querySelector('#favoriteCount').textContent = favoriteCount;
-  document.querySelector('#couponCount').textContent = coupons.length;
+  const availableCoupons = (() => {
+    try {
+      return typeof getMomoCoupons === 'function'
+        ? getMomoCoupons().filter((coupon) => coupon.status === 'available')
+        : [];
+    } catch {
+      return [];
+    }
+  })();
+  document.querySelector('#couponCount').textContent = availableCoupons.length;
   document.querySelector('#totalSpent').textContent = won(total);
 }
 
@@ -158,15 +167,102 @@ function renderRecentOrders() {
 }
 
 function renderCoupons() {
-  document.querySelector('#couponList').innerHTML = coupons.map((coupon) => `
+  const storedCoupons = (() => {
+    try {
+      return typeof getMomoCoupons === 'function'
+        ? getMomoCoupons().filter((coupon) => coupon.status === 'available').slice(0, 3).map((coupon) => ({
+            value: coupon.type,
+            unit: coupon.label,
+            title: coupon.title,
+            description: coupon.description || `${coupon.minimum || '제한 없음'} 이상 주문 시 사용 가능`,
+            until: `${coupon.date}까지`
+          }))
+        : null;
+    } catch {
+      return null;
+    }
+  })();
+  const visibleCoupons = Array.isArray(storedCoupons) ? storedCoupons : coupons;
+  document.querySelector('#couponList').innerHTML = visibleCoupons.length ? visibleCoupons.map((coupon, index) => `
     <article class="coupon-ticket">
-      <div class="coupon-value">${safe(coupon.value)}<small>${safe(coupon.unit)}</small></div>
+      <div class="coupon-value coupon-value-${index + 1}"><span>${safe(coupon.value)}</span><small>${safe(coupon.unit)}</small></div>
       <div class="coupon-info">
+        <span class="coupon-kicker">MOMO BENEFIT</span>
         <strong>${safe(coupon.title)}</strong>
-        <p>${safe(coupon.description)}<br>${safe(coupon.until)}</p>
+        <p>${safe(coupon.description)}</p>
+        <time>${safe(coupon.until)}</time>
       </div>
     </article>
+  `).join('') : '<p class="coupon-empty-message">현재 사용할 수 있는 쿠폰이 없습니다.</p>';
+}
+
+function renderMembershipBenefits() {
+  const benefit = window.MomoLoyalty?.getBenefit();
+  if (!benefit) return;
+  const status = document.querySelector('#membershipStatus');
+  const active = Boolean(benefit.membership && benefit.membership.status === 'active');
+  status.textContent = active ? '멤버십 이용 중' : '멤버십 미가입';
+  status.classList.toggle('is-active', active);
+  if (!active) {
+    status.innerHTML = '<a href="../community/event.html?action=membership">멤버십 시작하기</a>';
+  }
+  document.querySelector('#memberPoints').textContent = Number(benefit.points || 0).toLocaleString('ko-KR');
+  document.querySelector('#memberRewards').textContent = Number(benefit.rewards || 0);
+  document.querySelector('#stampProgress').textContent = `${benefit.stamps}/10`;
+  document.querySelector('#stampGrid').innerHTML = Array.from({ length: 10 }, (_, index) => `
+    <span class="stamp-slot${index < benefit.stamps ? ' is-stamped' : ''}">
+      <img src="../assets/images/momo-header-logo.png?v=5" alt="${index < benefit.stamps ? '적립된 모모 스탬프' : ''}">
+    </span>
   `).join('');
+
+  const memberKey = window.MomoLoyalty?.getUserKey();
+  const now = new Date();
+  const memberOrders = getOrdersSafely().filter((order) => {
+    const date = new Date(order.createdAt);
+    const belongsToMember = !order.memberKey || order.memberKey === memberKey;
+    return belongsToMember && date.getFullYear() === now.getFullYear() && date.getMonth() === now.getMonth();
+  });
+  const monthlySpent = memberOrders.reduce((sum, order) => sum + Number(order.total || 0), 0);
+  const grade = window.MomoLoyalty?.syncMonthlyGradeBenefits(monthlySpent) || window.MomoLoyalty?.getGrade(monthlySpent);
+  if (grade) {
+    document.querySelector('#currentGrade').textContent = grade.current;
+    document.querySelector('#profileGrade').textContent = grade.current;
+    document.querySelector('#gradeSpent').textContent = won(grade.amount);
+    document.querySelector('#gradeBenefits').textContent = `등급 혜택 · ${grade.benefits.join(' · ')}`;
+    document.querySelector('#gradePeriodLabel').textContent = `${now.getFullYear()}년 ${now.getMonth()+1}월 결제금액`;
+    document.querySelector('#gradeProgress').style.width = `${grade.progress}%`;
+    const gradePanel = document.querySelector('.grade-panel');
+    gradePanel.classList.remove('grade-welcome','grade-silver','grade-gold','grade-vip');
+    gradePanel.classList.add(`grade-${grade.current.toLowerCase()}`);
+    document.querySelector('#gradeMessage').textContent = grade.next
+      ? `다음 ${grade.next} 등급까지 ${won(grade.remaining)} 남았습니다.`
+      : '모모커피의 최고 등급 혜택을 이용 중입니다.';
+    const activeIndex = grade.grades.findIndex((item) => item.name === grade.current);
+    document.querySelectorAll('#gradeSteps span').forEach((step, index) => {
+      step.classList.toggle('is-reached', index <= activeIndex);
+      step.classList.toggle('is-current', index === activeIndex);
+    });
+  }
+}
+
+function renderMyReviews() {
+  const reviews = window.MomoLoyalty?.getReviews() || [];
+  const orders = getOrdersSafely();
+  const container = document.querySelector('#myReviewList');
+  if (!reviews.length) {
+    container.innerHTML = '<div class="review-empty"><span>♡</span><p>아직 작성한 리뷰가 없어요.</p><a href="../community/event.html?action=review">첫 리뷰 작성하기</a></div>';
+    return;
+  }
+  container.innerHTML = reviews.map((review) => {
+    const order = orders.find((item) => String(item.id) === String(review.orderId));
+    const menuName = order?.items?.[0]?.name || '모모커피 주문';
+    const date = new Date(review.createdAt).toISOString().slice(0, 10).replaceAll('-', '.');
+    return `<article class="my-review-item">
+      <div><strong>${safe(menuName)}</strong><span>${'♥'.repeat(Number(review.rating || 0))}${'♡'.repeat(5 - Number(review.rating || 0))}</span></div>
+      <p>${safe(review.text)}</p>
+      <small>${date} · ${Number(review.rewardPoints || 0).toLocaleString('ko-KR')}P 적립</small>
+    </article>`;
+  }).join('');
 }
 
 function bindLogout() {
@@ -213,9 +309,11 @@ function bindSectionNavigation() {
 
 if (currentUser) {
   renderUser();
+  renderMembershipBenefits();
   renderStats();
   renderRecentOrders();
   renderCoupons();
+  renderMyReviews();
   bindLogout();
   bindSectionNavigation();
 }

@@ -17,7 +17,7 @@
       <div class="footer-main">
         <section class="footer-brand" aria-label="MOMO COFFEE 브랜드 정보">
           <a class="footer-logo" href="${url('index.html')}" aria-label="MOMO COFFEE 홈">
-            <span class="footer-logo-mark" aria-hidden="true"><img src="${url('assets/images/momo-face-cute.png')}" alt=""></span>
+            <span class="footer-logo-mark" aria-hidden="true"><img src="${url('assets/images/momo-header-logo.png?v=5')}" alt=""></span>
             <strong>MOMO COFFEE</strong>
           </a>
           <p class="footer-slogan">한 잔의 커피,<br>하루의 <em>행복.</em></p>
@@ -54,7 +54,7 @@
           <section class="footer-column">
             <h2>BRAND</h2>
             <a href="${url('story/brand.html')}">브랜드 소개</a>
-            <a href="${url('story/brand.html')}">Brand Identity</a>
+            <a href="${url('story/bi.html')}">Brand Identity (BI)</a>
           </section>
           <section class="footer-column footer-customer">
             <h2>CUSTOMER CENTER</h2>

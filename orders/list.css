@@ -637,3 +637,18 @@ body {
     width: 100%;
   }
 }
+
+/* Softer MOMO summary typography and custom line icons */
+.order-stats .stat-icon svg { width:25px; height:25px; fill:none; stroke:currentColor; stroke-width:1.55; stroke-linecap:round; stroke-linejoin:round; }
+.order-stats .stat-card p { font-weight:500; }
+.order-stats .stat-card strong { font-family:var(--font-body); font-weight:600; letter-spacing:-0.025em; line-height:1.15; }
+.order-stats .stat-card small { font-weight:500; }
+
+/* Match My Page and Liked Menu viewport rhythm. */
+.orders-page { width:min(1320px,calc(100% - 56px)); padding-top:52px; }
+.orders-hero { min-height:176px; margin-bottom:0; }
+.orders-hero h1 { font-size:42px; }
+.orders-hero-copy>p:not(.orders-label) { font-size:16px; }
+.orders-dashboard { grid-template-columns:230px minmax(0,1fr); gap:18px; }
+@media(max-width:1180px){.orders-dashboard{grid-template-columns:1fr}}
+@media(max-width:760px){.orders-page{width:min(100% - 32px,1320px);padding-top:34px}.orders-hero h1{font-size:34px}.orders-hero{min-height:164px}}

@@ -4,15 +4,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>찜한 메뉴 | MOMO COFFEE</title>
+    <script src="js/auth-guard.js" data-redirect="liked-menu.html"></script>
     <link rel="stylesheet" href="css/variables.css">
     <link rel="stylesheet" href="css/nav.css">
     <link rel="stylesheet" href="css/footer.css">
     <link rel="stylesheet" href="liked-menu.css">
-    <script>
-      if (!localStorage.getItem('momoCurrentUser')) {
-        window.location.replace('login.html?redirect=liked-menu.html&message=login-required');
-      }
-    </script>
   </head>
   <body class="liked-page">
     <header class="site-header">
@@ -27,16 +23,16 @@
         <div>
           <p class="liked-label">LIKED MENU</p>
           <h1 id="likedTitle">찜한 메뉴 <span aria-hidden="true">♥</span></h1>
-          <p>모모님이 찜한 메뉴를 확인해보세요.</p>
+          <p id="likedHeroDescription"><span id="likedMemberName">회원님</span>이 찜한 메뉴를 확인해보세요.</p>
         </div>
         <img class="liked-momo" src="assets/images/momo-app-character-cutout.png" alt="커피를 들고 있는 모모 캐릭터">
       </section>
 
       <section class="liked-summary" aria-label="찜한 메뉴 요약">
-        <article><span>♡</span><p>찜한 메뉴</p><strong><b id="likedCount">8</b>개</strong><em>좋아하는 메뉴</em></article>
-        <article><span>▤</span><p>최근 찜한 메뉴</p><strong id="recentLiked">바닐라 라떼</strong><em>2026.07.08</em></article>
-        <article><span>▥</span><p>총 찜 횟수</p><strong>27회</strong><em>전체 기간</em></article>
-        <article><span>▣</span><p>찜 쿠폰 보유</p><strong>3장</strong><em>찜한 메뉴 전용 쿠폰</em></article>
+        <article><span class="summary-icon"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 26S6 20.5 6 12.5a5.5 5.5 0 0 1 10-3.2 5.5 5.5 0 0 1 10 3.2C26 20.5 16 26 16 26Z"/><path d="m24.5 5 .7-2.5M27 7.5l2.5-.7"/></svg></span><p>찜한 메뉴</p><strong><b id="likedCount">8</b>개</strong><em>좋아하는 메뉴</em></article>
+        <article><span class="summary-icon"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M8 5h16v22H8zM12 10h8M12 15h8M12 20h5"/><path d="m22 22 2 2 4-5"/></svg></span><p>최근 찜한 메뉴</p><strong id="recentLiked">바닐라 라떼</strong><em>2026.07.08</em></article>
+        <article><span class="summary-icon"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M6 8h20v17H6zM6 13h20"/><path d="m11 20 3-3 3 2 4-4"/></svg></span><p>선호 카테고리</p><strong id="preferredCategory">-</strong><em>가장 많이 담은 메뉴 유형</em></article>
+        <article><span class="summary-icon"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M4 9h24v5a3 3 0 0 0 0 6v5H4v-5a3 3 0 0 0 0-6V9Z"/><path d="M18.5 14.2a2.7 2.7 0 0 0-5 1.5c0 3.2 5 5.8 5 5.8s5-2.6 5-5.8a2.7 2.7 0 0 0-5-1.5Z"/></svg></span><p>찜 쿠폰 보유</p><strong><b id="likedCouponCount">1</b>장</strong><em>찜한 메뉴 전용 10% 쿠폰</em></article>
       </section>
 
       <section class="liked-board" aria-label="찜한 메뉴 대시보드">
@@ -46,7 +42,7 @@
           <a class="side-link" href="orders/list.html"><span class="side-icon side-icon-bag" aria-hidden="true"></span>주문 내역</a>
           <a class="side-link is-active" href="liked-menu.html" aria-current="page"><span class="side-icon side-icon-heart" aria-hidden="true"></span>찜한 메뉴</a>
           <a class="side-link" href="basket/list.html"><span class="side-icon side-icon-cart" aria-hidden="true"></span>장바구니</a>
-          <a class="side-link" href="my/index.html#couponBox"><span class="side-icon side-icon-ticket" aria-hidden="true"></span>쿠폰함</a>
+          <a class="side-link" href="coupon.html"><span class="side-icon side-icon-ticket" aria-hidden="true"></span>쿠폰함</a>
           <a class="side-link" href="my/profile.html"><span class="side-icon side-icon-profile" aria-hidden="true"></span>회원 정보 수정</a>
           <button class="side-link side-logout" type="button" id="logoutButton"><span class="side-icon side-icon-logout" aria-hidden="true"></span>로그아웃</button>
         </aside>
@@ -85,7 +81,7 @@
         <div class="footer-main">
           <section class="footer-brand" aria-label="MOMO COFFEE 브랜드 정보">
             <a class="footer-logo" href="index.html" aria-label="MOMO COFFEE 홈">
-              <span class="footer-logo-mark" aria-hidden="true"><img src="assets/images/momo-face-cute.png" alt=""></span>
+              <span class="footer-logo-mark" aria-hidden="true"><img src="assets/images/momo-header-logo.png?v=5" alt=""></span>
               <strong>MOMO COFFEE</strong>
             </a>
             <p class="footer-slogan">한 잔의 커피,<br>하루의 <em>행복.</em></p>
@@ -95,7 +91,7 @@
             <section class="footer-column"><h2>MENU</h2><a href="menus/list.html?category=drink">음료</a><a href="menus/list.html?category=season">시즌 메뉴</a><a href="menus/list.html?category=dessert">디저트</a></section>
             <section class="footer-column"><h2>STORE</h2><a href="stores/finder.html">매장 찾기</a><a href="stores/finder.html">신규 매장</a></section>
             <section class="footer-column"><h2>COMMUNITY</h2><a href="community/notice.html">공지사항</a><a href="community/event.html">이벤트</a><a href="community/faq.html">FAQ</a></section>
-            <section class="footer-column"><h2>BRAND</h2><a href="story/brand.html">브랜드 소개</a><a href="story/brand.html">Brand Identity</a></section>
+            <section class="footer-column"><h2>BRAND</h2><a href="story/brand.html">브랜드 소개</a><a href="story/bi.html">Brand Identity (BI)</a></section>
             <section class="footer-column footer-customer"><h2>CUSTOMER CENTER</h2><a href="tel:1234-5678">1234-5678</a><p>09:00 - 18:00</p><a href="mailto:momo@coffee.com">momo@coffee.com</a></section>
           </nav>
         </div>
@@ -107,6 +103,7 @@
 
     <script src="js/data.js"></script>
     <script src="js/utils.js"></script>
+    <script src="js/coupons.js"></script>
     <script src="liked-menu.js"></script>
     <script src="js/nav.js"></script>
     <script src="js/footer.js"></script>

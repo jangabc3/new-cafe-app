@@ -283,7 +283,7 @@
 
 .unified-header-inner {
   display: grid;
-  grid-template-columns: 250px minmax(580px, 1fr) 190px;
+  grid-template-columns: 230px minmax(520px, 1fr) 340px;
   align-items: center;
   box-sizing: border-box;
   width: min(1320px, calc(100% - 64px));
@@ -355,7 +355,7 @@
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 22px;
+  gap: 16px;
 }
 
 .unified-login {
@@ -367,7 +367,7 @@
 .header-actions .auth-greeting,
 .unified-actions .auth-greeting {
   overflow: hidden;
-  max-width: 170px;
+  max-width: 130px;
   color: #3f291f;
   font-size: 13px;
   font-weight: 700;
@@ -424,6 +424,56 @@
   transform: translateY(-1px);
 }
 
+.unified-cart {
+  position: relative;
+  display: inline-grid;
+  flex: 0 0 42px;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border: 1px solid #eddbd5;
+  border-radius: 50%;
+  color: #3f291f;
+  background: #fffdfb;
+  transition: color 180ms ease, border-color 180ms ease, background 180ms ease, transform 180ms ease;
+}
+
+.unified-cart svg {
+  width: 21px;
+  height: 21px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.unified-cart:hover {
+  color: #ef5575;
+  border-color: #f2a6b5;
+  background: #fff2f4;
+  transform: translateY(-1px);
+}
+
+.unified-cart-count {
+  position: absolute;
+  top: -5px;
+  right: -6px;
+  display: grid;
+  min-width: 19px;
+  height: 19px;
+  padding: 0 5px;
+  place-items: center;
+  border: 2px solid #fffaf7;
+  border-radius: 999px;
+  color: #fff;
+  background: #f55275;
+  font-size: 9px;
+  font-weight: 900;
+}
+
+.unified-cart-count[hidden] { display: none; }
+
 .global-mega-dropdown {
   position: absolute;
   top: 80px;
@@ -478,7 +528,9 @@
   margin: 0 0 21px;
   color: #4a2c21;
   font-size: 16px;
-  font-weight: 900;
+  font-family: var(--font-body) !important;
+  font-weight: 700;
+  letter-spacing: 0.01em;
 }
 
 .global-mega-column.is-active h2 {
@@ -522,4 +574,5 @@
   color: #ee6680;
   font-size: 12px;
   font-weight: 850;
+  font-family: var(--font-body) !important;
 }

@@ -1,3 +1,21 @@
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
+
+@font-face {
+  font-family: "MaruBuri";
+  src: url("https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-Regular.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "MaruBuri";
+  src: url("https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-SemiBold.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+}
+
 :root {
   --color-primary: #3b2a22;
   --color-primary-light: #7b6f64;
@@ -31,8 +49,8 @@
   --sp-2xl: 48px;
   --sp-3xl: 64px;
 
-  --font-heading: "Pretendard", "Noto Sans KR", "Apple SD Gothic Neo", Arial, sans-serif;
-  --font-body: "Pretendard", "Noto Sans KR", "Apple SD Gothic Neo", Arial, sans-serif;
+  --font-heading: "MaruBuri", "Noto Serif KR", "Nanum Myeongjo", Georgia, serif;
+  --font-body: "Pretendard", "Pretendard Variable", "Noto Sans KR", "Apple SD Gothic Neo", Arial, sans-serif;
   --font-size-xs: 12px;
   --font-size-sm: 14px;
   --font-size-base: 16px;
@@ -71,6 +89,10 @@ body {
   font-family: var(--font-body);
   font-size: var(--font-size-base);
   line-height: 1.6;
+  font-weight: 400;
+  letter-spacing: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 a {
@@ -105,6 +127,67 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: var(--font-heading);
-  line-height: 1.2;
+  font-family: var(--font-heading) !important;
+  font-weight: 600;
+  line-height: 1.34;
+  letter-spacing: -0.02em;
+}
+
+/* MOMO COFFEE typography system */
+p,
+li,
+dt,
+dd,
+input,
+textarea,
+select,
+label {
+  font-family: var(--font-body);
+  letter-spacing: 0;
+}
+
+.site-nav,
+.site-nav a,
+.nav-trigger,
+.nav-menu,
+.mega-menu,
+.mega-menu a,
+[class*="navigation"] {
+  font-family: var(--font-body) !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.01em !important;
+}
+
+button,
+[type="button"],
+[type="submit"],
+[type="reset"],
+.button,
+.btn,
+[class$="-button"],
+[class*=" button"] {
+  font-family: var(--font-body) !important;
+  font-weight: 600 !important;
+  letter-spacing: 0 !important;
+}
+
+.price,
+[class*="-price"],
+[class*="price-"],
+.amount,
+[class*="-amount"],
+[class*="amount-"] {
+  font-family: var(--font-body) !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.01em;
+}
+
+.eyebrow,
+.page-kicker,
+.caption,
+figcaption,
+small {
+  font-family: var(--font-body) !important;
+  font-weight: 400;
+  letter-spacing: 0;
 }

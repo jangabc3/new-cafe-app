@@ -1,0 +1,5 @@
+.event-hero{width:min(1320px,calc(100% - 56px));height:390px;margin:38px auto 0;border-radius:0;box-shadow:none;background:#f8f1eb}
+.event-hero__photo{object-position:center}.event-hero__shade{background:linear-gradient(90deg,rgba(252,248,244,.96) 0%,rgba(252,248,244,.72) 36%,transparent 56%)}
+.event-hero__copy{left:5.3%}.event-hero h1{margin:16px 0 18px;font-size:50px}.event-hero__copy>p:last-child{font-size:13px;line-height:1.8}
+.event-hero__momo,.event-heart{display:none}
+@media(max-width:760px){.event-hero{width:calc(100% - 32px);height:390px;margin-top:18px;border-radius:0}.event-hero__photo{object-position:62% center}.event-hero__shade{background:linear-gradient(180deg,rgba(252,248,244,.96),rgba(252,248,244,.65),transparent 70%)}.event-hero__copy{left:30px;top:38px;transform:none}.event-hero h1{font-size:39px}}

@@ -551,3 +551,17 @@
     flex-direction: column;
   }
 }
+
+/* Match My Page and Order History viewport rhythm. */
+.liked-shell { width:min(1320px,calc(100% - 56px)); padding-top:52px; }
+.liked-hero { min-height:176px; padding-top:8px; }
+.liked-hero h1 { font-size:42px; }
+.liked-board { grid-template-columns:230px minmax(0,1fr); gap:18px; }
+@media(max-width:1120px){.liked-board{grid-template-columns:1fr}}
+@media(max-width:760px){.liked-shell{width:min(100% - 32px,1320px);padding-top:34px}.liked-hero h1{font-size:34px}.liked-hero{min-height:164px}}
+
+/* Softer MOMO summary typography and custom line icons */
+.liked-summary .summary-icon svg { width:27px; height:27px; fill:none; stroke:currentColor; stroke-width:1.5; stroke-linecap:round; stroke-linejoin:round; }
+.liked-summary p { font-weight:600; }
+.liked-summary em { font-weight:400; }
+.liked-summary strong { font-family:var(--font-body); font-weight:600; letter-spacing:-0.025em; line-height:1.12; }

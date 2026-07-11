@@ -112,6 +112,7 @@ function getCart() {
 
 function saveCart(cart) {
   localStorage.setItem(CART_KEY, JSON.stringify(cart));
+  window.dispatchEvent(new CustomEvent('momo-cart-updated', { detail: { cart } }));
 }
 
 function addToCart(menuId, quantity = 1, options = {}) {

@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>&#xB9C8;&#xC774;&#xD398;&#xC774;&#xC9C0; | MOMO COFFEE</title>
+    <script src="../js/auth-guard.js" data-redirect="my/index.html"></script>
     <link rel="stylesheet" href="../css/variables.css">
     <link rel="stylesheet" href="../css/nav.css">
     <link rel="stylesheet" href="index.css">
@@ -33,17 +34,47 @@
           <a class="side-link" href="../orders/list.html"><span class="side-icon side-icon-bag" aria-hidden="true"></span>&#xC8FC;&#xBB38; &#xB0B4;&#xC5ED;</a>
           <a class="side-link" href="../liked-menu.html"><span class="side-icon side-icon-heart" aria-hidden="true"></span>&#xCC1C;&#xD55C; &#xBA54;&#xB274;</a>
           <a class="side-link" href="../basket/list.html"><span class="side-icon side-icon-cart" aria-hidden="true"></span>&#xC7A5;&#xBC14;&#xAD6C;&#xB2C8;</a>
-          <a class="side-link" href="#couponBox" data-section-link><span class="side-icon side-icon-ticket" aria-hidden="true"></span>&#xCFE0;&#xD3F0;&#xD568;</a>
+          <a class="side-link" href="../coupon.html"><span class="side-icon side-icon-ticket" aria-hidden="true"></span>&#xCFE0;&#xD3F0;&#xD568;</a>
           <a class="side-link" href="profile.html"><span class="side-icon side-icon-profile" aria-hidden="true"></span>&#xD68C;&#xC6D0; &#xC815;&#xBCF4; &#xC218;&#xC815;</a>
           <button class="side-link side-logout" type="button" id="logoutButton"><span class="side-icon side-icon-logout" aria-hidden="true"></span>&#xB85C;&#xADF8;&#xC544;&#xC6C3;</button>
         </aside>
 
         <div class="mypage-content">
           <section class="stat-grid" aria-label="member summary">
-            <article class="stat-card"><span class="stat-icon" aria-hidden="true">&#x25A7;</span><p>&#xC804;&#xCCB4; &#xC8FC;&#xBB38;</p><strong><span id="totalOrders">17</span><small>&#xAC74;</small></strong><em>&#xBAA8;&#xBAA8;&#xC640; &#xD568;&#xAED8;&#xD55C; &#xD69F;&#xC218;</em></article>
-            <article class="stat-card" id="favoriteMenu"><span class="stat-icon" aria-hidden="true">&#x2661;</span><p>&#xCC1C;&#xD55C; &#xBA54;&#xB274;</p><strong><span id="favoriteCount">8</span><small>&#xAC1C;</small></strong><em>&#xC88B;&#xC544;&#xD558;&#xB294; &#xBA54;&#xB274;</em></article>
-            <article class="stat-card"><span class="stat-icon" aria-hidden="true">&#x25A3;</span><p>&#xBCF4;&#xC720; &#xCFE0;&#xD3F0;</p><strong><span id="couponCount">3</span><small>&#xC7A5;</small></strong><em>&#xC0AC;&#xC6A9; &#xAC00;&#xB2A5;&#xD55C; &#xCFE0;&#xD3F0;</em></article>
-            <article class="stat-card"><span class="stat-icon" aria-hidden="true">&#x20A9;</span><p>&#xB204;&#xC801; &#xAE08;&#xC561;</p><strong id="totalSpent">333,200&#xC6D0;</strong><em>&#xCD1D; &#xC774;&#xC6A9; &#xAE08;&#xC561;</em></article>
+            <article class="stat-card"><span class="stat-icon" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M8 4h16v24l-3-2-3 2-2-2-2 2-3-2-3 2V4Z"/><path d="M12 10h8M12 15h8M12 20h5"/></svg></span><p>&#xC804;&#xCCB4; &#xC8FC;&#xBB38;</p><strong><span id="totalOrders">17</span><small>&#xAC74;</small></strong><em>&#xBAA8;&#xBAA8;&#xC640; &#xD568;&#xAED8;&#xD55C; &#xD69F;&#xC218;</em></article>
+            <article class="stat-card" id="favoriteMenu"><span class="stat-icon" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M16 26S6 20.5 6 12.5a5.5 5.5 0 0 1 10-3.2 5.5 5.5 0 0 1 10 3.2C26 20.5 16 26 16 26Z"/><path d="m24.5 5 .7-2.5M27 7.5l2.5-.7"/></svg></span><p>&#xCC1C;&#xD55C; &#xBA54;&#xB274;</p><strong><span id="favoriteCount">8</span><small>&#xAC1C;</small></strong><em>&#xC88B;&#xC544;&#xD558;&#xB294; &#xBA54;&#xB274;</em></article>
+            <article class="stat-card"><span class="stat-icon" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M4 9h24v5a3 3 0 0 0 0 6v5H4v-5a3 3 0 0 0 0-6V9Z"/><path d="M18.5 14.2a2.7 2.7 0 0 0-5 1.5c0 3.2 5 5.8 5 5.8s5-2.6 5-5.8a2.7 2.7 0 0 0-5-1.5Z"/></svg></span><p>&#xBCF4;&#xC720; &#xCFE0;&#xD3F0;</p><strong><span id="couponCount">3</span><small>&#xC7A5;</small></strong><em>&#xC0AC;&#xC6A9; &#xAC00;&#xB2A5;&#xD55C; &#xCFE0;&#xD3F0;</em></article>
+            <article class="stat-card"><span class="stat-icon" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M6 11h17v8a8 8 0 0 1-8 8h-1a8 8 0 0 1-8-8v-8Z"/><path d="M23 14h2.5a3.5 3.5 0 0 1 0 7H23M11 7c0-2 2-2 2-4M17 7c0-2 2-2 2-4"/></svg></span><p>&#xB204;&#xC801; &#xAE08;&#xC561;</p><strong id="totalSpent">333,200&#xC6D0;</strong><em>&#xCD1D; &#xC774;&#xC6A9; &#xAE08;&#xC561;</em></article>
+          </section>
+
+          <section class="dashboard-card loyalty-card" id="memberBenefits" aria-labelledby="memberBenefitsTitle">
+            <div class="loyalty-heading">
+              <div><p class="mypage-label">MOMO MEMBERSHIP</p><h2 id="memberBenefitsTitle">나의 멤버십 혜택</h2></div>
+              <span class="membership-status" id="membershipStatus">멤버십 확인 중</span>
+            </div>
+            <div class="grade-panel">
+              <div class="grade-current"><span>현재 등급</span><strong id="currentGrade">WELCOME</strong><p id="gradeMessage">다음 등급까지 확인 중입니다.</p></div>
+              <div class="grade-progress-wrap">
+                <div class="grade-steps" id="gradeSteps"><span>WELCOME</span><span>SILVER</span><span>GOLD</span><span>VIP</span></div>
+                <div class="grade-track"><i id="gradeProgress"></i></div>
+                <div class="grade-spend"><span id="gradePeriodLabel">이번 달 결제금액</span><strong id="gradeSpent">0원</strong></div>
+                <p class="grade-benefits" id="gradeBenefits"></p>
+              </div>
+            </div>
+            <div class="loyalty-summary">
+              <article><span>사용 가능 포인트</span><strong><b id="memberPoints">0</b>P</strong><small>장바구니에서 현금처럼 사용할 수 있어요.</small></article>
+              <article><span>스탬프 리워드</span><strong><b id="memberRewards">0</b>장</strong><small>1장당 최대 3,500원 할인</small></article>
+            </div>
+            <div class="stamp-wallet">
+              <div class="stamp-copy"><strong>모모 스탬프 <span id="stampProgress">0/10</span></strong><small>메뉴 수와 관계없이 주문 1건당 스탬프 1개가 적립됩니다.</small></div>
+              <div class="stamp-grid" id="stampGrid" aria-label="모모 스탬프 적립 현황"></div>
+              <p>10개를 모으면 3,500원 할인 리워드가 자동으로 발급돼요.</p>
+            </div>
+          </section>
+
+          <section class="dashboard-card review-history-card" id="myReviews" aria-labelledby="myReviewsTitle">
+            <div class="card-heading"><h2 id="myReviewsTitle">내가 작성한 리뷰</h2><a href="../community/event.html">리뷰 이벤트 보기 &rsaquo;</a></div>
+            <div class="my-review-list" id="myReviewList"></div>
           </section>
 
           <div class="info-grid">
@@ -52,7 +83,7 @@
               <div class="recent-list" id="recentOrders"></div>
             </section>
             <section class="dashboard-card coupon-card" id="couponBox" aria-labelledby="couponTitle">
-              <div class="card-heading"><h2 id="couponTitle">&#xB098;&#xC758; &#xCFE0;&#xD3F0;</h2><a href="#couponBox" data-section-link>&#xC804;&#xCCB4; &#xBCF4;&#xAE30; &rsaquo;</a></div>
+              <div class="card-heading"><h2 id="couponTitle">&#xB098;&#xC758; &#xCFE0;&#xD3F0;</h2><a href="../coupon.html">&#xC804;&#xCCB4; &#xBCF4;&#xAE30; &rsaquo;</a></div>
               <div class="coupon-list" id="couponList"></div>
             </section>
           </div>
@@ -61,7 +92,7 @@
             <div class="member-profile">
               <img src="../assets/images/momo-face-cute.png" alt="MOMO">
               <div>
-                <div class="member-name-line"><strong id="profileName">&#xBAA8;&#xBAA8; &#xACE0;&#xAC1D;&#xB2D8;</strong><span>GOLD</span></div>
+                <div class="member-name-line"><strong id="profileName">&#xBAA8;&#xBAA8; &#xACE0;&#xAC1D;&#xB2D8;</strong><span id="profileGrade">WELCOME</span></div>
                 <p><span id="profileEmail">momo@example.com</span><i aria-hidden="true">|</i><span id="profilePhone">010-1234-5678</span></p>
                 <p><span id="profileJoined">2026.06.01 &#xAC00;&#xC785;</span></p>
               </div>
@@ -74,6 +105,8 @@
 
     <script src="../js/data.js"></script>
     <script src="../js/utils.js"></script>
+    <script src="../js/coupons.js"></script>
+    <script src="../js/loyalty.js"></script>
     <script src="index.js"></script>
     <script src="../js/nav.js"></script>
     <script src="../js/footer.js"></script>

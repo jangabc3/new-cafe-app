@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>쿠폰함 | MOMO COFFEE</title>
+    <script src="js/auth-guard.js" data-redirect="coupon.html"></script>
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/nav.css">
+    <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="coupon.css">
+  </head>
+  <body class="coupon-page">
+    <header class="site-header">
+      <a class="brand" href="index.html" aria-label="MOMO COFFEE 홈">
+        <img src="assets/images/momo-header-logo.png?v=5" alt="MOMO COFFEE" class="site-logo-image">
+        <span><strong>MOMO COFFEE</strong><small>한 잔의 커피, 하루의 행복.</small></span>
+      </a>
+    </header>
+
+    <main class="coupon-shell">
+      <section class="coupon-hero" aria-labelledby="couponTitle">
+        <div class="coupon-heading">
+          <p class="coupon-eyebrow">COUPON WALLET</p>
+          <h1 id="couponTitle">쿠폰함 <span aria-hidden="true">♥</span></h1>
+          <p>보유하고 있는 쿠폰을 확인하고<br>주문 시 간편하게 사용해보세요.</p>
+        </div>
+        <div class="coupon-momo-wrap" aria-hidden="true">
+          <span class="floating-heart heart-one">♡</span>
+          <span class="floating-heart heart-two">♡</span>
+          <img class="coupon-momo" src="assets/images/momo-coupon-wallet.png?v=2" alt="">
+        </div>
+      </section>
+
+      <nav class="coupon-tabs" id="couponTabs" aria-label="쿠폰 상태 필터"></nav>
+
+      <section class="coupon-results" aria-live="polite" aria-labelledby="couponListTitle">
+        <div class="results-heading">
+          <div>
+            <p>MY COUPONS</p>
+            <h2 id="couponListTitle">보유 쿠폰</h2>
+          </div>
+          <span id="resultSummary"></span>
+        </div>
+        <div class="coupon-list" id="couponList"></div>
+        <div class="coupon-empty" id="couponEmpty" hidden>
+          <img src="assets/images/momo-face-cute.png" alt="웃고 있는 모모 캐릭터">
+          <h2>아직 사용할 수 있는 쿠폰이 없습니다.</h2>
+          <p>새로운 메뉴를 만나고 다음 혜택도 기대해 주세요.</p>
+          <a href="menus/list.html">메뉴 보러가기</a>
+        </div>
+      </section>
+
+      <section class="coupon-guide" aria-labelledby="couponGuideTitle">
+        <div>
+          <p>PLEASE NOTE</p>
+          <h2 id="couponGuideTitle"><span aria-hidden="true">!</span> 쿠폰 사용 안내</h2>
+          <ul>
+            <li>쿠폰은 주문 시 자동 적용 가능합니다.</li>
+            <li>중복 사용 여부는 쿠폰마다 다릅니다.</li>
+            <li>일부 시즌 메뉴는 제외될 수 있습니다.</li>
+            <li>유효기간이 지난 쿠폰은 사용할 수 없습니다.</li>
+          </ul>
+        </div>
+        <img src="assets/images/momo-face-cute.png" alt="모모 캐릭터">
+      </section>
+    </main>
+
+    <footer class="landing-footer"></footer>
+    <div class="coupon-toast" id="couponToast" role="status" hidden></div>
+
+    <script src="js/coupons.js"></script>
+    <script src="coupon.js"></script>
+    <script src="js/nav.js"></script>
+    <script src="js/footer.js"></script>
+  </body>
+</html>

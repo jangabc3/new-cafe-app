@@ -104,6 +104,15 @@ function updateCounts() {
   document.querySelector('#likedCount').textContent = count;
   document.querySelector('#gridCount').textContent = count;
   document.querySelector('#recentLiked').textContent = likedItems[0]?.name || '찜한 메뉴 없음';
+  const categoryCounts = likedItems.reduce((counts, item) => {
+    const label = item.categoryLabel || item.category || '기타';
+    counts[label] = (counts[label] || 0) + 1;
+    return counts;
+  }, {});
+  const preferred = Object.entries(categoryCounts).sort((a, b) => b[1] - a[1])[0]?.[0] || '-';
+  document.querySelector('#preferredCategory').textContent = preferred;
+  const likedCoupon = typeof ensureLikedMenuCoupon === 'function' ? ensureLikedMenuCoupon() : null;
+  document.querySelector('#likedCouponCount').textContent = likedCoupon?.status === 'available' ? '1' : '0';
   const cartQuantity = typeof getCart === 'function'
     ? getCart().reduce((sum, item) => sum + Number(item.quantity || 0), 0)
     : 0;
@@ -111,7 +120,14 @@ function updateCounts() {
   if (cartCount) cartCount.textContent = cartQuantity;
 }
 
+function renderMemberName() {
+  const name = String(currentUser?.name || '회원').trim();
+  const target = document.querySelector('#likedMemberName');
+  if (target) target.textContent = `${name}님`;
+}
+
 function renderLikedItems() {
+  renderMemberName();
   updateCounts();
   const items = sortedItems();
 

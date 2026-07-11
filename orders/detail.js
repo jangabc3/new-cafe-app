@@ -68,8 +68,8 @@ function renderOrderDetail() {
     </section>
 
     <dl class="summary-list">
-      <div><dt>상품 금액</dt><dd>${formatPrice(order.total)}</dd></div>
-      <div><dt>할인</dt><dd>0원</dd></div>
+      <div><dt>상품 금액</dt><dd>${formatPrice(order.subtotal ?? order.total)}</dd></div>
+      <div><dt>${order.coupon ? escapeHtml(order.coupon.title) : '쿠폰 할인'}</dt><dd>${order.couponDiscount ? `-${formatPrice(order.couponDiscount)}` : '0원'}</dd></div>
       <div class="summary-total"><dt>총 결제 금액</dt><dd>${formatPrice(order.total)}</dd></div>
     </dl>
 

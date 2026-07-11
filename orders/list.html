@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>&#xC8FC;&#xBB38; &#xB0B4;&#xC5ED; | MOMO COFFEE</title>
+    <script src="../js/auth-guard.js" data-redirect="orders/list.html"></script>
     <link rel="stylesheet" href="../css/variables.css">
     <link rel="stylesheet" href="list.css">
     <link rel="stylesheet" href="../css/nav.css">
@@ -28,16 +29,16 @@
           <a class="side-link is-active" href="list.html"><span class="side-icon side-icon-bag" aria-hidden="true"></span>&#xC8FC;&#xBB38; &#xB0B4;&#xC5ED;</a>
           <a class="side-link" href="../liked-menu.html"><span class="side-icon side-icon-heart" aria-hidden="true"></span>&#xCC1C;&#xD55C; &#xBA54;&#xB274;</a>
           <a class="side-link" href="../basket/list.html"><span class="side-icon side-icon-cart" aria-hidden="true"></span>&#xC7A5;&#xBC14;&#xAD6C;&#xB2C8;</a>
-          <a class="side-link" href="../my/index.html#couponBox"><span class="side-icon side-icon-ticket" aria-hidden="true"></span>&#xCFE0;&#xD3F0;&#xD568;</a>
+          <a class="side-link" href="../coupon.html"><span class="side-icon side-icon-ticket" aria-hidden="true"></span>&#xCFE0;&#xD3F0;&#xD568;</a>
           <a class="side-link" href="../my/profile.html"><span class="side-icon side-icon-profile" aria-hidden="true"></span>&#xD68C;&#xC6D0; &#xC815;&#xBCF4; &#xC218;&#xC815;</a>
           <button class="side-link side-logout" type="button" id="logoutButton"><span class="side-icon side-icon-logout" aria-hidden="true"></span>&#xB85C;&#xADF8;&#xC544;&#xC6C3;</button>
         </aside>
         <div class="orders-content">
           <section class="order-stats" aria-label="order summary">
-            <article class="stat-card"><span class="stat-icon" aria-hidden="true">&#x25A7;</span><div><p>&#xC804;&#xCCB4; &#xC8FC;&#xBB38;</p><strong><span id="totalOrders">0</span><small>&#xAC74;</small></strong></div></article>
-            <article class="stat-card"><span class="stat-icon" aria-hidden="true">&#x25F7;</span><div><p>&#xC9C4;&#xD589; &#xC911;</p><strong><span id="activeOrders">0</span><small>&#xAC74;</small></strong></div></article>
-            <article class="stat-card"><span class="stat-icon" aria-hidden="true">&#x20A9;</span><div><p>&#xB204;&#xC801; &#xAE08;&#xC561;</p><strong id="totalSpent">0&#xC6D0;</strong></div></article>
-            <article class="stat-card"><span class="stat-icon" aria-hidden="true">&#x2615;</span><div><p>&#xCD5C;&#xADFC; &#xC8FC;&#xBB38;</p><strong id="recentDate">-</strong></div></article>
+            <article class="stat-card"><span class="stat-icon" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M8 4h16v24l-3-2-3 2-2-2-2 2-3-2-3 2V4Z"/><path d="M12 10h8M12 15h8M12 20h5"/></svg></span><div><p>&#xC804;&#xCCB4; &#xC8FC;&#xBB38;</p><strong><span id="totalOrders">0</span><small>&#xAC74;</small></strong></div></article>
+            <article class="stat-card"><span class="stat-icon" aria-hidden="true"><svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="11"/><path d="M16 9v7l5 3M5 16H2m28 0h-3"/></svg></span><div><p>&#xC9C4;&#xD589; &#xC911;</p><strong><span id="activeOrders">0</span><small>&#xAC74;</small></strong></div></article>
+            <article class="stat-card"><span class="stat-icon" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M6 11h17v8a8 8 0 0 1-8 8h-1a8 8 0 0 1-8-8v-8Z"/><path d="M23 14h2.5a3.5 3.5 0 0 1 0 7H23M11 7c0-2 2-2 2-4M17 7c0-2 2-2 2-4"/></svg></span><div><p>&#xB204;&#xC801; &#xAE08;&#xC561;</p><strong id="totalSpent">0&#xC6D0;</strong></div></article>
+            <article class="stat-card"><span class="stat-icon" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M6 11h17v8a8 8 0 0 1-8 8h-1a8 8 0 0 1-8-8v-8Z"/><path d="M23 14h2.5a3.5 3.5 0 0 1 0 7H23M12 7c0-2 2-2 2-4"/><path d="m23.5 5 .7-2.5M26 7.5l2.5-.7"/></svg></span><div><p>&#xCD5C;&#xADFC; &#xC8FC;&#xBB38;</p><strong id="recentDate">-</strong></div></article>
           </section>
           <section class="orders-panel" aria-labelledby="ordersListTitle">
             <div class="orders-panel-head"><div><h2 id="ordersListTitle">&#xC8FC;&#xBB38; &#xB0B4;&#xC5ED; &#xBAA9;&#xB85D;</h2><p>&#xCD5C;&#xADFC; &#xC8FC;&#xBB38;&#xBD80;&#xD130; &#xCC28;&#xB840;&#xB300;&#xB85C; &#xBCF4;&#xC5EC;&#xB4DC;&#xB824;&#xC694;.</p></div><a class="filter-button" href="../menus/list.html">&#xBA54;&#xB274; &#xC8FC;&#xBB38;&#xD558;&#xAE30;</a></div>

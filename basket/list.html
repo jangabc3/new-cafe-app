@@ -55,10 +55,33 @@
             <p>모모가 주문서를 차분히 확인하고 있어요.</p>
           </div>
           <h2>주문 요약</h2>
+          <section class="basket-coupon" aria-labelledby="basketCouponTitle">
+            <button class="coupon-select-button" id="couponSelectButton" type="button" aria-expanded="false" aria-controls="couponPicker">
+              <span><small id="basketCouponTitle">쿠폰</small><strong id="selectedCouponName">쿠폰을 선택해 주세요</strong></span>
+              <b id="availableCouponCount">0장</b>
+            </button>
+            <div class="coupon-picker" id="couponPicker" hidden>
+              <div class="coupon-picker-heading"><strong>사용할 쿠폰 선택</strong><a href="../coupon.html">쿠폰함 보기</a></div>
+              <div class="basket-coupon-list" id="basketCouponList"></div>
+            </div>
+          </section>
+          <section class="basket-benefits" id="basketBenefits" aria-labelledby="basketBenefitsTitle">
+            <div class="benefit-heading"><div><small>MEMBER BENEFITS</small><strong id="basketBenefitsTitle">포인트 · 스탬프 리워드</strong></div><a href="../my/index.html#memberBenefits">내 혜택 보기</a></div>
+            <div class="point-control" id="pointControl">
+              <div><span>보유 포인트</span><strong><b id="availablePoints">0</b>P</strong></div>
+              <div class="point-input"><input id="pointInput" type="number" min="0" step="100" value="0" aria-label="사용할 포인트"><button id="applyPointButton" type="button">사용</button></div>
+            </div>
+            <button class="stamp-reward-control" id="stampRewardButton" type="button">
+              <span class="stamp-momo"><img src="../assets/images/momo-header-logo.png?v=5" alt=""></span>
+              <span><strong>스탬프 리워드</strong><small id="stampRewardStatus">로그인하면 스탬프 혜택을 사용할 수 있어요.</small></span>
+              <b id="rewardCount">0장</b>
+            </button>
+          </section>
           <dl class="summary-list">
             <div><dt>상품 금액</dt><dd id="subtotalPrice">0원</dd></div>
-            <div><dt>쿠폰 적용</dt><dd>0원</dd></div>
-            <div><dt>포인트 사용</dt><dd>0원</dd></div>
+            <div class="coupon-discount-row"><dt>쿠폰 적용</dt><dd id="couponDiscount">0원</dd></div>
+            <div class="point-discount-row"><dt>포인트 사용</dt><dd id="pointDiscount">0원</dd></div>
+            <div class="reward-discount-row"><dt>스탬프 리워드</dt><dd id="rewardDiscount">0원</dd></div>
             <div class="summary-total"><dt>총 결제 금액</dt><dd id="totalPrice">0원</dd></div>
           </dl>
           <button id="orderButton" class="primary-button order-button" type="button">주문하기</button>
@@ -83,6 +106,8 @@
 
     <script src="../js/data.js"></script>
     <script src="../js/utils.js"></script>
+    <script src="../js/coupons.js"></script>
+    <script src="../js/loyalty.js"></script>
     <script src="list.js"></script>
     <script src="../js/nav.js"></script>
     <script src="../js/footer.js"></script>

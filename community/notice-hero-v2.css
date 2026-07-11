@@ -1,0 +1,5 @@
+.notice-hero{display:block;width:min(1320px,calc(100% - 56px));height:390px;margin:38px auto 0;background:#f8f1eb url('../assets/images/momo-community-hero-v2.png') center/cover no-repeat}
+.notice-hero-copy{position:absolute;inset:0;display:flex;width:42%;box-sizing:border-box;justify-content:center;padding:60px 70px;background:linear-gradient(90deg,rgba(250,244,239,.96) 0%,rgba(250,244,239,.75) 78%,transparent 100%)}
+.notice-hero-copy p{font-size:10px}.notice-hero-copy h1{margin:16px 0 18px;font-size:50px}.notice-hero-copy span{font-size:13px}.notice-hero-scene{display:none}
+@media(max-width:850px){.notice-hero{height:420px}.notice-hero-copy{width:58%;padding:45px;background:linear-gradient(90deg,rgba(250,244,239,.97),rgba(250,244,239,.7),transparent)}}
+@media(max-width:560px){.notice-hero{width:calc(100% - 32px);height:390px;margin-top:18px;background-position:62% center}.notice-hero-copy{width:100%;justify-content:flex-start;padding:30px;background:linear-gradient(180deg,rgba(250,244,239,.96),rgba(250,244,239,.65),transparent 70%)}.notice-hero-copy h1{font-size:39px}}

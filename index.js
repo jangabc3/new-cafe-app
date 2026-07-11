@@ -55,7 +55,9 @@ function setMegaNavigation() {
 
 function updateCartCount() {
   if (!cartCount) return;
-  cartCount.textContent = getCart().reduce((sum, item) => sum + item.quantity, 0);
+  const quantity = getCart().reduce((sum, item) => sum + item.quantity, 0);
+  cartCount.textContent = quantity;
+  cartCount.hidden = quantity === 0;
 }
 
 function setHeroCarousel() {

@@ -32,6 +32,10 @@
       <div class="unified-actions">
         <a class="unified-login" href="${root}my/index.html">LOGIN</a>
         <a class="unified-order" href="${root}menus/list.html">ORDER</a>
+        <a class="unified-cart" href="${root}basket/list.html" aria-label="장바구니">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h2l2.2 10.2a2 2 0 0 0 2 1.6h7.9a2 2 0 0 0 1.9-1.4L21 8H7"></path><circle cx="10" cy="20" r="1.3"></circle><circle cx="18" cy="20" r="1.3"></circle></svg>
+          <span class="unified-cart-count" id="unifiedCartCount">0</span>
+        </a>
       </div>
     </div>
     <div class="global-mega-dropdown" id="globalMegaDropdown" aria-hidden="true">
@@ -42,14 +46,50 @@
           <div class="global-menu-group"><h3>&#xD478;&#xB4DC;</h3><a href="${root}menus/list.html?category=dessert">&#xB514;&#xC800;&#xD2B8;</a><a href="${root}menus/list.html?category=bakery">&#xBCA0;&#xC774;&#xCEE4;&#xB9AC;</a></div>
           <div class="global-menu-group"><h3>&#xC0C1;&#xD488;</h3><a href="${root}menu/goods.html">MD</a></div>
         </section>
-        <section class="global-mega-column" data-mega-column="store"><h2>STORE</h2><a href="${root}stores/finder.html">&#xB9E4;&#xC7A5; &#xCC3E;&#xAE30;</a><a href="${root}stores/list.html">&#xC2E0;&#xADDC; &#xB9E4;&#xC7A5;</a></section>
+        <section class="global-mega-column" data-mega-column="store"><h2>STORE</h2><a href="${root}stores/finder.html">&#xB9E4;&#xC7A5; &#xCC3E;&#xAE30;</a></section>
         <section class="global-mega-column" data-mega-column="community"><h2>COMMUNITY</h2><a href="${root}community/notice.html">&#xACF5;&#xC9C0;&#xC0AC;&#xD56D;</a><a href="${root}community/event.html">&#xC774;&#xBCA4;&#xD2B8;</a><a href="${root}community/faq.html">FAQ</a></section>
-        <section class="global-mega-column" data-mega-column="brand"><h2>BRAND</h2><a href="${root}story/brand.html">&#xBE0C;&#xB79C;&#xB4DC; &#xC18C;&#xAC1C;</a><a href="${root}story/bi.html">Brand Identity</a></section>
-        <section class="global-mega-column" data-mega-column="mypage"><h2>MY PAGE</h2><a href="${root}my/index.html">&#xB9C8;&#xC774;&#xD398;&#xC774;&#xC9C0;</a><a href="${root}orders/list.html">&#xC8FC;&#xBB38; &#xB0B4;&#xC5ED;</a><a href="${root}liked-menu.html">&#xCC1C;&#xD55C; &#xBA54;&#xB274;</a><a href="${root}basket/list.html">&#xC7A5;&#xBC14;&#xAD6C;&#xB2C8;</a><a href="${root}my/index.html#coupons">&#xCFE0;&#xD3F0;&#xD568;</a><a href="${root}my/profile.html">&#xD68C;&#xC6D0; &#xC815;&#xBCF4; &#xC218;&#xC815;</a></section>
+        <section class="global-mega-column" data-mega-column="brand"><h2>BRAND</h2><a href="${root}story/brand.html">&#xBE0C;&#xB79C;&#xB4DC; &#xC18C;&#xAC1C;</a><a href="${root}story/bi.html">Brand Identity (BI)</a></section>
+        <section class="global-mega-column" data-mega-column="mypage"><h2>MY PAGE</h2><a href="${root}my/index.html">&#xB9C8;&#xC774;&#xD398;&#xC774;&#xC9C0;</a><a href="${root}orders/list.html">&#xC8FC;&#xBB38; &#xB0B4;&#xC5ED;</a><a href="${root}liked-menu.html">&#xCC1C;&#xD55C; &#xBA54;&#xB274;</a><a href="${root}basket/list.html">&#xC7A5;&#xBC14;&#xAD6C;&#xB2C8;</a><a href="${root}coupon.html">&#xCFE0;&#xD3F0;&#xD568;</a><a href="${root}my/profile.html">&#xD68C;&#xC6D0; &#xC815;&#xBCF4; &#xC218;&#xC815;</a></section>
       </div>
     </div>`;
 
   oldHeader.replaceWith(header);
+
+  try {
+    const currentUser = JSON.parse(localStorage.getItem('momoCurrentUser') || 'null');
+    const loginLink = header.querySelector('.unified-login');
+    if (currentUser?.name && loginLink) {
+      loginLink.textContent = `${currentUser.name}님`;
+      loginLink.href = `${root}my/index.html`;
+      const logout = document.createElement('button');
+      logout.className = 'auth-logout';
+      logout.type = 'button';
+      logout.textContent = 'LOGOUT';
+      logout.addEventListener('click', () => {
+        localStorage.removeItem('momoCurrentUser');
+        window.location.href = `${root}index.html`;
+      });
+      loginLink.insertAdjacentElement('afterend', logout);
+    }
+  } catch {
+    // Keep the regular login link if stored member data is unavailable.
+  }
+
+  const cartCount = header.querySelector('#unifiedCartCount');
+  const updateUnifiedCartCount = () => {
+    let cart = [];
+    try {
+      cart = JSON.parse(localStorage.getItem('momo_coffee_cart_v1') || '[]');
+    } catch {
+      cart = [];
+    }
+    const quantity = Array.isArray(cart) ? cart.reduce((sum, item) => sum + Number(item.quantity || 0), 0) : 0;
+    cartCount.textContent = String(quantity);
+    cartCount.hidden = quantity === 0;
+  };
+  updateUnifiedCartCount();
+  window.addEventListener('storage', updateUnifiedCartCount);
+  window.addEventListener('momo-cart-updated', updateUnifiedCartCount);
 
   const dropdown = header.querySelector('.global-mega-dropdown');
   const triggers = [...header.querySelectorAll('[data-mega-category]')];

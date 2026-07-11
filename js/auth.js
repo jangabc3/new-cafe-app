@@ -3,6 +3,7 @@
   window.MomoAuthInitialized = true;
 
   const USERS_KEY = 'momoUsers';
+  const LAST_REGISTERED_USER_KEY = 'momoLastRegisteredUser';
   const CURRENT_USER_KEY = 'momoCurrentUser';
   const scriptUrl = document.currentScript?.src || new URL('js/auth.js', document.baseURI).href;
   const projectRoot = new URL('../', scriptUrl);
@@ -18,8 +19,22 @@
   };
 
   const getUsers = () => {
-    const users = readJson(USERS_KEY, []);
-    return Array.isArray(users) ? users : [];
+    const stored = readJson(USERS_KEY, []);
+    const users = Array.isArray(stored) ? stored : Array.isArray(stored?.users) ? stored.users : [];
+    const lastRegistered = readJson(LAST_REGISTERED_USER_KEY, null);
+
+    if (lastRegistered?.email && !users.some((user) =>
+      normalizeEmail(user.email) === normalizeEmail(lastRegistered.email)
+    )) {
+      users.push(lastRegistered);
+    }
+
+    return users.filter((user) => user && typeof user === 'object' && user.email);
+  };
+
+  const saveUsers = (users) => {
+    localStorage.setItem(USERS_KEY, JSON.stringify(users));
+    return readJson(USERS_KEY, []).length === users.length;
   };
 
   const getCurrentUser = () => readJson(CURRENT_USER_KEY, null);
@@ -50,7 +65,11 @@
     if (error) error.textContent = message;
   };
 
-  const normalizeEmail = (email) => email.trim().toLowerCase();
+  function normalizeEmail(email) {
+    return String(email || '').normalize('NFKC').trim().toLowerCase();
+  }
+
+  const normalizePassword = (password) => String(password || '').normalize('NFC');
 
   const setupSignup = () => {
     const form = document.querySelector('#signupForm');
@@ -62,8 +81,8 @@
 
       const data = new FormData(form);
       const email = normalizeEmail(String(data.get('email') || ''));
-      const password = String(data.get('password') || '');
-      const passwordConfirm = String(data.get('passwordConfirm') || '');
+      const password = normalizePassword(data.get('password'));
+      const passwordConfirm = normalizePassword(data.get('passwordConfirm'));
       const name = String(data.get('name') || '').trim();
       const phone = String(data.get('phone') || '').trim();
       let isValid = true;
@@ -99,15 +118,24 @@
         return;
       }
 
-      users.push({
+      const newUser = {
         id: Date.now(),
         email,
         password,
         name,
         phone,
         createdAt: new Date().toISOString()
-      });
-      localStorage.setItem(USERS_KEY, JSON.stringify(users));
+      };
+      users.push(newUser);
+
+      try {
+        localStorage.setItem(LAST_REGISTERED_USER_KEY, JSON.stringify(newUser));
+        if (!saveUsers(users)) throw new Error('User storage verification failed');
+      } catch {
+        showNotice('회원 정보를 저장하지 못했습니다. 브라우저 저장 공간을 확인한 뒤 다시 시도해주세요.');
+        return;
+      }
+
       window.location.href = projectUrl('login.html?registered=1');
     });
   };
@@ -142,7 +170,7 @@
 
       const data = new FormData(form);
       const email = normalizeEmail(String(data.get('email') || ''));
-      const password = String(data.get('password') || '');
+      const password = normalizePassword(data.get('password'));
       let isValid = true;
 
       if (!email) {
@@ -156,7 +184,7 @@
       if (!isValid) return;
 
       const user = getUsers().find((candidate) =>
-        normalizeEmail(String(candidate.email || '')) === email && candidate.password === password
+        normalizeEmail(candidate.email) === email && normalizePassword(candidate.password) === password
       );
 
       if (!user) {
@@ -189,7 +217,7 @@
     const greeting = document.createElement('a');
     greeting.className = 'auth-greeting';
     greeting.href = projectUrl('my/index.html');
-    greeting.textContent = `안녕하세요, ${currentUser.name}님`;
+    greeting.textContent = `${currentUser.name}님`;
 
     const logout = document.createElement('button');
     logout.className = 'auth-logout';

@@ -1,34 +1,6 @@
-<!doctype html>
-<html lang="ko">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>공지사항 | 모모커피</title>
-    <link rel="stylesheet" href="../css/variables.css">
-    <link rel="stylesheet" href="../css/content-page.css">
-    <link rel="stylesheet" href="../css/nav.css">
-  </head>
-  <body>
-    <header class="site-header">
-      <a class="brand" href="../index.html" aria-label="모모커피 홈"><img src="../assets/images/momo-header-logo.png?v=5" alt="MOMO COFFEE" class="site-logo-image"><span><strong>MOMO COFFEE</strong><small>한 잔의 커피, 하루의 행복.</small></span></a>
-      <nav class="site-nav" aria-label="주요 메뉴">
-        <div class="nav-group"><a class="nav-trigger" href="../story/brand.html">모모 스토리</a><div class="nav-menu"><a href="../story/brand.html">브랜드 소개</a><a href="../story/bi.html">Brand Identity (BI)</a></div></div>
-        <div class="nav-group"><a class="nav-trigger" href="../menu/drinks.html">메뉴</a><div class="nav-menu"><span>음료</span><a href="../menu/drinks.html">음료 전체</a><a href="../menus/list.html?category=coffee">커피</a><a href="../menus/list.html?category=noncoffee">논커피</a><a href="../menus/list.html?category=tea">티</a><a href="../menus/list.html?category=season">시즌 음료</a><span>푸드</span><a href="../menu/foods.html">푸드 전체</a><a href="../menus/list.html?category=dessert">디저트</a><a href="../menus/list.html?category=bakery">베이커리</a><span>상품(Goods)</span><a href="../menu/goods.html">상품 전체</a></div></div>
-        <div class="nav-group"><a class="nav-trigger" href="../stores/finder.html">매장</a><div class="nav-menu"><a href="../stores/finder.html">매장 찾기</a></div></div>
-        <div class="nav-group"><a class="nav-trigger is-active" href="notice.html">커뮤니티</a><div class="nav-menu"><a class="is-active" href="notice.html">공지사항</a><a href="faq.html">자주 묻는 질문</a><a href="event.html">이벤트</a></div></div>
-        <div class="nav-group"><a class="nav-trigger" href="../my/index.html">마이페이지</a></div>
-      </nav>
-      <a class="cart-link" href="../basket/list.html">장바구니 <span class="cart-badge">0</span></a>
-    </header>
-    <main class="content-shell">
-      <section class="content-hero"><div><p class="eyebrow">COMMUNITY</p><h1>공지사항</h1><p>모모커피의 운영 소식과 새로운 안내를 확인하세요.</p></div><img src="../assets/images/momo-cutout-tight.png" alt="" aria-hidden="true"></section>
-      <section class="wide-panel notice-list">
-        <article><time>2026.07.08</time><h2>모모커피 매장 찾기 페이지 오픈</h2><p>지도형 매장 검색과 길찾기 기능을 사용할 수 있습니다.</p></article>
-        <article><time>2026.07.01</time><h2>여름 시즌 메뉴 출시</h2><p>피치 아이스티와 상큼한 시즌 음료를 가까운 매장에서 만나보세요.</p></article>
-      </section>
-    </main>
-    <script src="../js/nav.js"></script>
-    <script src="../js/footer.js"></script>
-
-  </body>
-</html>
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>공지사항 | MOMO COFFEE</title><link rel="stylesheet" href="../css/variables.css"><link rel="stylesheet" href="../css/nav.css"><link rel="stylesheet" href="../css/footer.css"><link rel="stylesheet" href="notice.css"><link rel="stylesheet" href="notice-hero-v2.css"></head><body><header class="site-header"></header><main class="notice-page">
+<section class="notice-hero"><div class="notice-hero-copy"><p>COMMUNITY</p><h1>공지사항</h1><span>모모커피의 새로운 소식과 안내를 확인하세요.</span></div><div class="notice-hero-scene"><img class="hero-still" src="../assets/images/event-hero-lifestyle.png" alt="따뜻한 커피가 놓인 모모커피 테이블"><img class="hero-momo" src="../assets/images/momo-app-character-cutout.png" alt="커피를 들고 있는 모모"></div></section>
+<section class="notice-board" aria-labelledby="boardTitle"><div class="board-heading"><div><p>BRAND NEWS &amp; GUIDE</p><h2 id="boardTitle">새로운 소식</h2></div><span id="resultCount"></span></div>
+<div class="board-tools"><div class="category-filter" id="categoryFilter" aria-label="공지사항 카테고리"></div><label class="notice-search"><input id="noticeSearch" type="search" placeholder="공지 제목 검색" aria-label="공지 제목 검색"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4 4"/></svg></label></div>
+<div id="featuredNotice"></div><div class="notice-list" id="noticeList"></div><nav class="pagination" id="pagination" aria-label="공지사항 페이지"></nav><div class="notice-empty" id="noticeEmpty" hidden><strong>검색 결과가 없습니다.</strong><p>다른 검색어나 카테고리를 선택해주세요.</p></div></section>
+</main><script src="../js/nav.js"></script><script src="../js/footer.js"></script><script src="notices-data.js"></script><script src="notice.js"></script></body></html>

@@ -1,7 +1,7 @@
 ﻿const currentUser = JSON.parse(localStorage.getItem('momoCurrentUser') || 'null');
 
 if (!currentUser) {
-  window.location.href = '../login.html?redirect=my/index.html&message=login-required';
+  window.location.href = '/login.html?redirect=%2Fmy&message=login-required';
 }
 
 const demoOrders = [
@@ -204,14 +204,14 @@ function renderMembershipBenefits() {
   status.textContent = active ? '멤버십 이용 중' : '멤버십 미가입';
   status.classList.toggle('is-active', active);
   if (!active) {
-    status.innerHTML = '<a href="../community/event.html?action=membership">멤버십 시작하기</a>';
+    status.innerHTML = '<a href="/community/event.html?action=membership">멤버십 시작하기</a>';
   }
   document.querySelector('#memberPoints').textContent = Number(benefit.points || 0).toLocaleString('ko-KR');
   document.querySelector('#memberRewards').textContent = Number(benefit.rewards || 0);
   document.querySelector('#stampProgress').textContent = `${benefit.stamps}/10`;
   document.querySelector('#stampGrid').innerHTML = Array.from({ length: 10 }, (_, index) => `
     <span class="stamp-slot${index < benefit.stamps ? ' is-stamped' : ''}">
-      <img src="../assets/images/momo-header-logo.png?v=5" alt="${index < benefit.stamps ? '적립된 모모 스탬프' : ''}">
+      <img src="/assets/images/momo-header-logo.png?v=5" alt="${index < benefit.stamps ? '적립된 모모 스탬프' : ''}">
     </span>
   `).join('');
 
@@ -250,7 +250,7 @@ function renderMyReviews() {
   const orders = getOrdersSafely();
   const container = document.querySelector('#myReviewList');
   if (!reviews.length) {
-    container.innerHTML = '<div class="review-empty"><span>♡</span><p>아직 작성한 리뷰가 없어요.</p><a href="../community/event.html?action=review">첫 리뷰 작성하기</a></div>';
+    container.innerHTML = '<div class="review-empty"><span>♡</span><p>아직 작성한 리뷰가 없어요.</p><a href="/community/event.html?action=review">첫 리뷰 작성하기</a></div>';
     return;
   }
   container.innerHTML = reviews.map((review) => {
@@ -268,7 +268,7 @@ function renderMyReviews() {
 function bindLogout() {
   document.querySelector('#logoutButton')?.addEventListener('click', () => {
     localStorage.removeItem('momoCurrentUser');
-    window.location.href = '../index.html';
+    window.location.href = '/';
   });
 }
 

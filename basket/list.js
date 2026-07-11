@@ -294,6 +294,8 @@ stampRewardButton.addEventListener('click', () => {
 });
 
 orderButton.addEventListener('click', () => {
+  window.location.href = '../checkout/index.html';
+  return;
   const cart = getCart().map(enrichCartItem);
   if (cart.length === 0) return;
 

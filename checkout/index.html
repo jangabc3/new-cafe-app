@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>주문 및 결제 | MOMO COFFEE</title>
+<link rel="stylesheet" href="../css/variables.css"><link rel="stylesheet" href="../css/nav.css"><link rel="stylesheet" href="index.css">
+</head><body>
+<header class="site-header"><a class="brand" href="../index.html"><img src="../assets/images/momo-header-logo.png?v=5" alt="MOMO COFFEE" class="site-logo-image"></a></header>
+<main class="checkout-shell">
+ <header class="checkout-hero"><div class="page-heading"><p>MOMO COFFEE</p><h1>주문 및 결제</h1><span>주문하실 메뉴와 결제 정보를 확인해주세요.</span></div><ol class="checkout-steps" aria-label="결제 단계"><li><b>01</b><span>주문</span></li><li class="active"><b>02</b><span>결제</span></li><li><b>03</b><span>완료</span></li></ol></header>
+ <div id="checkoutAlert" class="alert" role="alert" tabindex="-1" hidden></div>
+ <form id="checkoutForm" class="checkout-layout" novalidate>
+  <div class="checkout-content">
+   <section class="section-card" id="itemsSection"><div class="section-title"><div><small>01</small><h2>주문 메뉴</h2></div><a href="../basket/list.html">장바구니로 돌아가기</a></div><div id="orderItems"></div></section>
+   <section class="section-card" id="storeSection"><div class="section-title"><div><small>02</small><h2>픽업 매장</h2></div></div><div id="storeOptions" class="store-grid"></div><p class="field-error" id="storeError"></p></section>
+   <section class="section-card customer-section"><div class="section-title"><div><small>03</small><h2>주문자 정보</h2></div><a href="../my/profile.html">정보 수정 ›</a></div><div class="customer-profile"><img src="../assets/images/momo-face-cute.png" alt="회원 프로필"><dl id="customerInfo" class="customer-info"></dl></div></section>
+   <section class="section-card"><div class="section-title"><div><small>04</small><h2>할인 혜택</h2></div></div><label for="couponSelect">쿠폰 선택</label><select id="couponSelect"><option value="">쿠폰 사용 안 함</option></select><p id="couponMessage" class="help" role="status"></p><div class="point-row"><div><span>보유 포인트</span><strong id="availablePoints">0P</strong></div><label for="pointInput">사용할 포인트</label><input id="pointInput" type="number" min="0" step="1" value="0" inputmode="numeric"><button id="useAllPoints" type="button">모두 사용</button></div></section>
+   <section class="section-card" id="paymentSection"><div class="section-title"><div><small>05</small><h2>결제 수단</h2></div></div><div id="paymentMethods" class="payment-grid"></div><div id="paymentPanel"></div></section>
+   <section class="section-card" id="termsSection"><div class="section-title"><div><small>06</small><h2>약관 동의</h2></div></div><label class="check master"><input id="agreeAll" type="checkbox"> 전체 동의</label><div class="terms"><label class="check"><input class="required-term" type="checkbox"> 주문 내용을 확인했습니다. (필수)</label><label class="check"><input class="required-term" type="checkbox"> 개인정보 수집 및 이용에 동의합니다. (필수)</label><label class="check"><input class="required-term" type="checkbox"> 결제 진행에 동의합니다. (필수)</label></div></section>
+  </div>
+  <aside class="summary-card"><p class="eyebrow">MOMO ORDER</p><h2>주문 요약</h2><dl><div><dt>상품 금액</dt><dd id="subtotal">0원</dd></div><div><dt>쿠폰 할인</dt><dd id="couponDiscount">0원</dd></div><div><dt>포인트 사용</dt><dd id="pointDiscount">0원</dd></div><div class="total"><dt>결제 예정 금액</dt><dd id="finalAmount">0원</dd></div></dl><div class="summary-meta"><p><span>주문 수량</span><strong>총 <b id="itemCount">0</b>개</strong></p><p><span>픽업 매장</span><strong id="selectedStore">선택 전</strong></p><p><span>결제 방법</span><strong id="selectedPayment">선택 전</strong></p></div><button id="payButton" type="submit" disabled>결제하기</button><p class="mock-notice">ⓘ 주문 완료 후 변경 및 취소는 매장에서만 가능합니다.</p></aside>
+ </form>
+</main><script src="../js/data.js"></script><script src="../js/utils.js"></script><script src="../js/coupons.js"></script><script src="../js/loyalty.js"></script><script src="index.js"></script><script src="../js/nav.js"></script><script src="../js/footer.js"></script>
+</body></html>

@@ -1,4 +1,4 @@
-﻿const cartCount = $('#cartCount');
+const cartCount = $('#cartCount');
 const emptyState = $('#emptyState');
 const basketLayout = $('#basketLayout');
 const cartList = $('#cartList');
@@ -179,7 +179,7 @@ function renderMemberBenefits(subtotal) {
 }
 
 function renderCouponSelector(cart, subtotal) {
-  const coupons = getMomoCoupons().filter((coupon) => coupon.status === 'available');
+  const coupons = getMomoCouponsForUser(window.MomoLoyalty?.getUser()).filter((coupon) => coupon.status === 'available' && !coupon.used);
   const selectedId = getSelectedMomoCouponId();
   availableCouponCount.textContent = `${coupons.length}장`;
   appliedCoupon = coupons.find((coupon) => Number(coupon.id) === Number(selectedId)) || null;

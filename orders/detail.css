@@ -87,6 +87,8 @@
   border-radius: 50%;
   background: #3d2619;
 }
+
+.customer-order-progress{display:grid;grid-template-columns:repeat(4,1fr);margin:22px 0;padding:22px;border:1px solid #eadfd8;border-radius:18px;background:#fffaf6}.customer-progress-step{position:relative;display:grid;justify-items:center;gap:7px;color:#aa9a91;font-size:12px}.customer-progress-step:before{content:"";position:absolute;right:50%;top:15px;width:100%;height:2px;background:#eadfd8}.customer-progress-step:first-child:before{display:none}.customer-progress-step i{position:relative;z-index:1;display:grid;place-items:center;width:31px;height:31px;border-radius:50%;background:#eee5df;font-style:normal}.customer-progress-step.is-done,.customer-progress-step.is-current{color:#4a3026;font-weight:700}.customer-progress-step.is-done i{background:#dfe9df}.customer-progress-step.is-current i{background:#4a3026;color:#fff}.customer-status-message{padding:16px 18px;border-radius:14px;background:#f6e9df;color:#6c5144;font-weight:700}.customer-status-message.is-ready{background:#dfe9df;color:#49624f}@media(max-width:600px){.customer-order-progress{padding:16px 5px}.customer-progress-step{font-size:10px}}
 .mini-momo span { width: 5px; height: 4px; top: 20px; left: 17px; }
 .mini-momo span::before,
 .mini-momo span::after { width: 4px; height: 4px; top: -9px; }

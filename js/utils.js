@@ -12,6 +12,8 @@ function getCategoryName(id) {
 }
 
 function getStatusLabel(value) {
+  const adminLabel = typeof ADMIN_ORDER_STATUS_LABELS !== 'undefined' ? ADMIN_ORDER_STATUS_LABELS[String(value || '').toUpperCase()] : null;
+  if (adminLabel) return adminLabel;
   const status = Object.values(ORDER_STATUS).find((item) => item.value === value);
   return status ? status.label : value;
 }
@@ -171,7 +173,8 @@ const ORDERS_KEY = 'momo_coffee_orders_v1';
 
 function getOrders() {
   const data = localStorage.getItem(ORDERS_KEY);
-  return data ? JSON.parse(data) : [];
+  const orders = data ? JSON.parse(data) : [];
+  return Array.isArray(orders) ? orders.map(normalizeOrderStatus) : [];
 }
 
 function saveOrders(orders) {
@@ -197,6 +200,17 @@ function createOrder(items, total) {
 function getOrderById(id) {
   return getOrders().find((order) => String(order.id) === String(id));
 }
+
+const ADMIN_ORDER_STATUSES = ['RECEIVED', 'PREPARING', 'READY', 'PICKED_UP'];
+const ADMIN_ORDER_STATUS_LABELS = { RECEIVED:'주문 접수', PREPARING:'제조 중', READY:'제조 완료', PICKED_UP:'픽업 완료' };
+const LEGACY_ORDER_STATUS_MAP = { pending:'RECEIVED', confirmed:'PREPARING', preparing:'PREPARING', ready:'READY', completed:'PICKED_UP', received:'RECEIVED', picked_up:'PICKED_UP' };
+function normalizeOrderStatus(order) { if(!order||typeof order!=='object')return order;const raw=String(order.status||'').trim(),upper=raw.toUpperCase();const status=ADMIN_ORDER_STATUSES.includes(upper)?upper:(LEGACY_ORDER_STATUS_MAP[raw.toLowerCase()]||'RECEIVED');return {...order,status,updatedAt:order.updatedAt||null,statusHistory:Array.isArray(order.statusHistory)?order.statusHistory:[],adminMemo:String(order.adminMemo||'')}; }
+function getOrderStatusLabel(status){return ADMIN_ORDER_STATUS_LABELS[normalizeOrderStatus({status}).status]}
+function getNextOrderStatus(status){const index=ADMIN_ORDER_STATUSES.indexOf(normalizeOrderStatus({status}).status);return index>=0&&index<3?ADMIN_ORDER_STATUSES[index+1]:null}
+function getNextOrderActionLabel(status){return {RECEIVED:'제조 시작',PREPARING:'제조 완료',READY:'픽업 완료',PICKED_UP:'처리 완료'}[normalizeOrderStatus({status}).status]}
+function getOrderStatusProgress(status){return Math.max(0,ADMIN_ORDER_STATUSES.indexOf(normalizeOrderStatus({status}).status))}
+function advanceOrderStatus(orderId,adminUser){if(adminUser?.role!=='ADMIN')throw new Error('관리자 권한이 필요합니다.');const orders=getOrders(),index=orders.findIndex(order=>String(order.id)===String(orderId));if(index<0)throw new Error('주문을 찾을 수 없습니다.');const next=getNextOrderStatus(orders[index].status);if(!next)throw new Error('이미 처리가 완료된 주문입니다.');const now=new Date().toISOString();orders[index]={...orders[index],status:next,updatedAt:now,statusHistory:[...orders[index].statusHistory,{status:next,changedAt:now,changedBy:adminUser.id??adminUser.email}]};saveOrders(orders);return orders[index]}
+function saveOrderAdminMemo(orderId,adminUser,memo){if(adminUser?.role!=='ADMIN')throw new Error('관리자 권한이 필요합니다.');const orders=getOrders(),order=orders.find(item=>String(item.id)===String(orderId));if(!order)throw new Error('주문을 찾을 수 없습니다.');order.adminMemo=String(memo||'').trim();order.updatedAt=new Date().toISOString();saveOrders(orders);return order}
 
 function updateOrderStatus(id, status) {
   const orders = getOrders();

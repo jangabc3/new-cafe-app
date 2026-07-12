@@ -15,7 +15,9 @@ function formatWon(value) {
 }
 
 function getSortedOrders() {
-  return getOrders().sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+  const currentUser = JSON.parse(localStorage.getItem('momoCurrentUser') || 'null');
+  const key = currentUser?.id ?? currentUser?.email;
+  return getOrders().filter((order) => String(order.userId ?? order.userEmail) === String(key) || String(order.userEmail) === String(currentUser?.email)).sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 }
 
 function getOrderQuantity(order) {
@@ -46,8 +48,8 @@ function formatShortDate(date) {
 }
 
 function renderSummary(orders) {
-  const active = orders.filter((order) => !['completed', 'cancelled'].includes(order.status));
-  const spent = orders.reduce((sum, order) => sum + Number(order.total || 0), 0);
+  const active = orders.filter((order) => !['PICKED_UP', 'cancelled'].includes(order.status));
+  const spent = orders.reduce((sum, order) => sum + Number(order.totalAmount ?? order.total ?? 0), 0);
 
   totalOrders.textContent = orders.length;
   activeOrders.textContent = active.length;
@@ -79,7 +81,7 @@ function renderOrdersPage(orders) {
             </div>
           </div>
           <div class="order-actions">
-            <strong class="order-price">${formatWon(order.total)}</strong>
+            <strong class="order-price">${formatWon(order.totalAmount ?? order.total)}</strong>
             <a class="detail-button" href="detail.html?id=${encodeURIComponent(order.id)}">상세</a>
           </div>
         </article>

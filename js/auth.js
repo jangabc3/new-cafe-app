@@ -5,7 +5,8 @@
   const USERS_KEY = 'momoUsers';
   const LAST_REGISTERED_USER_KEY = 'momoLastRegisteredUser';
   const CURRENT_USER_KEY = 'momoCurrentUser';
-  const ADMIN_EMAIL = 'admin@momo.com';
+  const ADMIN_EMAIL = 'admin@momocoffee.com';
+  const ADMIN_PASSWORD = 'momo1234';
   const projectRoot = new URL('/', window.location.origin);
   const projectPath = '/';
 
@@ -29,12 +30,22 @@
       users.push(lastRegistered);
     }
 
-    const normalized = users.filter((user) => user && typeof user === 'object' && user.email)
-      .map((user) => ({ ...user, role: user.role === 'ADMIN' ? 'ADMIN' : 'USER' }));
-    if (!normalized.some((user) => normalizeEmail(user.email) === ADMIN_EMAIL)) {
-      normalized.push({ id: 'momo-admin', email: ADMIN_EMAIL, password: 'momo-admin-dev', name: 'MOMO 관리자', role: 'ADMIN', createdAt: new Date().toISOString() });
-      saveUsers(normalized);
-    }
+    const validUsers = users.filter((user) => user && typeof user === 'object' && user.email);
+    const existingAdmin = validUsers.find((user) => normalizeEmail(user.email) === ADMIN_EMAIL)
+      || validUsers.find((user) => user.id === 'momo-admin');
+    const normalized = validUsers
+      .filter((user, index, list) => normalizeEmail(user.email) !== ADMIN_EMAIL
+        || index === list.findIndex((candidate) => normalizeEmail(candidate.email) === ADMIN_EMAIL))
+      .map((user) => ({ ...user, role: 'USER' }));
+    const migratedIndex = normalized.findIndex((user) => user.id === existingAdmin?.id);
+    const administrator = {
+      ...(existingAdmin || {}), id: existingAdmin?.id || 'momo-admin', email: ADMIN_EMAIL,
+      password: ADMIN_PASSWORD, name: existingAdmin?.name || 'MOMO 관리자', role: 'ADMIN',
+      createdAt: existingAdmin?.createdAt || new Date().toISOString()
+    };
+    if (migratedIndex >= 0) normalized[migratedIndex] = administrator;
+    else normalized.push(administrator);
+    saveUsers(normalized);
     return normalized;
   };
 
@@ -200,7 +211,7 @@
       }
 
       localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(user));
-      window.location.href = user.role === 'ADMIN' ? projectUrl('admin/') : safeRedirect(params.get('redirect'));
+      window.location.href = user.role === 'ADMIN' ? projectUrl('admin') : projectUrl('index.html');
     });
   };
 

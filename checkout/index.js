@@ -7,7 +7,9 @@
   try{user=JSON.parse(localStorage.getItem(CURRENT_USER_KEY)||'null')}catch{}
   if(!user){localStorage.setItem('momoAuthReturnPath','/checkout');location.replace('/login?returnTo='+encodeURIComponent('/checkout'));return}
   try{cart=getCart()}catch{cart=[]}
+  let operationSettings={};try{operationSettings=JSON.parse(localStorage.getItem('momoOperationSettings')||'{}')}catch{}
   const invalid=cart.filter(i=>!getMenuById(i.menuId)||getMenuById(i.menuId)?.soldOut||getMenuById(i.menuId)?.isSoldOut||!Number.isFinite(Number(i.price))||Number(i.price)<0||!Number.isInteger(Number(i.quantity))||Number(i.quantity)<1);
+  if(operationSettings.orderEnabled===false||operationSettings.pickupEnabled===false||operationSettings.maintenanceMode===true){alert('현재 온라인 주문이 일시 중지되었습니다.');location.replace('/basket/list');return}
   if(!cart.length){location.replace('/basket/list');return}
   const subtotal=cart.reduce((s,i)=>s+Number(i.price)*Number(i.quantity),0);
   const benefit=window.MomoLoyalty?.getBenefit?.()||{points:Number(user.points)||0};

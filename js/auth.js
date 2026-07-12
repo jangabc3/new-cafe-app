@@ -211,7 +211,7 @@
       }
 
       localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(user));
-      window.location.href = user.role === 'ADMIN' ? projectUrl('admin') : projectUrl('index.html');
+      window.location.href = user.role === 'ADMIN' ? projectUrl('admin/index.html') : projectUrl('index.html');
     });
   };
 

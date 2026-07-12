@@ -1,4 +1,4 @@
-﻿[hidden] { display: none !important; }
+[hidden] { display: none !important; }
 
 .site-header {
   position: sticky;
@@ -454,3 +454,5 @@ input:focus { outline: 3px solid rgba(233, 137, 128, 0.18); border-color: var(--
   align-self: end !important;
   margin-top: auto !important;
 }
+
+.menu-card.is-soldout{position:relative}.menu-card.is-soldout .menu-thumb img{opacity:.62;filter:grayscale(.18)}.soldout-badge{display:inline-flex;margin-bottom:7px;padding:5px 9px;border-radius:999px;background:#e4d4d0;color:#76564e;font-size:11px;font-weight:800}.menu-card button:disabled{background:#bcb1aa!important;cursor:not-allowed!important}

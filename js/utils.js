@@ -33,7 +33,7 @@ const MENU_STORAGE_KEY = 'momo_coffee_menus_v6';
 function getMenus() {
   const stored = localStorage.getItem(MENU_STORAGE_KEY);
   if (stored) {
-    const storedMenus = JSON.parse(stored);
+    const storedMenus = JSON.parse(stored).map(normalizeMenuAvailability);
     const storedIds = new Set(storedMenus.map((menu) => String(menu.id)));
     const missingDefaultMenus = MENU_ITEMS.filter((menu) => !storedIds.has(String(menu.id)));
 
@@ -47,12 +47,16 @@ function getMenus() {
   }
 
   saveMenus(MENU_ITEMS);
-  return [...MENU_ITEMS];
+  return MENU_ITEMS.map(normalizeMenuAvailability);
 }
 
-function saveMenus(menus) {
-  localStorage.setItem(MENU_STORAGE_KEY, JSON.stringify(menus));
-}
+function saveMenus(menus) { localStorage.setItem(MENU_STORAGE_KEY, JSON.stringify(menus.map(normalizeMenuAvailability))); }
+function normalizeMenuAvailability(menu) { return { ...menu, isSoldOut: Boolean(menu?.isSoldOut ?? menu?.soldOut ?? false) }; }
+function isMenuSoldOut(menuId) { return Boolean(getMenuById(menuId)?.isSoldOut); }
+function setMenuSoldOut(menuId, soldOut, adminUser) { if (adminUser?.role !== 'ADMIN') throw new Error('관리자 권한이 필요합니다.'); const menus=getMenus(),menu=menus.find(item=>String(item.id)===String(menuId)); if(!menu)throw new Error('메뉴를 찾을 수 없습니다.'); menu.isSoldOut=Boolean(soldOut); saveMenus(menus); return menu; }
+function getMenuAvailabilityLabel(menu) { return normalizeMenuAvailability(menu).isSoldOut ? '품절' : '판매 중'; }
+function canAddMenuToCart(menuId) { return Boolean(getMenuById(menuId) && !isMenuSoldOut(menuId)); }
+function getCartSoldOutItems(cart) { return (Array.isArray(cart) ? cart : []).filter(item => isMenuSoldOut(item.menuId)); }
 
 function getMenuById(id) {
   if (id === null || id === undefined || id === '') return null;
@@ -68,7 +72,8 @@ function normalizeMenu(menu) {
     category: menu.category,
     price: Number(menu.price),
     description: menu.description.trim(),
-    image: menu.image.trim()
+    image: menu.image.trim(),
+    isSoldOut: Boolean(menu.isSoldOut)
   };
 }
 
@@ -76,7 +81,8 @@ function createMenu(menu) {
   const menus = getMenus();
   const newMenu = {
     id: generateId(),
-    ...normalizeMenu(menu)
+    ...normalizeMenu(menu),
+    isSoldOut: false
   };
 
   menus.push(newMenu);
@@ -94,7 +100,7 @@ function updateMenu(id, updates) {
 
   menus[index] = {
     ...menus[index],
-    ...normalizeMenu(updates)
+    ...normalizeMenu({ ...updates, isSoldOut: menus[index].isSoldOut })
   };
   saveMenus(menus);
   return menus[index];
@@ -118,6 +124,7 @@ function saveCart(cart) {
 }
 
 function addToCart(menuId, quantity = 1, options = {}) {
+  if (!canAddMenuToCart(menuId)) throw new Error('현재 품절된 메뉴입니다.');
   const cart = getCart();
   const item = getMenuById(menuId);
   if (!item) return;
@@ -151,6 +158,7 @@ function updateCartQuantity(menuId, quantity) {
   const cart = getCart();
   const item = cart.find((cartItem) => String(cartItem.menuId) === String(menuId));
   if (!item) return;
+  if (quantity > item.quantity && !canAddMenuToCart(menuId)) throw new Error('현재 품절된 메뉴입니다.');
 
   if (quantity <= 0) {
     removeFromCart(menuId);

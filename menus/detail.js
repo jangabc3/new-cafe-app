@@ -1,4 +1,4 @@
-﻿const detailPanel = $('#detailPanel');
+const detailPanel = $('#detailPanel');
 const cartCount = $('#cartCount');
 const toast = $('#toast');
 const queryMenuId = getQueryParam('id');
@@ -96,6 +96,7 @@ function getSelectedOptions() {
 function renderMenuDetail() {
   document.title = `${menu.name} | 모모커피`;
   const isGoods = menu.category === 'goods';
+  const soldOut = menu.isSoldOut;
   const isCoffee = ['coffee', 'signature'].includes(menu.category);
   const isDrink = ['coffee', 'signature', 'noncoffee', 'tea', 'season'].includes(menu.category);
   detailPanel.innerHTML = `
@@ -107,7 +108,7 @@ function renderMenuDetail() {
       }
     </div>
     <article class="detail-content">
-      <span class="category-pill">${escapeHtml(getCategoryName(menu.category))}</span>
+      <span class="category-pill">${escapeHtml(getCategoryName(menu.category))}</span>${soldOut ? '<span class="soldout-detail-badge">품절</span>' : ''}
       <h1>${escapeHtml(menu.name)}</h1>
       <p class="detail-price">${formatPrice(menu.price)}</p>
       <p class="detail-description">${escapeHtml(menu.description)}</p>
@@ -115,7 +116,7 @@ function renderMenuDetail() {
         <span class="mini-momo" aria-hidden="true"><span></span></span>
         <p>${isGoods ? '모모 굿즈를 장바구니에 담아보세요.' : '모모가 옵션을 기다리고 있어요. 취향에 맞게 골라주세요.'}</p>
       </div>
-      <div class="option-panel">
+      ${soldOut ? '<p class="soldout-notice">현재 품절된 메뉴입니다.</p>' : ''}<div class="option-panel ${soldOut ? 'is-disabled' : ''}">
         ${
           !isDrink
             ? ''
@@ -150,10 +151,10 @@ function renderMenuDetail() {
         }
         <div class="option-group">
           <span class="option-label">수량</span>
-          <div class="quantity-control"><button class="icon-button" type="button" data-quantity="-1">-</button><strong id="quantityValue" class="quantity-value">1</strong><button class="icon-button" type="button" data-quantity="1">+</button></div>
+          <div class="quantity-control"><button class="icon-button" type="button" data-quantity="-1" ${soldOut ? 'disabled' : ''}>-</button><strong id="quantityValue" class="quantity-value">1</strong><button class="icon-button" type="button" data-quantity="1" ${soldOut ? 'disabled' : ''}>+</button></div>
         </div>
         <div class="total-row"><span>총 결제 금액</span><strong id="totalPrice">${formatPrice(menu.price)}</strong></div>
-        <div class="detail-actions"><button class="secondary-button" type="button" id="addToCartButton">장바구니 담기</button><button class="primary-button" type="button" id="orderNowButton">바로 주문하기</button></div>
+        <div class="detail-actions"><button class="secondary-button" type="button" id="addToCartButton" ${soldOut ? 'disabled' : ''}>${soldOut ? '품절' : '장바구니 담기'}</button><button class="primary-button" type="button" id="orderNowButton" ${soldOut ? 'disabled' : ''}>${soldOut ? '품절' : '바로 주문하기'}</button></div>
       </div>
     </article>
   `;
@@ -161,6 +162,7 @@ function renderMenuDetail() {
 }
 
 detailPanel.addEventListener('click', (event) => {
+  if (menu?.isSoldOut && event.target.closest('button')) { showToast('현재 품절된 메뉴입니다.'); return; }
   const optionButton = event.target.closest('[data-option]');
   if (optionButton) {
     optionState[optionButton.dataset.option] = optionButton.dataset.value;

@@ -1,4 +1,4 @@
-﻿const state = {
+const state = {
   search: '',
   category: getQueryParam('category') || 'all'
 };
@@ -130,7 +130,7 @@ function renderMenus() {
     menuGrid,
     filteredMenus,
     (menu) => `
-      <article class="menu-card ${menu.category === 'goods' ? 'is-goods-card' : ''}">
+      <article class="menu-card ${menu.category === 'goods' ? 'is-goods-card' : ''} ${menu.isSoldOut ? 'is-soldout' : ''}">
         <a class="menu-thumb" href="detail.html?id=${encodeURIComponent(menu.id)}" aria-label="${escapeHtml(menu.name)} 상세 보기">
           ${
             menu.image
@@ -138,7 +138,7 @@ function renderMenus() {
               : `<span>${escapeHtml(menu.emoji || menu.name.slice(0, 1))}</span>`
           }
         </a>
-        <div class="menu-card-body">
+        <div class="menu-card-body">${menu.isSoldOut ? '<span class="soldout-badge">품절</span>' : ''}
           <span class="category-pill">${escapeHtml(getCategoryName(menu.category))}</span>
           <button
             class="like-button ${isLiked(menu.id) ? 'is-liked' : ''}"
@@ -153,7 +153,7 @@ function renderMenus() {
             <strong>${formatPrice(menu.price)}</strong>
             <div>
               <a class="secondary-button" href="detail.html?id=${encodeURIComponent(menu.id)}">상세</a>
-              <button class="primary-button" type="button" data-cart-id="${escapeHtml(menu.id)}">담기</button>
+              <button class="primary-button" type="button" data-cart-id="${escapeHtml(menu.id)}" ${menu.isSoldOut ? 'disabled' : ''}>${menu.isSoldOut ? '품절' : '담기'}</button>
             </div>
           </div>
         </div>

@@ -20,7 +20,7 @@ function fillForm() {
   menuForm.elements.description.value = menu.description;
   menuForm.elements.image.value = menu.image || '';
   pageTitle.textContent = `${menu.name} 수정`;
-  detailLink.href = `detail.html?id=${encodeURIComponent(menu.id)}`;
+  detailLink.href = `/admin/menus/detail.html?id=${encodeURIComponent(menu.id)}`;
   menuForm.hidden = false;
 }
 
@@ -59,7 +59,7 @@ menuForm.addEventListener('submit', (event) => {
   }
 
   updateMenu(menu.id, menuData);
-  window.location.href = `detail.html?id=${encodeURIComponent(menu.id)}`;
+  window.location.href = `/admin/menus/detail.html?id=${encodeURIComponent(menu.id)}`;
 });
 
 initializeCategories();

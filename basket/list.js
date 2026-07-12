@@ -67,6 +67,7 @@ function enrichCartItem(item) {
     price: menu ? menu.price : item.price,
     emoji: menu ? menu.emoji : '☕',
     image: menu ? menu.image : item.image
+    ,isSoldOut: Boolean(menu?.isSoldOut)
   };
 }
 
@@ -91,6 +92,7 @@ function renderItemThumb(item) {
 
 function renderCart() {
   const cart = getCart().map(enrichCartItem);
+  const soldOutItems = cart.filter((item) => item.isSoldOut);
   const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
   const quantity = getCartQuantity(cart);
 
@@ -102,6 +104,8 @@ function renderCart() {
   subtotalPrice.textContent = formatPrice(total);
   renderCouponSelector(cart, total);
   renderMemberBenefits(total);
+  orderButton.disabled = soldOutItems.length > 0;
+  orderButton.textContent = soldOutItems.length ? '품절 메뉴 확인 필요' : '주문하기';
 
   if (cart.length > 0) {
     setMomoReaction(`모모가 ${quantity}개의 메뉴를 확인하고 있어요.`);
@@ -111,11 +115,12 @@ function renderCart() {
     cartList,
     cart,
     (item) => `
-      <article class="cart-item">
+      <article class="cart-item ${item.isSoldOut ? 'is-soldout' : ''}">
         <div class="cart-item-main">
           ${renderItemThumb(item)}
           <div class="item-info">
             <h2>${escapeHtml(item.name)}</h2>
+            ${item.isSoldOut ? '<strong class="cart-soldout-badge">품절</strong><p class="item-meta">현재 품절된 메뉴입니다.</p>' : ''}
             <p class="item-meta">${escapeHtml(getCategoryName(item.category))} · ${formatPrice(item.price)}</p>
             <p class="item-meta">옵션: ${escapeHtml(formatCartOptions(item.options))}</p>
           </div>
@@ -124,7 +129,7 @@ function renderCart() {
           <div class="quantity-control" aria-label="${escapeHtml(item.name)} 수량">
             <button class="icon-button" type="button" data-action="decrease" data-menu-id="${escapeHtml(item.menuId)}" aria-label="수량 줄이기">-</button>
             <strong class="quantity-value">${item.quantity}</strong>
-            <button class="icon-button" type="button" data-action="increase" data-menu-id="${escapeHtml(item.menuId)}" aria-label="수량 늘리기">+</button>
+            <button class="icon-button" type="button" data-action="increase" data-menu-id="${escapeHtml(item.menuId)}" aria-label="수량 늘리기" ${item.isSoldOut ? 'disabled' : ''}>+</button>
           </div>
           <span class="line-price">${formatPrice(item.price * item.quantity)}</span>
           <button class="remove-button" type="button" data-action="remove" data-menu-id="${escapeHtml(item.menuId)}">삭제</button>
@@ -294,6 +299,7 @@ stampRewardButton.addEventListener('click', () => {
 });
 
 orderButton.addEventListener('click', () => {
+  if (getCartSoldOutItems(getCart()).length) { showToast('품절된 메뉴가 포함되어 있어 주문할 수 없습니다.'); return; }
   window.location.href = '../checkout/index.html';
   return;
   const cart = getCart().map(enrichCartItem);

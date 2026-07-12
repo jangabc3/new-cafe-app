@@ -2,6 +2,8 @@
 const detailPanel = $('#detailPanel');
 const orderId = getQueryParam('id');
 const order = getOrderById(orderId);
+const detailUser = JSON.parse(localStorage.getItem('momoCurrentUser') || 'null');
+const canViewOrder = order && (String(order.userId ?? order.userEmail) === String(detailUser?.id ?? detailUser?.email) || String(order.userEmail) === String(detailUser?.email));
 
 function updateCartCount() {
   cartCount.textContent = getCart().reduce((sum, item) => sum + item.quantity, 0);
@@ -21,6 +23,8 @@ function renderMissingOrder() {
 function renderOrderDetail() {
   document.title = `주문 ${order.id} | 모모커피`;
   const completedAt = order.completedAt ? formatDate(order.completedAt) : '아직 완료되지 않음';
+  const progress = getOrderStatusProgress(order.status);
+  const statusMessages = { RECEIVED:'주문이 정상적으로 접수되었습니다.', PREPARING:'모모가 메뉴를 정성껏 준비하고 있어요.', READY:'메뉴 준비가 완료되었습니다. 선택하신 매장에서 픽업해주세요.', PICKED_UP:'픽업이 완료된 주문입니다.' };
 
   detailPanel.innerHTML = `
     <div class="detail-header">
@@ -32,13 +36,10 @@ function renderOrderDetail() {
       <strong>${formatPrice(order.total)}</strong>
     </div>
 
-    <section class="momo-progress" aria-label="모모 주문 리액션">
-      <span class="mini-momo" aria-hidden="true"><span></span></span>
-      <div>
-        <strong>모모가 커피를 준비하고 있어요.</strong>
-        <p>주문 접수부터 픽업 가능 상태까지 작은 리액션으로 진행 상황을 알려드립니다.</p>
-      </div>
+    <section class="customer-order-progress" aria-label="주문 진행 상태">
+      ${ADMIN_ORDER_STATUSES.map((status,index)=>`<div class="customer-progress-step ${index<progress?'is-done':index===progress?'is-current':''}"><i>${index<progress?'✓':index+1}</i><span>${getOrderStatusLabel(status)}</span></div>`).join('')}
     </section>
+    <p class="customer-status-message ${order.status==='READY'?'is-ready':''}">${statusMessages[order.status]}</p>
 
     <section class="detail-meta" aria-label="주문 정보">
       <article><span>주문 일시</span><strong>${escapeHtml(formatDate(order.createdAt))}</strong></article>
@@ -81,5 +82,5 @@ function renderOrderDetail() {
 }
 
 updateCartCount();
-if (order) renderOrderDetail();
+if (canViewOrder) renderOrderDetail();
 else renderMissingOrder();

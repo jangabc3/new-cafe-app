@@ -1,14 +1,1 @@
-@import url("create.css");
-
-.missing-panel {
-  grid-template-columns: 1fr;
-}
-
-.missing-panel h2,
-.missing-panel p {
-  margin: 0;
-}
-
-.missing-panel .primary-button {
-  width: fit-content;
-}
+@import url('/admin/menus/detail.css');.form-panel{display:grid;grid-template-columns:1fr 1fr;gap:20px;padding:34px;background:var(--admin-card);border:1px solid var(--admin-line);border-radius:22px}.form-field{display:grid;gap:8px;font-weight:700}.form-field-wide{grid-column:1/-1}.form-field input,.form-field select,.form-field textarea{width:100%;min-height:48px;padding:12px 14px;border:1px solid var(--admin-line);border-radius:12px;background:#fff;color:var(--admin-brown);font:500 14px Pretendard}.form-field textarea{min-height:150px;resize:vertical}.form-field input:focus,.form-field select:focus,.form-field textarea:focus{outline:3px solid #eac5c8;border-color:#c9868c}.form-error{grid-column:1/-1;margin:0;color:#a65151}.form-actions{grid-column:1/-1;display:flex;gap:9px}.missing-panel{display:block;text-align:center}@media(max-width:700px){.form-panel{grid-template-columns:1fr;padding:23px 17px}.form-field-wide{grid-column:auto}.form-actions{grid-column:auto}.form-actions>*{flex:1}}

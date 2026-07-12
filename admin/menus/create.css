@@ -1,8 +1,6 @@
-@import url("list.css");
+@import url("/admin/menus/list.css");
 
-.form-shell {
-  width: min(860px, calc(100% - 32px));
-}
+.page-heading,.form-panel{width:min(900px,100%)}.page-heading{display:flex;align-items:end;justify-content:space-between;margin-bottom:20px}.page-heading h1{margin:4px 0;font:600 34px MaruBuri}.page-heading p{color:var(--admin-muted)}
 
 .form-panel {
   display: grid;

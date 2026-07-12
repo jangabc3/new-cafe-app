@@ -21,6 +21,17 @@ function getMomoCoupons() {
   }
 }
 
+function getMomoCouponsForUser(user) {
+  const userId = user?.id ?? user?.email;
+  const memberKey = String(userId || '').toLowerCase();
+  return getMomoCoupons().filter((coupon) => {
+    if (coupon.revoked) return false;
+    if (coupon.expiresAt && new Date(coupon.expiresAt) < new Date()) return false;
+    if (coupon.userId != null) return String(coupon.userId) === String(userId) || String(coupon.memberKey || '').toLowerCase() === memberKey;
+    return true;
+  });
+}
+
 function saveMomoCoupons(coupons) {
   localStorage.setItem(MOMO_COUPON_STORAGE_KEY, JSON.stringify(coupons));
 }

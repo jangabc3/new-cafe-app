@@ -1,4 +1,16 @@
 (() => {
+  let operationSettings={};try{operationSettings=JSON.parse(localStorage.getItem('momoOperationSettings')||'{}')}catch{}
+  document.documentElement.classList.toggle('momo-maintenance',Boolean(operationSettings.maintenanceMode));
+  document.addEventListener('DOMContentLoaded',()=>{
+    const visibility=[
+      ['heroBannerEnabled','.landing-hero,.hero-spacer'],
+      ['seasonMenuEnabled','.season-collection,.season-section'],
+      ['eventSectionEnabled','.event-section,#event'],
+      ['appPromotionEnabled','.app-section,#app']
+    ];
+    visibility.forEach(([key,selector])=>{if(operationSettings[key]===false)document.querySelectorAll(selector).forEach(node=>{node.hidden=true})});
+  });
+  if(operationSettings.noticeMessage||operationSettings.maintenanceMode){document.addEventListener('DOMContentLoaded',()=>{const key=operationSettings.updatedAt||operationSettings.noticeMessage;if(sessionStorage.getItem('momoNoticeClosed')===key)return;const bar=document.createElement('div');bar.className='operation-notice-bar';bar.innerHTML=`<span>${operationSettings.noticeMessage||'현재 사이트 점검 중이며 주문 기능이 제한됩니다.'}</span><button type="button" aria-label="운영 공지 닫기">×</button>`;bar.style.cssText='padding:10px 45px;text-align:center;background:#f1dfd5;color:#4a3026;font:600 13px Pretendard;position:relative;z-index:100';bar.querySelector('button').onclick=()=>{sessionStorage.setItem('momoNoticeClosed',key);bar.remove()};document.body.prepend(bar)})}
   const oldHeader = document.querySelector('.site-header');
   if (!oldHeader || oldHeader.matches('[data-mega-header]')) return;
 

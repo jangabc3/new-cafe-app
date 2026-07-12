@@ -1,4 +1,5 @@
-const couponData = getMomoCoupons();
+const couponUser = JSON.parse(localStorage.getItem('momoCurrentUser') || 'null');
+const couponData = getMomoCouponsForUser(couponUser);
 
 const statusMeta = {
   all: { label: '전체 쿠폰' },

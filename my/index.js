@@ -1,4 +1,4 @@
-﻿const currentUser = JSON.parse(localStorage.getItem('momoCurrentUser') || 'null');
+const currentUser = JSON.parse(localStorage.getItem('momoCurrentUser') || 'null');
 
 if (!currentUser) {
   window.location.href = '/login.html?redirect=%2Fmy&message=login-required';
@@ -133,7 +133,7 @@ function renderStats() {
   const availableCoupons = (() => {
     try {
       return typeof getMomoCoupons === 'function'
-        ? getMomoCoupons().filter((coupon) => coupon.status === 'available')
+        ? getMomoCouponsForUser(currentUser).filter((coupon) => coupon.status === 'available' && !coupon.used)
         : [];
     } catch {
       return [];
@@ -170,7 +170,7 @@ function renderCoupons() {
   const storedCoupons = (() => {
     try {
       return typeof getMomoCoupons === 'function'
-        ? getMomoCoupons().filter((coupon) => coupon.status === 'available').slice(0, 3).map((coupon) => ({
+        ? getMomoCouponsForUser(currentUser).filter((coupon) => coupon.status === 'available' && !coupon.used).slice(0, 3).map((coupon) => ({
             value: coupon.type,
             unit: coupon.label,
             title: coupon.title,

@@ -4,19 +4,19 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Create Menu | Cafe Admin</title>
-    <link rel="stylesheet" href="../../css/variables.css">
-    <link rel="stylesheet" href="create.css">
+    <link rel="stylesheet" href="/css/variables.css">
+    <link rel="stylesheet" href="/admin/menus/create.css">
   </head>
-  <body>
+  <body data-admin-page="menus">
     <header class="admin-header">
-      <a class="brand" href="list.html" aria-label="Menu admin home">
-        <img src="../../assets/images/momo-header-logo.png?v=5" alt="MOMO COFFEE" class="site-logo-image">
+      <a class="brand" href="/admin/menus/list.html" aria-label="Menu admin home">
+        <img src="/assets/images/momo-header-logo.png?v=5" alt="MOMO COFFEE" class="site-logo-image">
         <span>Cafe Admin</span>
       </a>
       <nav class="admin-nav" aria-label="Admin navigation">
-        <a class="is-active" href="list.html">Menus</a>
+        <a class="is-active" href="/admin/menus/list.html">Menus</a>
         <a href="/admin/qna/list.html">문의 관리</a>
-        <a href="../index.html">Dashboard</a>
+        <a href="/admin/">Dashboard</a>
       </nav>
     </header>
 
@@ -26,7 +26,7 @@
           <p class="eyebrow">Create Menu</p>
           <h1>메뉴 추가</h1>
         </div>
-        <a class="secondary-button" href="list.html">목록</a>
+        <a class="secondary-button" href="/admin/menus/list.html">목록</a>
       </section>
 
       <form id="menuForm" class="form-panel">
@@ -53,15 +53,15 @@
         <p id="formError" class="form-error" hidden></p>
         <div class="form-actions">
           <button class="primary-button" type="submit">저장</button>
-          <a class="secondary-button" href="list.html">취소</a>
+          <a class="secondary-button" href="/admin/menus/list.html">취소</a>
         </div>
       </form>
     </main>
 
     <script src="../../js/data.js"></script>
     <script src="../../js/utils.js"></script>
-    <script src="create.js"></script>
+    <script src="/admin/menus/create.js"></script>
     <script src="../../js/footer.js"></script>
-  </body>
+  <script src="/admin/admin-layout.js"></script></body>
 </html>
 

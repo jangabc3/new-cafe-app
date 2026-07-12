@@ -200,7 +200,7 @@
       }
 
       localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(user));
-      window.location.href = safeRedirect(params.get('redirect'));
+      window.location.href = user.role === 'ADMIN' ? projectUrl('admin/') : safeRedirect(params.get('redirect'));
     });
   };
 

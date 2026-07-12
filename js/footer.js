@@ -1,7 +1,5 @@
 ﻿(() => {
-  const scriptUrl = document.currentScript?.src || new URL('js/footer.js', document.baseURI).href;
-  const projectRoot = new URL('../', scriptUrl);
-  const url = (path) => new URL(path, projectRoot).href;
+  const url = (path) => new URL(`/${String(path).replace(/^\/+/, '')}`, window.location.origin).href;
 
   if (!document.querySelector('link[href$="css/footer.css"], link[href*="/css/footer.css"]')) {
     const link = document.createElement('link');

@@ -2,9 +2,7 @@
   const oldHeader = document.querySelector('.site-header');
   if (!oldHeader || oldHeader.matches('[data-mega-header]')) return;
 
-  const scriptUrl = document.currentScript?.src || new URL('../js/nav.js', document.baseURI).href;
-  const projectRoot = new URL('../', scriptUrl);
-  const root = projectRoot.href;
+  const root = '/';
   const path = window.location.pathname.replace(/\\/g, '/');
   const activeCategory =
     path.includes('/menus/') || path.includes('/menu/') || path.endsWith('/liked-menu.html') ? 'menu'
@@ -47,7 +45,7 @@
           <div class="global-menu-group"><h3>&#xC0C1;&#xD488;</h3><a href="${root}menu/goods.html">MD</a></div>
         </section>
         <section class="global-mega-column" data-mega-column="store"><h2>STORE</h2><a href="${root}stores/finder.html">&#xB9E4;&#xC7A5; &#xCC3E;&#xAE30;</a></section>
-        <section class="global-mega-column" data-mega-column="community"><h2>COMMUNITY</h2><a href="${root}community/notice.html">&#xACF5;&#xC9C0;&#xC0AC;&#xD56D;</a><a href="${root}community/event.html">&#xC774;&#xBCA4;&#xD2B8;</a><a href="${root}community/faq.html">FAQ</a></section>
+        <section class="global-mega-column" data-mega-column="community"><h2>COMMUNITY</h2><a href="${root}community/notice.html">&#xACF5;&#xC9C0;&#xC0AC;&#xD56D;</a><a href="${root}community/event.html">&#xC774;&#xBCA4;&#xD2B8;</a><a href="${root}community/faq.html">FAQ</a><a href="${root}qna/list.html">1:1 문의</a></section>
         <section class="global-mega-column" data-mega-column="brand"><h2>BRAND</h2><a href="${root}story/brand.html">&#xBE0C;&#xB79C;&#xB4DC; &#xC18C;&#xAC1C;</a><a href="${root}story/bi.html">Brand Identity (BI)</a></section>
         <section class="global-mega-column" data-mega-column="mypage"><h2>MY PAGE</h2><a href="${root}my/index.html">&#xB9C8;&#xC774;&#xD398;&#xC774;&#xC9C0;</a><a href="${root}orders/list.html">&#xC8FC;&#xBB38; &#xB0B4;&#xC5ED;</a><a href="${root}liked-menu.html">&#xCC1C;&#xD55C; &#xBA54;&#xB274;</a><a href="${root}basket/list.html">&#xC7A5;&#xBC14;&#xAD6C;&#xB2C8;</a><a href="${root}coupon.html">&#xCFE0;&#xD3F0;&#xD568;</a><a href="${root}my/profile.html">&#xD68C;&#xC6D0; &#xC815;&#xBCF4; &#xC218;&#xC815;</a></section>
       </div>

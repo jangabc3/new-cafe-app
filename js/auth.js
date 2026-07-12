@@ -5,9 +5,9 @@
   const USERS_KEY = 'momoUsers';
   const LAST_REGISTERED_USER_KEY = 'momoLastRegisteredUser';
   const CURRENT_USER_KEY = 'momoCurrentUser';
-  const scriptUrl = document.currentScript?.src || new URL('js/auth.js', document.baseURI).href;
-  const projectRoot = new URL('../', scriptUrl);
-  const projectPath = projectRoot.pathname;
+  const ADMIN_EMAIL = 'admin@momo.com';
+  const projectRoot = new URL('/', window.location.origin);
+  const projectPath = '/';
 
   const readJson = (key, fallback) => {
     try {
@@ -29,7 +29,13 @@
       users.push(lastRegistered);
     }
 
-    return users.filter((user) => user && typeof user === 'object' && user.email);
+    const normalized = users.filter((user) => user && typeof user === 'object' && user.email)
+      .map((user) => ({ ...user, role: user.role === 'ADMIN' ? 'ADMIN' : 'USER' }));
+    if (!normalized.some((user) => normalizeEmail(user.email) === ADMIN_EMAIL)) {
+      normalized.push({ id: 'momo-admin', email: ADMIN_EMAIL, password: 'momo-admin-dev', name: 'MOMO 관리자', role: 'ADMIN', createdAt: new Date().toISOString() });
+      saveUsers(normalized);
+    }
+    return normalized;
   };
 
   const saveUsers = (users) => {
@@ -124,7 +130,8 @@
         password,
         name,
         phone,
-        createdAt: new Date().toISOString()
+        createdAt: new Date().toISOString(),
+        role: 'USER'
       };
       users.push(newUser);
 

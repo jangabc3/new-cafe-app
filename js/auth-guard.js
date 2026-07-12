@@ -12,9 +12,7 @@
 
   if (currentUser) return;
 
-  const scriptUrl = script?.src || new URL('js/auth-guard.js', document.baseURI).href;
-  const projectRoot = new URL('../', scriptUrl);
-  const loginUrl = new URL('login.html', projectRoot);
+  const loginUrl = new URL('/login.html', window.location.origin);
   loginUrl.searchParams.set('redirect', redirect);
   loginUrl.searchParams.set('message', 'login-required');
   window.location.replace(loginUrl.href);

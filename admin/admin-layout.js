@@ -1,10 +1,7 @@
 (() => {
   const read=(key,fallback=null)=>{try{return JSON.parse(localStorage.getItem(key))??fallback}catch{return fallback}};
   const user=read('momoCurrentUser');
-  const sessionExpiresAt=Number(user?.sessionExpiresAt||0);
-  if(user&&(!sessionExpiresAt||Date.now()>=sessionExpiresAt)){localStorage.removeItem('momoCurrentUser');location.replace('/login.html?message=session-expired');return}
   if(!user){location.replace('/login.html?redirect='+encodeURIComponent(location.pathname+location.search));return}
-  setTimeout(()=>{localStorage.removeItem('momoCurrentUser');alert('로그인 후 30분이 지나 자동 로그아웃되었습니다.');location.replace('/login.html?message=session-expired')},Math.max(0,sessionExpiresAt-Date.now())+50);
   if(user.role!=='ADMIN'){alert('관리자만 접근할 수 있습니다.');location.replace('/index.html');return}
   const app=document.querySelector('.admin-app');if(!app)return;
   const path=location.pathname.replace(/\/index\.html$/,'').replace(/\/$/,'');

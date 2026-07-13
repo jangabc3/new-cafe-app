@@ -200,7 +200,7 @@ function setSingleHeroCarousel() {
       description: '상큼한 딸기와 부드러운 크림을 담은 달콤한 한 잔',
       seasonText: '2026 SPRING SEASON LIMITED',
       buttonText: '시즌 메뉴 보기',
-      href: 'menus/list.html?category=season',
+      href: '/menus/list.html#category=season',
       alt: 'MOMO COFFEE 딸기 크림 라떼 배너',
     },
     {
@@ -213,7 +213,7 @@ function setSingleHeroCarousel() {
       description: '진한 말차와 달콤한 크림이 만드는 차분한 한 잔',
       seasonText: '2026 SPRING SEASON LIMITED',
       buttonText: '시즌 메뉴 보기',
-      href: 'menus/list.html?category=noncoffee',
+      href: '/menus/list.html#category=noncoffee',
       alt: 'MOMO COFFEE 말차 크림 라떼 배너',
     },
     {
@@ -226,7 +226,7 @@ function setSingleHeroCarousel() {
       description: '복숭아 가득, 시원하게!',
       seasonText: '2026 SUMMER SEASON LIMITED',
       buttonText: '시즌 메뉴 보기',
-      href: 'menus/list.html?category=season',
+      href: '/menus/list.html#category=season',
       alt: 'MOMO COFFEE 복숭아 아이스티 배너',
     },
     {
@@ -239,7 +239,7 @@ function setSingleHeroCarousel() {
       description: '달콤하게, 시원하게, 한 컵 가득 행복을 담았어요!',
       seasonText: '2026 SUMMER NEW DESSERT',
       buttonText: '여름 시즌 메뉴 보기',
-      href: '/menus/list.html?category=season',
+      href: '/menus/list.html#category=season',
       alt: 'MOMO COFFEE 컵빙수 여름 디저트 배너',
     },
   ];

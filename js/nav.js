@@ -70,10 +70,10 @@
   try {
     let currentUser = JSON.parse(localStorage.getItem('momoCurrentUser') || 'null');
     const sessionExpiresAt = Number(currentUser?.sessionExpiresAt || 0);
-    if (currentUser && (!sessionExpiresAt || Date.now() >= sessionExpiresAt)) {
+    if (currentUser && currentUser.role !== 'ADMIN' && (!sessionExpiresAt || Date.now() >= sessionExpiresAt)) {
       localStorage.removeItem('momoCurrentUser');
       currentUser = null;
-    } else if (currentUser) {
+    } else if (currentUser && currentUser.role !== 'ADMIN') {
       const sessionTimer = document.createElement('span');
       sessionTimer.className = 'session-timer';
       sessionTimer.setAttribute('aria-label', '자동 로그아웃까지 남은 시간');
@@ -95,6 +95,14 @@
     }
     const loginLink = header.querySelector('.unified-login');
     if (currentUser?.name && loginLink) {
+      if (currentUser.role === 'ADMIN') {
+        const adminShortcut = document.createElement('a');
+        adminShortcut.className = 'admin-header-shortcut';
+        adminShortcut.href = '/admin/index.html';
+        adminShortcut.textContent = 'ADMIN';
+        adminShortcut.setAttribute('aria-label', '관리자 페이지로 이동');
+        header.querySelector('.unified-header-inner')?.prepend(adminShortcut);
+      }
       loginLink.hidden = true;
       const greeting = document.createElement('a');
       greeting.className = 'auth-greeting';

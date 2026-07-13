@@ -59,13 +59,14 @@
   const getCurrentUser = () => {
     const user = readJson(CURRENT_USER_KEY, null);
     if (!user) return null;
+    if (user.role === 'ADMIN') return user;
     const expiresAt = Number(user.sessionExpiresAt || 0);
     if (!expiresAt || Date.now() >= expiresAt) { clearSession(); return null; }
     return user;
   };
   const scheduleSessionExpiry = () => {
     const user = getCurrentUser();
-    if (!user) return;
+    if (!user || user.role === 'ADMIN') return;
     window.setTimeout(() => {
       if (getCurrentUser()) return;
       window.alert('로그인 후 30분이 지나 자동 로그아웃되었습니다.');

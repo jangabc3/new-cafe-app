@@ -6,7 +6,7 @@
   let currentUser = null;
   try {
     currentUser = JSON.parse(localStorage.getItem(CURRENT_USER_KEY) || 'null');
-    if (currentUser && (!Number(currentUser.sessionExpiresAt) || Date.now() >= Number(currentUser.sessionExpiresAt))) {
+    if (currentUser && currentUser.role !== 'ADMIN' && (!Number(currentUser.sessionExpiresAt) || Date.now() >= Number(currentUser.sessionExpiresAt))) {
       currentUser = null;
       localStorage.removeItem(CURRENT_USER_KEY);
     }

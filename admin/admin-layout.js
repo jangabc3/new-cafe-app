@@ -4,6 +4,15 @@
   if(!user){location.replace('/login.html?redirect='+encodeURIComponent(location.pathname+location.search));return}
   if(user.role!=='ADMIN'){alert('관리자만 접근할 수 있습니다.');location.replace('/index.html');return}
   const app=document.querySelector('.admin-app');if(!app)return;
+  // `serve` can redirect clean URLs while dropping a query string. Inquiry
+  // identifiers therefore travel in the fragment and are restored in-place
+  // before each page entry script reads location.search.
+  const routeHash=new URLSearchParams(location.hash.replace(/^#/,''));
+  if(/\/admin\/qna\/detail(?:\.html)?\/?$/.test(location.pathname)&&!new URLSearchParams(location.search).get('id')&&routeHash.get('id')){
+    const inquiryId=routeHash.get('id');
+    const section=routeHash.get('section');
+    history.replaceState(null,'',`${location.pathname}?id=${encodeURIComponent(inquiryId)}${section==='answer'?'#answer':''}`);
+  }
   const path=location.pathname.replace(/\/index\.html$/,'').replace(/\/$/,'');
   const page=document.body.dataset.adminPage||({
     '/admin':'dashboard','/admin/operations':'operations','/admin/orders/list':'orders','/admin/menus/list':'menus','/admin/members/list':'members','/admin/qna/list':'qna','/admin/rewards/list':'rewards','/admin/analytics':'analytics','/admin/activity/list':'activity','/admin/settings':'settings'
@@ -32,9 +41,31 @@
   document.querySelectorAll('input,select,textarea').forEach(control=>{if(control.type==='hidden'||control.getAttribute('aria-label')||control.getAttribute('aria-labelledby')||control.labels?.length)return;control.setAttribute('aria-label',control.placeholder||control.name||'입력 항목')});
   document.querySelectorAll('button').forEach(button=>{if(!button.getAttribute('aria-label')&&!button.textContent.trim())button.setAttribute('aria-label',button.title||'버튼')});
   document.querySelectorAll('[data-admin-logout]').forEach(button=>button.onclick=()=>{localStorage.removeItem('momoCurrentUser');location.replace('/login.html')});
+  const normalizeQnaLinks=root=>root.querySelectorAll?.('a[href*="/admin/qna/detail"]').forEach(link=>{
+    const target=new URL(link.href,location.origin);
+    const inquiryId=target.searchParams.get('id');
+    if(!inquiryId)return;
+    const section=target.hash==='#answer'?'&section=answer':'';
+    link.href=`/admin/qna/detail.html#id=${encodeURIComponent(inquiryId)}${section}`;
+  });
+  normalizeQnaLinks(document);
+  new MutationObserver(records=>records.forEach(record=>record.addedNodes.forEach(node=>{
+    if(node.nodeType===1){normalizeQnaLinks(node);if(node.matches?.('a[href*="/admin/qna/detail"]'))normalizeQnaLinks(node.parentElement)}
+  }))).observe(document.body,{childList:true,subtree:true});
+  document.addEventListener('click',event=>{
+    const link=event.target.closest('a[href*="/admin/qna/detail"]');
+    if(!link)return;
+    const target=new URL(link.href,location.origin);
+    const inquiryId=target.searchParams.get('id');
+    if(!inquiryId)return;
+    event.preventDefault();
+    const section=target.hash==='#answer'?'&section=answer':'';
+    location.href=`/admin/qna/detail.html#id=${encodeURIComponent(inquiryId)}${section}`;
+  },true);
   const toggle=top.querySelector('.sidebar-toggle'),bell=top.querySelector('.admin-notification-button');toggle.onclick=()=>{const open=document.body.classList.toggle('admin-nav-open');toggle.setAttribute('aria-expanded',String(open))};bell.onclick=()=>{panel.hidden=!panel.hidden;bell.setAttribute('aria-expanded',String(!panel.hidden));if(!panel.hidden)renderNotices()};
   panel.onclick=event=>{if(event.target.closest('[data-read-all]')){MomoAdminNotifications?.markAllRead();renderNotices();return}const filter=event.target.closest('[data-filter]');if(filter){panel.querySelectorAll('[data-filter]').forEach(button=>button.classList.toggle('active',button===filter));panel.querySelectorAll('.notification-list a').forEach(link=>link.hidden=filter.dataset.filter==='unread'&&!link.classList.contains('unread'));return}const link=event.target.closest('[data-id]');if(link)MomoAdminNotifications?.markRead(link.dataset.id)};
   modal.querySelector('[data-confirm-cancel]').onclick=()=>closeModal(false);modal.querySelector('[data-confirm-ok]').onclick=()=>closeModal(true);modal.onclick=event=>{if(event.target===modal)closeModal(false)};
   document.addEventListener('keydown',event=>{if(event.key==='Escape'){if(!modal.hidden)closeModal(false);else{document.body.classList.remove('admin-nav-open');panel.hidden=true;toggle.setAttribute('aria-expanded','false');bell.setAttribute('aria-expanded','false')}}});
+  window.addEventListener('load',()=>{if(location.hash==='#answer')document.querySelector('#answer')?.scrollIntoView({block:'start'})});
   window.MomoAdmin={user,read,requireAdmin:()=>{if(user.role!=='ADMIN')throw Error('관리자 권한이 필요합니다.')},formatMoney,formatPoint,formatDate,formatDateTime,relativeTime,toast,confirm:confirmDialog,empty,loading};
 })();

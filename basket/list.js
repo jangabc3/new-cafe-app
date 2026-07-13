@@ -301,7 +301,8 @@ stampRewardButton.addEventListener('click', () => {
 orderButton.addEventListener('click', () => {
   let settings={};try{settings=JSON.parse(localStorage.getItem('momoOperationSettings')||'{}')}catch{} if(settings.orderEnabled===false||settings.maintenanceMode){showToast('현재 온라인 주문이 일시 중지되었습니다.');return;}
   if (getCartSoldOutItems(getCart()).length) { showToast('품절된 메뉴가 포함되어 있어 주문할 수 없습니다.'); return; }
-  window.location.href = '../checkout/index.html';
+  localStorage.setItem('momoCheckoutBenefits', JSON.stringify({ couponId: appliedCoupon?.id ?? null, points: appliedPoints, rewardApplied }));
+  window.location.href = '/checkout/index.html';
   return;
   const cart = getCart().map(enrichCartItem);
   if (cart.length === 0) return;

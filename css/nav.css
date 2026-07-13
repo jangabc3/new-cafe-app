@@ -364,6 +364,37 @@
   font-weight: 750;
 }
 
+/* Keep account controls identical even when a page stylesheet has broad link/button rules. */
+.site-header.unified-header .unified-actions .unified-login:not([hidden]) {
+  display: inline-flex !important;
+  max-width: 150px !important;
+  min-height: 40px !important;
+  align-items: center !important;
+  overflow: hidden !important;
+  color: #3f291f !important;
+  font-family: Pretendard, "Noto Sans KR", sans-serif !important;
+  font-size: 14px !important;
+  font-weight: 750 !important;
+  line-height: 1.2 !important;
+  letter-spacing: -0.02em !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+
+.site-header.unified-header .unified-actions .unified-login[hidden] {
+  display: none !important;
+}
+
+.site-header.unified-header .unified-actions .auth-logout {
+  min-height: 40px !important;
+  color: #8a6f63 !important;
+  font-family: Pretendard, "Noto Sans KR", sans-serif !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  line-height: 1.2 !important;
+  white-space: nowrap !important;
+}
+
 .header-actions .auth-greeting,
 .unified-actions .auth-greeting {
   overflow: hidden;
@@ -373,6 +404,18 @@
   font-weight: 700;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.site-header.unified-header .unified-actions .auth-greeting {
+  display: inline-flex !important;
+  min-height: 40px !important;
+  align-items: center !important;
+  color: #3f291f !important;
+  font-family: Pretendard, "Noto Sans KR", sans-serif !important;
+  font-size: 14px !important;
+  font-weight: 750 !important;
+  line-height: 1.2 !important;
+  letter-spacing: -0.02em !important;
 }
 
 .header-actions .auth-logout,

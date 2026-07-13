@@ -30,7 +30,8 @@ function renderOrderDetail() {
     <div class="detail-header">
       <div>
         <span class="status-pill">${escapeHtml(getStatusLabel(order.status))}</span>
-        <h1>주문번호 ${escapeHtml(order.id)}</h1>
+        <p class="order-eyebrow">MOMO ORDER</p>
+        <h1>${escapeHtml(order.orderNumber || order.id)}</h1>
         <p class="missing-copy">맛있는 커피를 정성껏 준비하고 있어요. 예상 제조 시간은 약 10분입니다.</p>
       </div>
       <strong>${formatPrice(order.total)}</strong>
@@ -49,16 +50,15 @@ function renderOrderDetail() {
 
     <section class="items-table" aria-label="주문 상품">
       <table>
-        <thead><tr><th>메뉴</th><th>카테고리</th><th>수량</th><th>단가</th><th>금액</th></tr></thead>
+        <thead><tr><th>주문 메뉴</th><th>선택 옵션</th><th>수량</th><th>금액</th></tr></thead>
         <tbody>
           ${order.items
             .map(
               (item) => `
                 <tr>
-                  <td>${escapeHtml(item.name)}</td>
-                  <td>${escapeHtml(getCategoryName(item.category))}</td>
+                  <td><div class="ordered-menu"><img src="/${String(item.image || getMenuById(item.menuId)?.image || 'assets/images/momo-face-cute.png').replace(/^\.\.\//,'').replace(/^\//,'')}" alt=""><span><b>${escapeHtml(item.name)}</b><small>${escapeHtml(getCategoryName(item.category))}</small></span></div></td>
+                  <td>${escapeHtml(Object.values(item.options || {}).filter(value=>value&&typeof value!=='object').join(' · ') || '기본 옵션')}</td>
                   <td>${item.quantity}</td>
-                  <td>${formatPrice(item.price)}</td>
                   <td>${formatPrice(item.price * item.quantity)}</td>
                 </tr>
               `

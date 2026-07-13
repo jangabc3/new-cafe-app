@@ -1,85 +1,10 @@
-﻿(() => {
-  const url = (path) => new URL(`/${String(path).replace(/^\/+/, '')}`, window.location.origin).href;
-
-  if (!document.querySelector('link[href$="css/footer.css"], link[href*="/css/footer.css"]')) {
-    const link = document.createElement('link');
-    link.rel = 'stylesheet';
-    link.href = url('css/footer.css');
-    document.head.appendChild(link);
-  }
-
-  const footer = document.createElement('footer');
-  footer.className = 'landing-footer';
-  footer.innerHTML = `
-    <div class="footer-inner">
-      <div class="footer-main">
-        <section class="footer-brand" aria-label="MOMO COFFEE 브랜드 정보">
-          <a class="footer-logo" href="${url('index.html')}" aria-label="MOMO COFFEE 홈">
-            <span class="footer-logo-mark" aria-hidden="true"><img src="${url('assets/images/momo-header-logo.png?v=5')}" alt=""></span>
-            <strong>MOMO COFFEE</strong>
-          </a>
-          <p class="footer-slogan">한 잔의 커피,<br>하루의 <em>행복.</em></p>
-          <p class="footer-description">따뜻한 커피와 달콤한 디저트로<br>당신의 하루에 작은 행복을 전합니다.</p>
-          <div class="footer-social" aria-label="MOMO COFFEE 소셜 채널">
-            <a href="#" aria-label="Instagram">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.5" cy="6.5" r="1"></circle></svg>
-            </a>
-            <a href="#" aria-label="YouTube">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 8.2a3 3 0 0 0-2.1-2.1C17 5.6 12 5.6 12 5.6s-5 0-6.9.5A3 3 0 0 0 3 8.2 31 31 0 0 0 2.6 12 31 31 0 0 0 3 15.8a3 3 0 0 0 2.1 2.1c1.9.5 6.9.5 6.9.5s5 0 6.9-.5a3 3 0 0 0 2.1-2.1 31 31 0 0 0 .4-3.8 31 31 0 0 0-.4-3.8Z"></path><path d="m10 9 5 3-5 3Z"></path></svg>
-            </a>
-            <a href="#" aria-label="KakaoTalk"><span aria-hidden="true">TALK</span></a>
-          </div>
-        </section>
-
-        <nav class="footer-navigation" aria-label="푸터 내비게이션">
-          <section class="footer-column">
-            <h2>MENU</h2>
-            <a href="${url('menus/list.html?category=drink')}">음료</a>
-            <a href="${url('menus/list.html?category=season')}">시즌 메뉴</a>
-            <a href="${url('menus/list.html?category=dessert')}">디저트</a>
-          </section>
-          <section class="footer-column">
-            <h2>STORE</h2>
-            <a href="${url('stores/finder.html')}">매장 찾기</a>
-            <a href="${url('stores/finder.html')}">신규 매장</a>
-          </section>
-          <section class="footer-column">
-            <h2>COMMUNITY</h2>
-            <a href="${url('community/notice.html')}">공지사항</a>
-            <a href="${url('community/event.html')}">이벤트</a>
-            <a href="${url('community/faq.html')}">FAQ</a>
-          </section>
-          <section class="footer-column">
-            <h2>BRAND</h2>
-            <a href="${url('story/brand.html')}">브랜드 소개</a>
-            <a href="${url('story/bi.html')}">Brand Identity (BI)</a>
-          </section>
-          <section class="footer-column footer-customer">
-            <h2>CUSTOMER CENTER</h2>
-            <a href="tel:1234-5678"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3 5 5c-1 1 0 5 4 9s8 5 9 4l2-3-4-2-2 2c-2-1-4-3-5-5l2-2Z"></path></svg>1234-5678</a>
-            <p><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v6l4 2"></path></svg>09:00 - 18:00</p>
-            <a href="mailto:momo@coffee.com"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="m4 7 8 6 8-6"></path></svg>momo@coffee.com</a>
-          </section>
-        </nav>
-      </div>
-
-      <div class="footer-bottom">
-        <small>© 2026 MOMO COFFEE. ALL RIGHTS RESERVED.</small>
-        <nav aria-label="약관 및 정책">
-          <a href="#">이용약관</a>
-          <a href="#">개인정보처리방침</a>
-        </nav>
-      </div>
-    </div>
-  `;
-
-  document.querySelectorAll('.landing-footer').forEach((element) => element.remove());
-  const mains = [...document.querySelectorAll('main')];
-  const main = mains[mains.length - 1];
-  if (main) {
-    main.insertAdjacentElement('afterend', footer);
-  } else {
-    document.body.appendChild(footer);
-  }
+(() => {
+  const url=path=>new URL(`/${String(path).replace(/^\/+/, '')}`,location.origin).href;
+  if(!document.querySelector('link[href*="/css/footer.css"]')){const link=document.createElement('link');link.rel='stylesheet';link.href=url('css/footer.css');document.head.append(link)}
+  const footer=document.createElement('footer');footer.className='landing-footer';footer.innerHTML=`<div class="footer-inner"><div class="footer-main"><section class="footer-brand" aria-label="MOMO COFFEE 브랜드 정보"><a class="footer-logo" href="${url('index.html')}" aria-label="MOMO COFFEE 홈"><span class="footer-logo-mark"><img src="${url('assets/images/momo-header-logo.png?v=5')}" alt=""></span><strong>MOMO COFFEE</strong></a><p class="footer-slogan">한 잔의 커피,<br>하루의 <em>행복.</em></p><p class="footer-description">따뜻한 커피와 달콤한 디저트로<br>당신의 하루에 작은 행복을 전합니다.</p><div class="footer-social" aria-label="소셜 채널"><a href="#" aria-label="Instagram">◎</a><a href="#" aria-label="YouTube">▶</a><a href="#" aria-label="KakaoTalk"><span>TALK</span></a></div></section><nav class="footer-navigation" aria-label="푸터 내비게이션"><section class="footer-column"><h2>MENU</h2><a href="${url('menus/list.html?category=coffee')}">음료</a><a href="${url('menus/list.html?category=dessert')}">푸드</a><a href="${url('menu/goods.html')}">상품</a></section><section class="footer-column"><h2>STORE</h2><a href="${url('stores/finder.html')}">매장 찾기</a></section><section class="footer-column"><h2>COMMUNITY</h2><a href="${url('community/notice.html')}">공지사항</a><a href="${url('community/event.html')}">이벤트</a><a href="${url('community/faq.html')}">FAQ</a><a href="${url('qna/list.html')}">1:1 문의</a></section><section class="footer-column"><h2>BRAND</h2><a href="${url('story/brand.html')}">브랜드 소개</a><a href="${url('story/bi.html')}">Brand Identity (BI)</a></section><section class="footer-column footer-customer"><h2>CUSTOMER CENTER</h2><a href="tel:1234-5678">☎ 1234-5678</a><p>◷ 09:00 - 18:00</p><a href="mailto:momo@coffee.com">✉ momo@coffee.com</a></section></nav></div><div class="footer-bottom"><small>© 2026 MOMO COFFEE. ALL RIGHTS RESERVED.</small><nav aria-label="약관 및 정책"><button type="button" data-policy="terms">이용약관</button><button type="button" data-policy="privacy">개인정보처리방침</button></nav></div></div>`;
+  const policies={terms:{title:'이용약관',content:`<h3>제1조 목적</h3><p>본 약관은 MOMO COFFEE가 제공하는 웹사이트, 주문, 멤버십 및 관련 서비스의 이용 조건과 절차를 정합니다.</p><h3>제2조 서비스 이용</h3><p>이용자는 정확한 정보를 제공해야 하며, 타인의 계정이나 결제 정보를 무단으로 사용할 수 없습니다.</p><h3>제3조 주문 및 결제</h3><p>주문은 결제 완료 후 접수됩니다. 매장 상황, 재고 또는 운영 사정에 따라 주문이 제한되거나 취소될 수 있습니다.</p><h3>제4조 책임</h3><p>천재지변, 통신 장애 등 합리적으로 통제하기 어려운 사유로 서비스 제공이 지연될 수 있습니다.</p>`},privacy:{title:'개인정보처리방침',content:`<h3>수집하는 개인정보</h3><p>회원가입과 주문 처리에 필요한 이름, 이메일, 연락처, 생년월일 및 주문 이용 기록을 수집할 수 있습니다.</p><h3>이용 목적</h3><p>회원 식별, 주문·결제 처리, 고객 문의 답변, 쿠폰·포인트 및 멤버십 서비스 제공에 이용합니다.</p><h3>보유 및 파기</h3><p>개인정보는 이용 목적 달성 또는 회원 탈퇴 후 지체 없이 파기합니다. 관계 법령에 따른 보존 의무가 있는 경우 해당 기간 동안 보관합니다.</p><h3>이용자의 권리</h3><p>이용자는 자신의 개인정보 열람, 정정 및 삭제를 요청할 수 있습니다. 문의는 momo@coffee.com으로 접수할 수 있습니다.</p>`}};
+  const modal=document.createElement('div');modal.className='policy-modal-backdrop';modal.hidden=true;modal.innerHTML='<section class="policy-modal" role="dialog" aria-modal="true" aria-labelledby="policyTitle"><header><h2 id="policyTitle"></h2><button type="button" aria-label="정책 내용 닫기" data-policy-close>×</button></header><div class="policy-content"></div><footer><button type="button" data-policy-close>확인</button></footer></section>';
+  let trigger=null;const close=()=>{modal.hidden=true;document.body.classList.remove('policy-modal-open');trigger?.focus()};const open=button=>{trigger=button;const policy=policies[button.dataset.policy];modal.querySelector('h2').textContent=policy.title;modal.querySelector('.policy-content').innerHTML=policy.content;modal.hidden=false;document.body.classList.add('policy-modal-open');modal.querySelector('[data-policy-close]').focus()};
+  footer.addEventListener('click',event=>{const button=event.target.closest('[data-policy]');if(button)open(button)});modal.addEventListener('click',event=>{if(event.target===modal||event.target.closest('[data-policy-close]'))close()});document.addEventListener('keydown',event=>{if(event.key==='Escape'&&!modal.hidden)close()});
+  footer.querySelector('.footer-social')?.remove();document.querySelectorAll('.landing-footer').forEach(node=>node.remove());const main=[...document.querySelectorAll('main')].at(-1);if(main)main.insertAdjacentElement('afterend',footer);else document.body.append(footer);document.body.append(modal);
 })();
-

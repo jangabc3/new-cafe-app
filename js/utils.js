@@ -34,6 +34,13 @@ function getMenus() {
   const stored = localStorage.getItem(MENU_STORAGE_KEY);
   if (stored) {
     const storedMenus = JSON.parse(stored).map(normalizeMenuAvailability);
+    let categoryMigrated = false;
+    storedMenus.forEach((menu) => {
+      if (['17', '18'].includes(String(menu.id)) && menu.category !== 'season') {
+        menu.category = 'season';
+        categoryMigrated = true;
+      }
+    });
     const storedIds = new Set(storedMenus.map((menu) => String(menu.id)));
     const missingDefaultMenus = MENU_ITEMS.filter((menu) => !storedIds.has(String(menu.id)));
 
@@ -43,6 +50,8 @@ function getMenus() {
       return mergedMenus;
     }
 
+    if (categoryMigrated) saveMenus(storedMenus);
+
     return storedMenus;
   }
 
@@ -51,7 +60,7 @@ function getMenus() {
 }
 
 function saveMenus(menus) { localStorage.setItem(MENU_STORAGE_KEY, JSON.stringify(menus.map(normalizeMenuAvailability))); }
-function normalizeMenuAvailability(menu) { return { ...menu, isSoldOut: Boolean(menu?.isSoldOut ?? menu?.soldOut ?? false) }; }
+function normalizeMenuAvailability(menu) { return { ...menu, englishName: menu?.englishName ?? '', nutrition: menu?.nutrition ?? null, allergens: Array.isArray(menu?.allergens) ? menu.allergens : [], pairingMenuIds: Array.isArray(menu?.pairingMenuIds) ? menu.pairingMenuIds : [], isSoldOut: Boolean(menu?.isSoldOut ?? menu?.soldOut ?? false) }; }
 function isMenuSoldOut(menuId) { return Boolean(getMenuById(menuId)?.isSoldOut); }
 function setMenuSoldOut(menuId, soldOut, adminUser) { if (adminUser?.role !== 'ADMIN') throw new Error('관리자 권한이 필요합니다.'); const menus=getMenus(),menu=menus.find(item=>String(item.id)===String(menuId)); if(!menu)throw new Error('메뉴를 찾을 수 없습니다.'); const before={isSoldOut:menu.isSoldOut}; menu.isSoldOut=Boolean(soldOut); saveMenus(menus); window.MomoAdminActivity?.log(adminUser,menu.isSoldOut?'SOLD_OUT':'RESUME_MENU','MENU',menu.id,menu.isSoldOut?'메뉴 품절 처리':'메뉴 판매 재개',before,{isSoldOut:menu.isSoldOut}); return menu; }
 function getMenuAvailabilityLabel(menu) { return normalizeMenuAvailability(menu).isSoldOut ? '품절' : '판매 중'; }

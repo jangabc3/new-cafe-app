@@ -30,7 +30,7 @@ function updateCartCount() {
 }
 
 function getOptionPrice() {
-  const sizePrice = optionState.size === 'Large' ? 700 : 0;
+  const sizePrice = optionState.size === 'Large' ? 1000 : 0;
   const beanPrice = optionState.bean === '디카페인' ? 500 : 0;
   return sizePrice + optionState.shot * 500 + optionState.syrup * 300 + beanPrice;
 }
@@ -57,7 +57,7 @@ function renderMissingMenu() {
       <span class="category-pill">Menu</span>
       <h1>메뉴를 찾을 수 없습니다.</h1>
       <p class="detail-description">메뉴 목록으로 돌아가 다시 선택해 주세요.</p>
-      <div class="detail-actions"><a class="primary-button" href="list.html">목록으로 이동</a></div>
+      <div class="detail-actions"><a class="primary-button" href="/menus/list.html">목록으로 이동</a></div>
     </div>
   `;
 }
@@ -127,7 +127,7 @@ function renderMenuDetail() {
               </div>
               <div class="option-group">
                 <span class="option-label">사이즈</span>
-                <div class="segmented"><button type="button" data-option="size" data-value="Regular">Regular</button><button type="button" data-option="size" data-value="Large">Large +700</button></div>
+                <div class="segmented"><button type="button" data-option="size" data-value="Regular">Regular</button><button type="button" data-option="size" data-value="Large">Large +1,000원</button></div>
               </div>
             `
         }
@@ -195,8 +195,10 @@ detailPanel.addEventListener('click', (event) => {
   }
 
   if (event.target.closest('#orderNowButton')) {
-    addToCart(menu.id, optionState.quantity, getSelectedOptions());
-    window.location.href = '../basket/list.html';
+    const options=getSelectedOptions();
+    const item={menuId:menu.id,name:menu.name,price:menu.price+getOptionPrice(),basePrice:menu.price,category:menu.category,image:menu.image,options:{...options,optionPrice:getOptionPrice()},quantity:optionState.quantity};
+    localStorage.setItem('momoBuyNowItem',JSON.stringify(item));
+    window.location.href = '/checkout/index.html?buyNow=1';
   }
 });
 

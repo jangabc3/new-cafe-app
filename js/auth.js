@@ -7,6 +7,7 @@
   const CURRENT_USER_KEY = 'momoCurrentUser';
   const ADMIN_EMAIL = 'admin@momocoffee.com';
   const ADMIN_PASSWORD = 'momo1234';
+  const SESSION_DURATION = 30 * 60 * 1000;
   const projectRoot = new URL('/', window.location.origin);
   const projectPath = '/';
 
@@ -54,7 +55,23 @@
     return readJson(USERS_KEY, []).length === users.length;
   };
 
-  const getCurrentUser = () => readJson(CURRENT_USER_KEY, null);
+  const clearSession = () => localStorage.removeItem(CURRENT_USER_KEY);
+  const getCurrentUser = () => {
+    const user = readJson(CURRENT_USER_KEY, null);
+    if (!user) return null;
+    const expiresAt = Number(user.sessionExpiresAt || 0);
+    if (!expiresAt || Date.now() >= expiresAt) { clearSession(); return null; }
+    return user;
+  };
+  const scheduleSessionExpiry = () => {
+    const user = getCurrentUser();
+    if (!user) return;
+    window.setTimeout(() => {
+      if (getCurrentUser()) return;
+      window.alert('로그인 후 30분이 지나 자동 로그아웃되었습니다.');
+      window.location.replace(projectUrl('login.html?message=session-expired'));
+    }, Math.max(0, Number(user.sessionExpiresAt) - Date.now()) + 50);
+  };
 
   const projectUrl = (relativePath) => new URL(relativePath, projectRoot).href;
 
@@ -180,6 +197,8 @@
       showNotice('회원가입이 완료되었습니다. 로그인해주세요.', 'success');
     } else if (params.get('message') === 'login-required') {
       showNotice('로그인이 필요합니다.');
+    } else if (params.get('message') === 'session-expired') {
+      showNotice('안전한 이용을 위해 로그인 후 30분이 지나 자동 로그아웃되었습니다.');
     }
 
     form.addEventListener('submit', (event) => {
@@ -210,7 +229,7 @@
         return;
       }
 
-      localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(user));
+      localStorage.setItem(CURRENT_USER_KEY, JSON.stringify({ ...user, sessionStartedAt: Date.now(), sessionExpiresAt: Date.now() + SESSION_DURATION }));
       window.location.href = user.role === 'ADMIN' ? projectUrl('admin/index.html') : projectUrl('index.html');
     });
   };
@@ -283,6 +302,7 @@
   setupLogin();
   protectMyPage();
   updateHeader();
+  scheduleSessionExpiry();
 
   window.MomoAuth = {
     getUsers,

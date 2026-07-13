@@ -238,11 +238,14 @@ function setSingleHeroCarousel() {
       koreanTitle: '모모커피 여름 신메뉴 컵빙수',
       description: '달콤하게, 시원하게, 한 컵 가득 행복을 담았어요!',
       seasonText: '2026 SUMMER NEW DESSERT',
-      buttonText: '시즌 디저트 보기',
-      href: 'menus/list.html?category=dessert',
+      buttonText: '여름 시즌 메뉴 보기',
+      href: '/menus/list.html?category=season',
       alt: 'MOMO COFFEE 컵빙수 여름 디저트 배너',
     },
   ];
+
+  const mainSlideOrder = { mango: 0, berry: 1, peach: 2, matcha: 3 };
+  slides.sort((a, b) => mainSlideOrder[a.theme] - mainSlideOrder[b.theme]);
 
   if (!singleHero || !singleHeroBg || !prevButton || !nextButton || slides.length <= 1) return;
 

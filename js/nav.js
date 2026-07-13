@@ -21,7 +21,9 @@
       : path.includes('/stores/') ? 'store'
         : path.includes('/community/') ? 'community'
           : path.includes('/story/') ? 'brand'
-            : 'mypage';
+            : path.includes('/my/') || path.includes('/orders/') || path.includes('/basket/') || path.includes('/qna/') || path.endsWith('/coupon.html')
+              ? 'mypage'
+              : '';
 
   const header = document.createElement('header');
   header.className = 'site-header unified-header';
@@ -66,11 +68,38 @@
   oldHeader.replaceWith(header);
 
   try {
-    const currentUser = JSON.parse(localStorage.getItem('momoCurrentUser') || 'null');
+    let currentUser = JSON.parse(localStorage.getItem('momoCurrentUser') || 'null');
+    const sessionExpiresAt = Number(currentUser?.sessionExpiresAt || 0);
+    if (currentUser && (!sessionExpiresAt || Date.now() >= sessionExpiresAt)) {
+      localStorage.removeItem('momoCurrentUser');
+      currentUser = null;
+    } else if (currentUser) {
+      const sessionTimer = document.createElement('span');
+      sessionTimer.className = 'session-timer';
+      sessionTimer.setAttribute('aria-label', '자동 로그아웃까지 남은 시간');
+      header.querySelector('.unified-actions')?.append(sessionTimer);
+      const renderSessionTimer = () => {
+        const remaining = Math.max(0, sessionExpiresAt - Date.now());
+        const minutes = Math.floor(remaining / 60000);
+        const seconds = Math.floor((remaining % 60000) / 1000);
+        sessionTimer.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')} 후 자동 로그아웃`;
+      };
+      renderSessionTimer();
+      const sessionClock = window.setInterval(renderSessionTimer, 1000);
+      window.setTimeout(() => {
+        window.clearInterval(sessionClock);
+        localStorage.removeItem('momoCurrentUser');
+        window.alert('로그인 후 30분이 지나 자동 로그아웃되었습니다.');
+        window.location.replace('/login.html?message=session-expired');
+      }, Math.max(0, sessionExpiresAt - Date.now()) + 50);
+    }
     const loginLink = header.querySelector('.unified-login');
     if (currentUser?.name && loginLink) {
-      loginLink.textContent = `${currentUser.name}님`;
-      loginLink.href = `${root}my/index.html`;
+      loginLink.hidden = true;
+      const greeting = document.createElement('a');
+      greeting.className = 'auth-greeting';
+      greeting.href = `${root}my/index.html`;
+      greeting.textContent = `${currentUser.name}님`;
       const logout = document.createElement('button');
       logout.className = 'auth-logout';
       logout.type = 'button';
@@ -79,11 +108,27 @@
         localStorage.removeItem('momoCurrentUser');
         window.location.href = `${root}index.html`;
       });
-      loginLink.insertAdjacentElement('afterend', logout);
+      loginLink.insertAdjacentElement('beforebegin', greeting);
+      greeting.insertAdjacentElement('afterend', logout);
     }
   } catch {
     // Keep the regular login link if stored member data is unavailable.
   }
+
+  // Some legacy pages run their authentication header updater after this file.
+  // Reconcile once more so the customer name never disappears from the shared header.
+  window.setTimeout(() => {
+    let user = null;
+    try { user = JSON.parse(localStorage.getItem('momoCurrentUser') || 'null'); } catch {}
+    if (!user?.name || header.querySelector('.auth-greeting')) return;
+    const login = header.querySelector('.unified-login');
+    const greeting = document.createElement('a');
+    greeting.className = 'auth-greeting';
+    greeting.href = '/my/index.html';
+    greeting.textContent = `${user.name}님`;
+    login?.insertAdjacentElement('beforebegin', greeting);
+    if (login) login.hidden = true;
+  }, 0);
 
   const cartCount = header.querySelector('#unifiedCartCount');
   const updateUnifiedCartCount = () => {

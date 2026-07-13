@@ -356,7 +356,11 @@
   align-items: center;
   justify-content: flex-end;
   gap: 16px;
+  transform: translateX(40px);
 }
+.unified-actions .session-timer{display:inline-flex;align-items:center;margin-left:4px;color:#9b877b;font-size:10px;font-weight:600;letter-spacing:-.01em;white-space:nowrap}
+@media(max-width:900px){.unified-actions .session-timer{display:none}}
+@media(max-width:760px){.unified-actions{transform:none;gap:12px}}
 
 .unified-login {
   color: #3f291f;
@@ -408,6 +412,9 @@
 
 .site-header.unified-header .unified-actions .auth-greeting {
   display: inline-flex !important;
+  flex: 0 0 auto !important;
+  min-width: max-content !important;
+  max-width: 180px !important;
   min-height: 40px !important;
   align-items: center !important;
   color: #3f291f !important;

@@ -52,4 +52,6 @@
   const renderHero=menu=>{if(!menu)return;heroActive=menu;const featured=$('#heroFeatured'),heroImage=$('#heroMenuImage'),nextImage=HERO_IMAGES[menu.id]||image(menu);if(!heroImage.src.includes('hero-menu-'))heroImage.src=nextImage;featured.classList.add('is-changing');setTimeout(()=>{heroImage.src=nextImage;heroImage.alt=`${menu.name}가 놓인 모모커피 메뉴 화보`;$('#heroMenuName').textContent=menu.name;$('#heroMenuPrice').textContent=won(menu.price);$('#heroMenuDescription').textContent=menu.description;featured.classList.remove('is-changing')},300)};
   if(heroActive){renderHero(heroActive);$('[data-hero-detail]').onclick=event=>openPanel(heroActive,event.currentTarget);if(heroMenus.length>1&&!matchMedia('(prefers-reduced-motion: reduce)').matches){heroTimer=setInterval(()=>{heroIndex=(heroIndex+1)%heroMenus.length;renderHero(heroMenus[heroIndex])},6000);addEventListener('pagehide',()=>clearInterval(heroTimer),{once:true})}}
   setupSearch();$('#sortSelect')?.closest('label')?.remove();$('#searchInput').placeholder='찾고 싶은 메뉴를 입력해보세요';renderTabs();render();
+  const requestedDetail=new URLSearchParams(location.search).get('detail');
+  if(requestedDetail){const requestedMenu=getMenuById(requestedDetail);if(requestedMenu)window.requestAnimationFrame(()=>openPanel(requestedMenu,null))}
 })();

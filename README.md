@@ -111,35 +111,47 @@
 
 # 4. 🛠 기술 스택  (수정 예정)
 
-## Frontend
-
+### Frontend
 - HTML5
 - CSS3
 - JavaScript (ES6)
 
-## UI / UX
+### UI / UX
+- Responsive Web Design
+- CSS Variables
+- Flexbox
+- Grid Layout
 
-- Responsive Web
 
-
-## Data
-
+### Data Management
 - LocalStorage
+- JSON-based Data Management
 
-## Deployment
+### Authentication & Authorization
+- Client-side Authentication
+- Role-based Access Control (관리자 / 일반 회원 권한 분리)
 
+### Deployment
 - Linux
 - Nginx
-- Serve
+- Reverse Proxy
 
-## Version Control
-
+### Version Control
 - Git
 - GitHub
 
-## Design
 
-- AI Image Generation (Brand Assets)
+### Development Environment
+- Visual Studio Code
+- Windows
+- WSL
+- Linux CLI
+
+### Design & Brand Assets
+- AI Image Generation
+- Canva
+- Brand Identity Design
+- UI Prototype Design
 
 ---
 

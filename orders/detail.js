@@ -1,6 +1,6 @@
 ﻿const cartCount = $('#cartCount');
 const detailPanel = $('#detailPanel');
-const orderId = getQueryParam('id');
+const orderId = getQueryParam('id') || new URLSearchParams(location.hash.replace(/^#/, '')).get('id');
 const order = getOrderById(orderId);
 const detailUser = JSON.parse(localStorage.getItem('momoCurrentUser') || 'null');
 const canViewOrder = order && (String(order.userId ?? order.userEmail) === String(detailUser?.id ?? detailUser?.email) || String(order.userEmail) === String(detailUser?.email));

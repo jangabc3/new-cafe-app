@@ -82,7 +82,7 @@ function renderOrdersPage(orders) {
           </div>
           <div class="order-actions">
             <strong class="order-price">${formatWon(order.totalAmount ?? order.total)}</strong>
-            <a class="detail-button" href="detail.html?id=${encodeURIComponent(order.id)}">상세</a>
+            <a class="detail-button" href="/orders/detail.html#id=${encodeURIComponent(order.id)}">상세</a>
           </div>
         </article>
       `;

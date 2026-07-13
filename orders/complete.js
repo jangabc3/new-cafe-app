@@ -1,7 +1,7 @@
 (() => {
   const latestKey = 'momo_coffee_latest_order_v1';
   const pointHistoryKey = 'momoPointHistory';
-  const requested = new URLSearchParams(location.search).get('id');
+  const requested = new URLSearchParams(location.search).get('id') || new URLSearchParams(location.hash.replace(/^#/, '')).get('id');
   const latest = localStorage.getItem(latestKey);
   const orderId = requested || latest;
 
@@ -61,7 +61,18 @@
     return earned;
   };
 
+  const awardOrderStamp = () => {
+    if (isGuestOrder || !window.MomoLoyalty?.addOrderStamp) return null;
+    return window.MomoLoyalty.addOrderStamp(order.id);
+  };
+
   const earnedPoints = awardOrderPoints();
+  const stampResult = awardOrderStamp();
+  const stampText = stampResult?.benefit
+    ? stampResult.rewardEarned
+      ? '10개 완성 · 리워드 1장 발급'
+      : `${Number(stampResult.benefit.stamps || 0)}/10`
+    : '-';
   const names = { card:'신용·체크카드', kakao:'카카오페이', naver:'네이버페이', toss:'토스페이', free:'무료 주문' };
   document.querySelector('#orderMeta').innerHTML = `
     <div><dt>픽업 매장</dt><dd>${escapeHtml(order.pickupStore?.name || '-')}</dd></div>
@@ -70,13 +81,13 @@
     <div><dt>결제 수단</dt><dd>${names[order.paymentMethod] || order.paymentMethod}</dd></div>
     <div><dt>최종 결제 금액</dt><dd>${formatPrice(order.totalAmount ?? order.total)}</dd></div>
     <div><dt>적립 포인트</dt><dd>${Number(earnedPoints || order.earnedPoints || 0).toLocaleString('ko-KR')}P</dd></div>
+    ${isGuestOrder ? '' : `<div><dt>스탬프</dt><dd>${stampText}</dd></div>`}
     <div><dt>주문 상태</dt><dd>${getStatusLabel(order.status)}</dd></div>`;
   document.querySelector('#orderedItems').innerHTML = order.items.map(item => `<div class="menu-row"><span>${escapeHtml(item.name)} × ${item.quantity}</span><strong>${formatPrice(item.price * item.quantity)}</strong></div>`).join('');
-  document.querySelector('#historyLink').href = `/orders/detail.html?id=${encodeURIComponent(order.id)}`;
+  document.querySelector('#historyLink').href = `/orders/detail.html#id=${encodeURIComponent(order.id)}`;
   if (isGuestOrder) {
     const historyLink = document.querySelector('#historyLink');
-    historyLink.href = '/menus/list.html';
-    historyLink.textContent = '메뉴 더 보기';
+    historyLink.hidden = true;
   }
   document.querySelector('#completeCard').hidden = false;
 })();

@@ -198,7 +198,8 @@ detailPanel.addEventListener('click', (event) => {
     const options=getSelectedOptions();
     const item={menuId:menu.id,name:menu.name,price:menu.price+getOptionPrice(),basePrice:menu.price,category:menu.category,image:menu.image,options:{...options,optionPrice:getOptionPrice()},quantity:optionState.quantity};
     localStorage.setItem('momoBuyNowItem',JSON.stringify(item));
-    window.location.href = '/checkout/index.html?buyNow=1';
+    sessionStorage.setItem('momoPendingBuyNowItem',JSON.stringify(item));
+    window.location.href = `/checkout/index.html#buyNow=${encodeURIComponent(JSON.stringify(item))}`;
   }
 });
 

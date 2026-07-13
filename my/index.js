@@ -71,7 +71,11 @@ function normalizeImagePath(image) {
 
 function getOrdersSafely() {
   try {
-    return typeof getOrders === 'function' ? getOrders() : [];
+    if (typeof getOrders !== 'function' || !currentUser) return [];
+    const identities = [currentUser.id, currentUser.email].filter(Boolean).map((value) => String(value).trim().toLowerCase());
+    return getOrders().filter((order) => [order.userId, order.userEmail, order.memberKey]
+      .filter(Boolean)
+      .some((value) => identities.includes(String(value).trim().toLowerCase())));
   } catch {
     return [];
   }
@@ -116,8 +120,8 @@ function renderUser() {
 function renderStats() {
   const orders = getOrdersSafely();
   const cart = getCartSafely();
-  const orderCount = orders.length || 17;
-  const total = orders.reduce((sum, order) => sum + Number(order.total || 0), 0) || 333200;
+  const orderCount = orders.length;
+  const total = orders.reduce((sum, order) => sum + Math.max(0, Number(order.totalAmount ?? order.total) || 0), 0);
   const likedMenus = (() => {
     try {
       const records = JSON.parse(localStorage.getItem('momoLikedMenuIds'));
@@ -150,9 +154,9 @@ function renderRecentOrders() {
     .map(getFirstOrderItem)
     .filter(Boolean)
     .slice(0, 3);
-  const list = realOrders.length ? realOrders : demoOrders;
+  const list = realOrders;
 
-  document.querySelector('#recentOrders').innerHTML = list.map((order) => `
+  document.querySelector('#recentOrders').innerHTML = list.length ? list.map((order) => `
     <article class="recent-item">
       <img src="${safe(order.image)}" alt="${safe(order.name)}">
       <div>
@@ -163,7 +167,7 @@ function renderRecentOrders() {
       </div>
       <strong class="recent-price">${won(order.price)}</strong>
     </article>
-  `).join('');
+  `).join('') : '<p class="recent-empty">아직 주문 내역이 없습니다.</p>';
 }
 
 function renderCoupons() {
@@ -215,12 +219,10 @@ function renderMembershipBenefits() {
     </span>
   `).join('');
 
-  const memberKey = window.MomoLoyalty?.getUserKey();
   const now = new Date();
   const memberOrders = getOrdersSafely().filter((order) => {
     const date = new Date(order.createdAt);
-    const belongsToMember = !order.memberKey || order.memberKey === memberKey;
-    return belongsToMember && date.getFullYear() === now.getFullYear() && date.getMonth() === now.getMonth();
+    return !Number.isNaN(date.getTime()) && date.getFullYear() === now.getFullYear() && date.getMonth() === now.getMonth();
   });
   const monthlySpent = memberOrders.reduce((sum, order) => sum + Number(order.total || 0), 0);
   const grade = window.MomoLoyalty?.syncMonthlyGradeBenefits(monthlySpent) || window.MomoLoyalty?.getGrade(monthlySpent);

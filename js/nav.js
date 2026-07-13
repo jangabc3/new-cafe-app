@@ -199,4 +199,13 @@
   header.addEventListener('keydown', (event) => {
     if (event.key === 'Escape') close();
   });
+
+  document.addEventListener('click', (event) => {
+    if (!event.target.closest('[data-panel-buy]')) return;
+    const pendingItem = localStorage.getItem('momoBuyNowItem');
+    if (pendingItem) {
+      sessionStorage.setItem('momoPendingBuyNowItem', pendingItem);
+      location.href = `/checkout/index.html#buyNow=${encodeURIComponent(pendingItem)}`;
+    }
+  });
 })();

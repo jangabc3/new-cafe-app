@@ -15,8 +15,10 @@
     location.replace('/orders/list.html');
     return;
   }
+  const isGuestOrder = String(order.userId || '').startsWith('GUEST-');
 
   const awardOrderPoints = () => {
+    if (isGuestOrder) return 0;
     const paidAmount = Math.max(0, Number(order.totalAmount ?? order.total) || 0);
     const earned = Math.floor(paidAmount * 0.05);
     if (order.rewardAwardedAt || earned < 1 || !window.MomoLoyalty?.addPoints) return Number(order.earnedPoints || 0);
@@ -71,5 +73,10 @@
     <div><dt>주문 상태</dt><dd>${getStatusLabel(order.status)}</dd></div>`;
   document.querySelector('#orderedItems').innerHTML = order.items.map(item => `<div class="menu-row"><span>${escapeHtml(item.name)} × ${item.quantity}</span><strong>${formatPrice(item.price * item.quantity)}</strong></div>`).join('');
   document.querySelector('#historyLink').href = `/orders/detail.html?id=${encodeURIComponent(order.id)}`;
+  if (isGuestOrder) {
+    const historyLink = document.querySelector('#historyLink');
+    historyLink.href = '/menus/list.html';
+    historyLink.textContent = '메뉴 더 보기';
+  }
   document.querySelector('#completeCard').hidden = false;
 })();

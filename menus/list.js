@@ -1,212 +1,55 @@
-const state = {
-  search: '',
-  category: getQueryParam('category') || 'all'
-};
-
-const searchInput = $('#searchInput');
-const categoryTabs = $('#categoryTabs');
-const menuGrid = $('#menuGrid');
-const emptyState = $('#emptyState');
-const visibleCount = $('#visibleCount');
-const cartCount = $('#cartCount');
-const toast = $('#toast');
-const heroMenuName = $('#heroMenuName');
-const heroMenuPrice = $('#heroMenuPrice');
-
-let toastTimer;
-const LIKED_KEY = 'momoLikedMenuIds';
-
-function getLikedRecords() {
-  try {
-    const records = JSON.parse(localStorage.getItem(LIKED_KEY));
-    if (!Array.isArray(records)) return [];
-    return records.map((record) => {
-      if (record && typeof record === 'object') {
-        return {
-          id: String(record.id),
-          likedAt: record.likedAt || new Date().toISOString()
-        };
-      }
-      return {
-        id: String(record),
-        likedAt: new Date().toISOString()
-      };
-    }).filter((record) => record.id);
-  } catch {
-    return [];
-  }
-}
-
-function saveLikedRecords(records) {
-  localStorage.setItem(LIKED_KEY, JSON.stringify(records));
-  localStorage.setItem('momoFavoriteCount', String(records.length));
-}
-
-function isLiked(menuId) {
-  return getLikedRecords().some((record) => String(record.id) === String(menuId));
-}
-
-function toggleLiked(menuId) {
-  const records = getLikedRecords();
-  const exists = records.some((record) => String(record.id) === String(menuId));
-  const nextRecords = exists
-    ? records.filter((record) => String(record.id) !== String(menuId))
-    : [{ id: String(menuId), likedAt: new Date().toISOString() }, ...records];
-
-  saveLikedRecords(nextRecords);
-  return !exists;
-}
-
-function getMenuImagePath(menu) {
-  if (!menu.image) return '';
-  if (menu.image.startsWith('http') || menu.image.startsWith('../')) return menu.image;
-  return `../${menu.image}`;
-}
-
-function updateCartCount() {
-  cartCount.textContent = getCart().reduce((sum, item) => sum + item.quantity, 0);
-}
-
-function showToast(message, mood = 'happy') {
-  window.clearTimeout(toastTimer);
-  toast.innerHTML = `
-    <span class="mini-momo ${mood}" aria-hidden="true"><span></span></span>
-    <span>${escapeHtml(message)}</span>
-    <i aria-hidden="true">♡</i>
-  `;
-  toast.hidden = false;
-  toast.classList.add('is-floating');
-  toastTimer = window.setTimeout(() => {
-    toast.hidden = true;
-    toast.classList.remove('is-floating');
-  }, 2200);
-}
-
-function renderCategoryTabs() {
-  const tabs = [{ id: 'all', name: '전체', icon: '✦' }, ...CATEGORIES];
-  categoryTabs.innerHTML = tabs
-    .map(
-      (category) => `
-        <button
-          class="category-tab ${category.id === state.category ? 'is-active' : ''}"
-          type="button"
-          data-category="${category.id}"
-          role="tab"
-          aria-selected="${category.id === state.category}"
-        >
-          <span>${escapeHtml(category.icon)}</span>
-          ${escapeHtml(category.name)}
-        </button>
-      `
-    )
-    .join('');
-}
-
-function getFilteredMenus() {
-  const search = state.search.toLowerCase();
-  return getMenus().filter((menu) => {
-    const matchesCategory = state.category === 'all' || menu.category === state.category;
-    const matchesSearch =
-      menu.name.toLowerCase().includes(search) ||
-      menu.description.toLowerCase().includes(search);
-    return matchesCategory && matchesSearch;
-  });
-}
-
-function renderHero(menus) {
-  const featured = menus.find((menu) => menu.category === 'signature') || menus[0];
-  if (!featured) return;
-
-  heroMenuName.textContent = featured.name;
-  heroMenuPrice.textContent = formatPrice(featured.price);
-}
-
-function renderMenus() {
-  const filteredMenus = getFilteredMenus();
-  visibleCount.textContent = filteredMenus.length;
-  emptyState.hidden = filteredMenus.length > 0;
-
-  renderList(
-    menuGrid,
-    filteredMenus,
-    (menu) => `
-      <article class="menu-card ${menu.category === 'goods' ? 'is-goods-card' : ''} ${menu.isSoldOut ? 'is-soldout' : ''}">
-        <a class="menu-thumb" href="detail.html?id=${encodeURIComponent(menu.id)}" aria-label="${escapeHtml(menu.name)} 상세 보기">
-          ${
-            menu.image
-              ? `<img src="${escapeHtml(getMenuImagePath(menu))}" alt="${escapeHtml(menu.name)}">`
-              : `<span>${escapeHtml(menu.emoji || menu.name.slice(0, 1))}</span>`
-          }
-        </a>
-        <div class="menu-card-body">${menu.isSoldOut ? '<span class="soldout-badge">품절</span>' : ''}
-          <span class="category-pill">${escapeHtml(getCategoryName(menu.category))}</span>
-          <button
-            class="like-button ${isLiked(menu.id) ? 'is-liked' : ''}"
-            type="button"
-            data-like-id="${escapeHtml(menu.id)}"
-            aria-label="${escapeHtml(menu.name)} 찜하기"
-            aria-pressed="${isLiked(menu.id)}"
-          >${isLiked(menu.id) ? '♥' : '♡'}</button>
-          <h2>${escapeHtml(menu.name)}</h2>
-          <p class="menu-description">${escapeHtml(menu.description)}</p>
-          <div class="card-actions">
-            <strong>${formatPrice(menu.price)}</strong>
-            <div>
-              <a class="secondary-button" href="detail.html?id=${encodeURIComponent(menu.id)}">상세</a>
-              <button class="primary-button" type="button" data-cart-id="${escapeHtml(menu.id)}" ${menu.isSoldOut ? 'disabled' : ''}>${menu.isSoldOut ? '품절' : '담기'}</button>
-            </div>
-          </div>
-        </div>
-      </article>
-    `
-  );
-}
-
-searchInput.addEventListener('input', (event) => {
-  state.search = event.target.value.trim();
-  renderMenus();
-});
-
-categoryTabs.addEventListener('click', (event) => {
-  const button = event.target.closest('[data-category]');
-  if (!button) return;
-
-  state.category = button.dataset.category;
-  renderCategoryTabs();
-  renderMenus();
-});
-
-menuGrid.addEventListener('click', (event) => {
-  const likeButton = event.target.closest('.like-button');
-  if (likeButton) {
-    const menuId = likeButton.dataset.likeId;
-    const liked = toggleLiked(menuId);
-    likeButton.classList.toggle('is-liked', liked);
-    likeButton.textContent = liked ? '♥' : '♡';
-    likeButton.setAttribute('aria-pressed', String(liked));
-    const menu = getMenuById(menuId);
-    showToast(liked ? `${menu?.name || '메뉴'}를 찜했어요.` : `${menu?.name || '메뉴'}를 찜 해제했어요.`);
-    return;
-  }
-
-  const button = event.target.closest('[data-cart-id]');
-  const detailLink = event.target.closest('a[href*="detail.html"]');
-
-  if (detailLink) {
-    const id = new URL(detailLink.href, window.location.href).searchParams.get('id');
-    if (id) sessionStorage.setItem('momo_selected_menu_id', id);
-    return;
-  }
-
-  if (!button) return;
-  const menu = getMenuById(button.dataset.cartId);
-  if (!menu) return;
-
-  sessionStorage.setItem('momo_selected_menu_id', String(menu.id));
-  window.location.href = `detail.html?id=${encodeURIComponent(menu.id)}`;
-});
-
-renderHero(getMenus());
-renderCategoryTabs();
-renderMenus();
-updateCartCount();
+(() => {
+  const $=selector=>document.querySelector(selector),state={search:'',category:new URLSearchParams(location.search).get('category')||'all',sort:'recommended',page:1},LIKED_KEY='momoLikedMenuIds',PAGE_SIZE=12;let activeMenu=null,lastTrigger=null,toastTimer=null,optionState=null;
+  const beans=[{id:'momo',name:'모모 블렌드',taste:'고소한 밸런스',origin:'브라질 · 콜롬비아 · 과테말라',note:'고소함과 은은한 단맛',acidity:'낮음',body:'풍부함',aroma:'견과 · 카라멜',pairing:'라떼 · 아메리카노',badge:'BEST',image:'/assets/images/bean-momo-blend.jpg'},{id:'ethiopia',name:'에티오피아 싱글 오리진',taste:'산미 있는 맛',origin:'에티오피아',note:'화사한 과일향과 산뜻한 산미',acidity:'높음',body:'가벼움',aroma:'베리 · 플로럴',pairing:'아메리카노 · 콜드브루',badge:'SIGNATURE',image:'/assets/images/bean-ethiopia-origin.jpg'},{id:'decaf',name:'디카페인 블렌드',taste:'부드러운 맛',origin:'콜롬비아 · 브라질',note:'카페인 부담 없는 편안한 풍미',acidity:'낮음',body:'중간',aroma:'코코아 · 곡물',pairing:'디카페인 라떼',image:'/assets/images/bean-decaf-blend.jpg'}];
+  const english={1:'Vanilla Latte',2:'Cream Einspanner',3:'Americano',4:'Cafe Latte',5:'Matcha Latte',6:'Strawberry Cream Latte',7:'Yuja Chamomile Tea',8:'Peach Iced Tea',9:'Strawberry Cream Cake',10:'Chocolate Cake',11:'Butter Croissant',12:'Momo Honey Bread',13:'Momo Keyring',14:'Momo Mug',15:'Momo Note',16:'Momo Eco Bag',17:'Original Cup Bingsu',18:'Mango Cup Bingsu'};
+  const nutrition={
+    1:[360,330,45,22,14,9,120],2:[360,385,38,24,19,8,145],3:[360,10,2,0,0,0,150],4:[360,210,18,12,9,8,130],
+    5:[360,315,47,31,11,10,65],6:[360,390,58,42,14,7,0],7:[360,115,28,24,0,0,0],8:[360,145,36,32,0,0,35],
+    9:{servingSize:'1조각 (145g)',calories:420,carbohydrates:52,sugars:31,fat:21,protein:6,caffeine:0},
+    10:{servingSize:'1조각 (135g)',calories:465,carbohydrates:49,sugars:29,fat:27,protein:7,caffeine:18},
+    11:{servingSize:'1개 (75g)',calories:310,carbohydrates:34,sugars:7,fat:17,protein:6,caffeine:0},
+    12:{servingSize:'1개 (210g)',calories:590,carbohydrates:91,sugars:38,fat:21,protein:10,caffeine:0},
+    17:{servingSize:'1컵 (280g)',calories:445,carbohydrates:76,sugars:48,fat:13,protein:8,caffeine:0},
+    18:{servingSize:'1컵 (280g)',calories:410,carbohydrates:82,sugars:55,fat:7,protein:6,caffeine:0}
+  };
+  const escape=value=>String(value??'').replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char])),image=menu=>menu.image?(menu.image.startsWith('http')?menu.image:`/${menu.image.replace(/^\.\.\//,'').replace(/^\//,'')}`):'/assets/images/momo-face-cute.png',won=value=>`${Math.max(0,Number(value)||0).toLocaleString('ko-KR')}원`;
+  const getLiked=()=>{try{const value=JSON.parse(localStorage.getItem(LIKED_KEY)||'[]');return Array.isArray(value)?value:[]}catch{return[]}},isLiked=id=>getLiked().some(item=>String(item?.id??item)===String(id));
+  function toggleLike(id){const user=JSON.parse(localStorage.getItem('momoCurrentUser')||'null');if(!user){location.href='/login.html?redirect='+encodeURIComponent(location.pathname+location.search);return null}const list=getLiked(),liked=isLiked(id),next=liked?list.filter(item=>String(item?.id??item)!==String(id)):[{id:String(id),likedAt:new Date().toISOString()},...list];localStorage.setItem(LIKED_KEY,JSON.stringify(next));localStorage.setItem('momoFavoriteCount',String(next.length));return!liked}
+  function nutritionData(menu){const data=menu.nutrition||nutrition[menu.id];if(!data)return null;if(Array.isArray(data))return{servingSize:`${data[0]}ml`,calories:data[1],carbohydrates:data[2],sugars:data[3],fat:data[4],protein:data[5],caffeine:data[6],sodium:null,saturatedFat:null};return data}
+  function renderTabs(){const items=[{id:'all',name:'전체'},...CATEGORIES];$('#categoryTabs').innerHTML=items.map(item=>`<button type="button" role="tab" data-category="${item.id}" class="${state.category===item.id?'is-active':''}" aria-selected="${state.category===item.id}">${escape(item.name)}</button>`).join('')}
+  function filtered(){const term=state.search.toLowerCase(),menus=getMenus(),originalOrder=new Map(menus.map((menu,index)=>[String(menu.id),index])),orderCount=new Map();getOrders().filter(order=>String(order.status||'').toUpperCase()!=='CANCELLED'&&order.paymentStatus!=='failed').forEach(order=>(order.items||[]).forEach(item=>{const key=String(item.menuId??item.id??'');if(key)orderCount.set(key,(orderCount.get(key)||0)+Math.max(0,Number(item.quantity)||0))}));const rows=menus.filter(menu=>(state.category==='all'||menu.category===state.category)&&(`${menu.name} ${english[menu.id]||''}`.toLowerCase().includes(term)));if(state.sort==='recommended')rows.sort((a,b)=>(orderCount.get(String(b.id))||0)-(orderCount.get(String(a.id))||0)||(originalOrder.get(String(a.id))||0)-(originalOrder.get(String(b.id))||0));if(state.sort==='name')rows.sort((a,b)=>a.name.localeCompare(b.name,'ko'));if(state.sort==='price-low')rows.sort((a,b)=>a.price-b.price);if(state.sort==='price-high')rows.sort((a,b)=>b.price-a.price);return rows}
+  function nutritionMarkup(menu){if(menu.category==='goods')return'';const n=nutritionData(menu);if(!n)return'';return`<div class="nutrition-pop"><span class="nutrition-label">NUTRITION</span><strong>1회 제공량 ${escape(n.servingSize||'-')}</strong><dl><div><dt>열량</dt><dd>${n.calories??'-'} kcal</dd></div><div><dt>탄수화물</dt><dd>${n.carbohydrates??'-'} g</dd></div><div><dt>당류</dt><dd>${n.sugars??'-'} g</dd></div><div><dt>단백질</dt><dd>${n.protein??'-'} g</dd></div><div><dt>지방</dt><dd>${n.fat??'-'} g</dd></div><div><dt>나트륨</dt><dd>${n.sodium??'-'} mg</dd></div><div><dt>카페인</dt><dd>${n.caffeine??'-'} mg</dd></div></dl></div>`}
+  function render(){const rows=filtered(),pages=Math.max(1,Math.ceil(rows.length/PAGE_SIZE));state.page=Math.min(state.page,pages);const visible=rows.slice((state.page-1)*PAGE_SIZE,state.page*PAGE_SIZE);$('#visibleCount').textContent=rows.length;$('#emptyState').hidden=Boolean(rows.length);$('#menuGrid').innerHTML=visible.map((menu,index)=>`<article class="menu-card ${menu.category!=='goods'?'has-nutrition':''} ${menu.isSoldOut?'is-soldout':''}" data-id="${menu.id}" style="animation-delay:${Math.min(index*45,360)}ms">${menu.isSoldOut?'<span class="soldout">품절</span>':''}<button class="like-button ${isLiked(menu.id)?'is-liked':''}" type="button" data-like aria-label="${escape(menu.name)} 찜하기" aria-pressed="${isLiked(menu.id)}">${isLiked(menu.id)?'♥':'♡'}</button><button class="menu-image" type="button" data-open aria-label="${escape(menu.name)} 옵션 선택 및 상세 보기"><img src="${escape(image(menu))}" alt="${escape(menu.name)}" loading="lazy">${nutritionMarkup(menu)}</button><div class="menu-card-body"><span class="menu-category">${escape(getCategoryName(menu.category))}</span><h2>${escape(menu.name)}</h2><span class="menu-english">${escape(menu.englishName||english[menu.id]||'MOMO Coffee Menu')}</span><p class="menu-description">${escape(menu.description)}</p><strong class="menu-price">${won(menu.price)}</strong><div class="card-buttons single"><button type="button" data-open ${menu.isSoldOut?'disabled':''}>${menu.isSoldOut?'현재 품절':'상세 보기'}</button></div></div></article>`).join('');renderPagination(pages)}
+  function renderPagination(pages){let nav=$('#menuPagination');if(!nav){nav=document.createElement('nav');nav.id='menuPagination';nav.className='menu-pagination';nav.setAttribute('aria-label','메뉴 목록 페이지');$('#menuGrid').after(nav)}nav.hidden=pages<=1;nav.innerHTML=pages<=1?'':`<button type="button" data-page="${state.page-1}" ${state.page===1?'disabled':''} aria-label="이전 페이지">←</button>${Array.from({length:pages},(_,index)=>{const page=index+1;return`<button type="button" data-page="${page}" class="${page===state.page?'is-current':''}" ${page===state.page?'aria-current="page"':''}>${page}</button>`}).join('')}<button type="button" data-page="${state.page+1}" ${state.page===pages?'disabled':''} aria-label="다음 페이지">→</button>`}
+  const RECENT_SEARCH_KEY='momoRecentMenuSearches';let searchPanel=null;
+  const getRecentSearches=()=>{try{const rows=JSON.parse(localStorage.getItem(RECENT_SEARCH_KEY)||'[]');return Array.isArray(rows)?rows.slice(0,5):[]}catch{return[]}};
+  function saveRecentSearch(value){const term=value.trim();if(!term)return;localStorage.setItem(RECENT_SEARCH_KEY,JSON.stringify([term,...getRecentSearches().filter(item=>item!==term)].slice(0,5)))}
+  function searchSuggestions(term){const query=term.trim().toLowerCase();if(!query)return[];return getMenus().filter(menu=>`${menu.name} ${english[menu.id]||''}`.toLowerCase().includes(query)).slice(0,6)}
+  function renderSearchPanel(term=''){if(!searchPanel)return;const suggestions=searchSuggestions(term);if(term.trim()){searchPanel.innerHTML=`<section><strong>추천 메뉴</strong>${suggestions.length?suggestions.map(menu=>`<button type="button" data-search-value="${escape(menu.name)}"><span>${escape(menu.name)}</span><small>${escape(english[menu.id]||getCategoryName(menu.category))}</small></button>`).join(''):'<p>일치하는 메뉴가 없습니다.</p>'}</section>`}else{const recent=getRecentSearches();searchPanel.innerHTML=recent.length?`<section><strong>최근 검색</strong><div class="search-chips">${recent.map(value=>`<button type="button" data-search-value="${escape(value)}">${escape(value)}</button>`).join('')}</div></section>`:'<section><p>메뉴명을 입력하면 추천 메뉴를 확인할 수 있습니다.</p></section>'}searchPanel.hidden=false}
+  function applySearch(value,remember=true){const input=$('#searchInput');input.value=value;state.search=value.trim();state.page=1;if(remember)saveRecentSearch(value);render();searchPanel.hidden=true}
+  function setupSearch(){const input=$('#searchInput'),box=input.closest('label');box.classList.add('menu-search-box');input.placeholder='메뉴 검색';input.setAttribute('aria-label','메뉴 검색');input.setAttribute('autocomplete','off');input.setAttribute('aria-autocomplete','list');input.setAttribute('aria-expanded','false');searchPanel=document.createElement('div');searchPanel.className='menu-search-panel';searchPanel.hidden=true;searchPanel.setAttribute('role','listbox');box.append(searchPanel);input.addEventListener('focus',()=>{renderSearchPanel(input.value);input.setAttribute('aria-expanded','true')});input.addEventListener('input',()=>{state.search=input.value.trim();state.page=1;render();renderSearchPanel(input.value)});input.addEventListener('keydown',event=>{if(event.key==='Enter'){event.preventDefault();applySearch(input.value)}if(event.key==='Escape'){searchPanel.hidden=true;input.setAttribute('aria-expanded','false')}});searchPanel.addEventListener('click',event=>{const button=event.target.closest('[data-search-value]');if(button)applySearch(button.dataset.searchValue)});document.addEventListener('click',event=>{if(!box.contains(event.target)){searchPanel.hidden=true;input.setAttribute('aria-expanded','false')}})}
+  function showToast(message){clearTimeout(toastTimer);const toast=$('#toast');toast.textContent=message;toast.hidden=false;toastTimer=setTimeout(()=>toast.hidden=true,2200)}
+  function panelBody(menu,tab='detail'){const n=nutritionData(menu),liked=isLiked(menu.id),tabs=menu.category==='goods'?'<div class="quick-tabs"><button data-tab="detail" class="active">상품 정보</button></div>':`<div class="quick-tabs"><button data-tab="detail" class="${tab==='detail'?'active':''}">상세 정보</button><button data-tab="nutrition" class="${tab==='nutrition'?'active':''}">영양 정보</button><button data-tab="allergen" class="${tab==='allergen'?'active':''}">알레르기 정보</button></div>`;let content=`<p>${escape(menu.description)}</p>`;if(tab==='nutrition'&&menu.category!=='goods')content=n?`<div class="quick-nutrition">${[['열량',`${n.calories??'-'} kcal`],['탄수화물',`${n.carbohydrates??'-'} g`],['당류',`${n.sugars??'-'} g`],['단백질',`${n.protein??'-'} g`],['지방',`${n.fat??'-'} g`],['카페인',`${n.caffeine??'-'} mg`]].map(([l,v])=>`<div><small>${l}</small><strong>${v}</strong></div>`).join('')}</div>`:'<p>영양정보 준비 중입니다.</p>';if(tab==='allergen'&&menu.category!=='goods')content=`<p>${menu.allergens?.length?escape(menu.allergens.join(', ')):'알레르기 정보 준비 중입니다.'}</p>`;return`<img class="quick-media" src="${escape(image(menu))}" alt="${escape(menu.name)}"><small class="menu-category">${escape(getCategoryName(menu.category))}</small><h2 id="quickTitle">${escape(menu.name)}</h2><p class="menu-english">${escape(menu.englishName||english[menu.id]||'MOMO Coffee Menu')}</p><strong>${won(menu.price)}</strong>${menu.isSoldOut?'<p class="soldout">현재 품절된 메뉴입니다.</p>':''}${tabs}<div class="quick-tab-content">${content}</div><div class="quick-actions"><button type="button" data-panel-like aria-label="찜하기" aria-pressed="${liked}">${liked?'♥':'♡'}</button><button class="add" type="button" data-panel-cart ${menu.isSoldOut?'disabled':''}>${menu.isSoldOut?'품절':'장바구니 담기'}</button></div>`}
+  function openPanel(menu,trigger){activeMenu=menu;lastTrigger=trigger;$('#quickContent').innerHTML=panelBody(menu);$('#quickPanel').hidden=false;$('#panelBackdrop').hidden=false;document.body.style.overflow='hidden';$('.quick-close').focus()}
+  function closePanel(){if($('#quickPanel').hidden)return;$('#quickPanel').hidden=true;$('#panelBackdrop').hidden=true;document.body.style.overflow='';lastTrigger?.focus()}
+  function add(menu){if(menu.isSoldOut){showToast('현재 품절된 메뉴입니다.');return}addToCart(menu.id,1,{});showToast(`${menu.name}을 장바구니에 담았습니다.`);window.dispatchEvent(new Event('momo-cart-updated'))}
+  $('#categoryTabs').onclick=event=>{const button=event.target.closest('[data-category]');if(!button)return;state.category=button.dataset.category;state.page=1;history.replaceState(null,'',state.category==='all'?'/menus/list':`/menus/list?category=${encodeURIComponent(state.category)}`);renderTabs();render()};$('#searchInput').oninput=event=>{state.search=event.target.value.trim();state.page=1;render()};$('#sortSelect').onchange=event=>{state.sort=event.target.value;state.page=1;render()};document.addEventListener('click',event=>{const button=event.target.closest('#menuPagination [data-page]');if(!button||button.disabled)return;state.page=Number(button.dataset.page)||1;render();$('#menuCatalog').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'})});$('#menuGrid').onclick=event=>{const card=event.target.closest('.menu-card');if(!card)return;const menu=getMenuById(card.dataset.id);if(event.target.closest('[data-like]')){const liked=toggleLike(menu.id);if(liked!==null){showToast(liked?'찜한 메뉴에 추가했습니다.':'찜을 해제했습니다.');render()}}else if(event.target.closest('[data-open]'))openPanel(menu,event.target.closest('button'))};
+  $('#quickPanel').onclick=event=>{if(event.target.closest('.quick-close'))closePanel();const tab=event.target.closest('[data-tab]');if(tab)$('#quickContent').innerHTML=panelBody(activeMenu,tab.dataset.tab);if(event.target.closest('[data-panel-like]')){toggleLike(activeMenu.id);$('#quickContent').innerHTML=panelBody(activeMenu)}if(event.target.closest('[data-panel-cart]'))add(activeMenu)};$('#panelBackdrop').onclick=closePanel;document.addEventListener('keydown',event=>{if(event.key==='Escape')closePanel();if(event.key==='Tab'&&!$('#quickPanel').hidden){const focusable=[...$('#quickPanel').querySelectorAll('button:not([disabled]),a[href]')],first=focusable[0],last=focusable.at(-1);if(event.shiftKey&&document.activeElement===first){event.preventDefault();last.focus()}else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first.focus()}}});
+  const isDrink=menu=>['coffee','signature','noncoffee','tea','season'].includes(menu.category),isCoffee=menu=>['coffee','signature'].includes(menu.category);
+  const initialOptions=menu=>({bean:isCoffee(menu)?'momo':null,size:isDrink(menu)?'Regular':null,temperature:isDrink(menu)?(Number(menu.id)===8?'ICED':'HOT'):null,quantity:1});
+  const extraPrice=()=>optionState?.size==='Large'?1000:0;
+  const selectedOptions=()=>{const bean=beans.find(item=>item.id===optionState.bean);return{...(optionState.size?{size:optionState.size}:{}),...(optionState.temperature?{temperature:optionState.temperature}:{}),...(bean?{bean:bean.name,beanId:bean.id,beanOrigin:bean.origin,flavorProfile:bean.taste}:{}),optionPrice:extraPrice()}};
+  const optionMarkup=menu=>{const bean=isCoffee(menu)?`<div class="option-row bean-quick"><strong>원두</strong><div>${beans.map(item=>`<button type="button" data-option="bean" data-value="${item.id}" class="${optionState.bean===item.id?'selected':''}">${item.taste}</button>`).join('')}</div></div>`:'';const drink=isDrink(menu)?`<div class="option-row"><strong>사이즈</strong><div><button type="button" data-option="size" data-value="Regular" class="${optionState.size==='Regular'?'selected':''}">Regular</button><button type="button" data-option="size" data-value="Large" class="${optionState.size==='Large'?'selected':''}">Large <small>+1,000원</small></button></div></div><div class="option-row"><strong>온도</strong><div><button type="button" data-option="temperature" data-value="HOT" class="${optionState.temperature==='HOT'?'selected':''}" ${Number(menu.id)===8?'disabled title="아이스 전용 메뉴입니다."':''}>HOT</button><button type="button" data-option="temperature" data-value="ICED" class="${optionState.temperature==='ICED'?'selected':''}">ICED</button></div></div>`:'';return`<section class="order-options" aria-label="주문 옵션">${bean}${drink}<div class="quantity-row"><strong>수량</strong><div><button type="button" data-quantity="-1" ${optionState.quantity<=1?'disabled':''}>−</button><span>${optionState.quantity}</span><button type="button" data-quantity="1">＋</button></div></div></section>`};
+  const beanDetailsMarkup=menu=>isCoffee(menu)?`<section class="bean-detail-section" aria-labelledby="beanSectionTitle"><header><small>MOMO BEAN GUIDE</small><h3 id="beanSectionTitle">원두 선택</h3><p>취향에 맞는 원두를 선택해보세요.</p></header><div class="bean-grid">${beans.map(item=>`<label class="bean-card ${optionState.bean===item.id?'selected':''}"><input type="radio" name="bean" value="${item.id}" ${optionState.bean===item.id?'checked':''}><img src="${item.image}" alt="${item.name} 원두" loading="lazy"><span><b>${item.name}${item.badge?` <em>${item.badge}</em>`:''}</b><small class="bean-taste">${item.taste}</small><small>${item.origin}</small><small>${item.note}</small></span><i aria-hidden="true">✓</i></label>`).join('')}</div></section>`:'';
+  const pairingMarkup=menu=>menu.category==='goods'?'':`<aside class="pairing-tags" aria-label="추천 정보"><span>오늘의 페어링 <b>${isCoffee(menu)?'버터 크루아상':'모모 허니 브레드'}</b></span><span>추천 디저트 <b>${menu.category==='dessert'?'바닐라 라떼':'딸기 생크림 케이크'}</b></span></aside>`;
+  const basePanelBody=panelBody;panelBody=function(menu,tab='detail'){const markup=basePanelBody(menu,tab),total=(menu.price+extraPrice())*optionState.quantity;let result=markup.replace(`<strong>${won(menu.price)}</strong>`,`<strong class="quick-total">${won(total)}</strong>`).replace('<div class="quick-tabs">',`${optionMarkup(menu)}${pairingMarkup(menu)}${beanDetailsMarkup(menu)}<div class="quick-tabs">`).replace('<div class="quick-actions">','<div class="quick-actions expanded">');const end=result.lastIndexOf('</button></div>');if(end>=0)result=result.slice(0,end)+'</button><button class="buy" type="button" data-panel-buy '+(menu.isSoldOut?'disabled':'')+'>바로 구매하기</button></div>'+result.slice(end+15);return result};
+  const baseOpenPanel=openPanel;openPanel=function(menu,trigger){optionState=initialOptions(menu);baseOpenPanel(menu,trigger)};
+  const buildItem=menu=>({menuId:menu.id,name:menu.name,price:menu.price+extraPrice(),basePrice:menu.price,category:menu.category,image:menu.image,options:selectedOptions(),quantity:optionState.quantity});
+  add=function(menu){if(menu.isSoldOut){showToast('현재 품절된 메뉴입니다.');return}const item=buildItem(menu),cart=getCart(),key=JSON.stringify(item.options),existing=cart.find(row=>String(row.menuId)===String(item.menuId)&&JSON.stringify(row.options||{})===key);if(existing)existing.quantity+=item.quantity;else cart.push(item);saveCart(cart);window.dispatchEvent(new Event('momo-cart-updated'));showToast(`${menu.name}을 장바구니에 담았습니다.`);window.setTimeout(()=>{if(window.confirm('장바구니에 담았습니다. 지금 장바구니로 이동할까요?'))location.href='/basket/list.html'},120)};
+  $('#quickPanel').addEventListener('click',event=>{const option=event.target.closest('[data-option]');if(option&&!option.disabled){optionState[option.dataset.option]=option.dataset.value;$('#quickContent').innerHTML=panelBody(activeMenu);return}const quantity=event.target.closest('[data-quantity]');if(quantity&&!quantity.disabled){optionState.quantity=Math.max(1,Math.min(20,optionState.quantity+Number(quantity.dataset.quantity)));$('#quickContent').innerHTML=panelBody(activeMenu);return}const bean=event.target.closest('input[name="bean"]');if(bean){optionState.bean=bean.value;$('#quickContent').innerHTML=panelBody(activeMenu);return}if(event.target.closest('[data-panel-buy]')){if(activeMenu.isSoldOut)return;localStorage.setItem('momoBuyNowItem',JSON.stringify(buildItem(activeMenu)));location.href='/checkout/index.html?buyNow=1'}},true);
+  const HERO_IMAGES={1:'/assets/images/hero-menu-vanilla-v2.jpg',2:'/assets/images/hero-menu-einspanner-v2.jpg',5:'/assets/images/hero-menu-matcha-v2.jpg',8:'/assets/images/hero-menu-peach-v2.jpg',17:'/assets/images/hero-menu-bingsu-v2.jpg'};
+  const heroMenus=[1,2,5,8,17].map(id=>getMenuById(id)).filter(Boolean);let heroIndex=0,heroTimer=null,heroActive=heroMenus[0]||getMenus()[0];
+  const renderHero=menu=>{if(!menu)return;heroActive=menu;const featured=$('#heroFeatured'),heroImage=$('#heroMenuImage'),nextImage=HERO_IMAGES[menu.id]||image(menu);if(!heroImage.src.includes('hero-menu-'))heroImage.src=nextImage;featured.classList.add('is-changing');setTimeout(()=>{heroImage.src=nextImage;heroImage.alt=`${menu.name}가 놓인 모모커피 메뉴 화보`;$('#heroMenuName').textContent=menu.name;$('#heroMenuPrice').textContent=won(menu.price);$('#heroMenuDescription').textContent=menu.description;featured.classList.remove('is-changing')},300)};
+  if(heroActive){renderHero(heroActive);$('[data-hero-detail]').onclick=event=>openPanel(heroActive,event.currentTarget);if(heroMenus.length>1&&!matchMedia('(prefers-reduced-motion: reduce)').matches){heroTimer=setInterval(()=>{heroIndex=(heroIndex+1)%heroMenus.length;renderHero(heroMenus[heroIndex])},6000);addEventListener('pagehide',()=>clearInterval(heroTimer),{once:true})}}
+  setupSearch();$('#sortSelect')?.closest('label')?.remove();$('#searchInput').placeholder='찾고 싶은 메뉴를 입력해보세요';renderTabs();render();
+})();

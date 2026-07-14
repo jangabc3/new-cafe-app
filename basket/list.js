@@ -263,7 +263,7 @@ couponSelectButton.addEventListener('click', () => {
 basketCouponList.addEventListener('click', (event) => {
   const option = event.target.closest('[data-coupon-id]');
   if (!option || option.disabled) return;
-  selectMomoCoupon(option.dataset.couponId ? Number(option.dataset.couponId) : null);
+  selectMomoCoupon(option.dataset.couponId || null);
   couponPicker.hidden = true;
   couponSelectButton.setAttribute('aria-expanded', 'false');
   renderCart();
@@ -344,7 +344,9 @@ orderButton.addEventListener('click', () => {
   const memberKey = window.MomoLoyalty?.getUserKey();
   const monthlySpent = memberKey ? getOrders().filter((item) => {
     const date = new Date(item.createdAt);
-    return (!item.memberKey || item.memberKey === memberKey) && date.getFullYear() === now.getFullYear() && date.getMonth() === now.getMonth();
+    return window.MomoLoyalty?.belongsToMember(item)
+      && date.getFullYear() === now.getFullYear()
+      && date.getMonth() === now.getMonth();
   }).reduce((sum, item) => sum + Number(item.total || 0), 0) : 0;
   const monthlyGrade = memberKey ? window.MomoLoyalty?.syncMonthlyGradeBenefits(monthlySpent) : null;
 

@@ -15,20 +15,24 @@ const MOMO_DEFAULT_COUPONS = [
 function getMomoCoupons() {
   try {
     const saved = JSON.parse(localStorage.getItem(MOMO_COUPON_STORAGE_KEY) || 'null');
-    return Array.isArray(saved) ? saved : MOMO_DEFAULT_COUPONS.map((coupon) => ({ ...coupon }));
+    return Array.isArray(saved)
+      ? saved.filter((coupon) => coupon?.userId != null || String(coupon?.memberKey || '').trim())
+      : [];
   } catch {
-    return MOMO_DEFAULT_COUPONS.map((coupon) => ({ ...coupon }));
+    return [];
   }
 }
 
 function getMomoCouponsForUser(user) {
   const userId = user?.id ?? user?.email;
   const memberKey = String(userId || '').toLowerCase();
+  if (!memberKey) return [];
   return getMomoCoupons().filter((coupon) => {
     if (coupon.revoked) return false;
     if (coupon.expiresAt && new Date(coupon.expiresAt) < new Date()) return false;
-    if (coupon.userId != null) return String(coupon.userId) === String(userId) || String(coupon.memberKey || '').toLowerCase() === memberKey;
-    return true;
+    const assignedUserId = coupon.userId == null ? '' : String(coupon.userId);
+    const assignedMemberKey = String(coupon.memberKey || '').toLowerCase();
+    return assignedUserId === String(userId) || assignedMemberKey === memberKey;
   });
 }
 
@@ -58,10 +62,11 @@ function ensureLikedMenuCoupon() {
   return likedCoupons[0];
 }
 
-ensureLikedMenuCoupon();
+// Legacy liked-menu coupons were global and leaked into every member wallet.
+// Grade and administrator-issued coupons must always be assigned to one member.
 
 function getSelectedMomoCouponId() {
-  return Number(localStorage.getItem(MOMO_SELECTED_COUPON_KEY)) || null;
+  return localStorage.getItem(MOMO_SELECTED_COUPON_KEY) || null;
 }
 
 function selectMomoCoupon(id) {

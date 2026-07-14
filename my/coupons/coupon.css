@@ -227,8 +227,7 @@ button, a { font: inherit; }
 
 .coupon-empty { padding: 70px 24px; border: 1px solid var(--coupon-line); border-radius: 24px; background: #fff; text-align: center; box-shadow: var(--coupon-shadow); }
 .coupon-empty[hidden] { display: none; }
-.coupon-empty img { width: 150px; height: 150px; object-fit: cover; border-radius: 50%; }
-.coupon-empty h2 { margin: 22px 0 8px; font-size: 23px; }
+.coupon-empty h2 { margin: 0 0 8px; font-size: 23px; }
 .coupon-empty p { margin: 0 0 24px; color: var(--coupon-muted); }
 .coupon-empty a { width: 180px; margin: auto; }
 

@@ -94,7 +94,7 @@ tabs.addEventListener('click', (event) => {
 list.addEventListener('click', (event) => {
   const button = event.target.closest('[data-use-coupon]');
   if (!button) return;
-  const coupon = couponData.find((item) => item.id === Number(button.dataset.useCoupon));
+  const coupon = couponData.find((item) => String(item.id) === String(button.dataset.useCoupon));
   if (coupon) {
     selectMomoCoupon(coupon.id);
     showToast(`‘${coupon.title}’ 쿠폰을 선택했습니다. 장바구니로 이동합니다.`);

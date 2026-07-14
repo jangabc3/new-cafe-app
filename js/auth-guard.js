@@ -16,8 +16,11 @@
 
   if (currentUser) return;
 
+  const requestedUrl = new URL(redirect, window.location.origin);
+  if (!requestedUrl.search && window.location.search) requestedUrl.search = window.location.search;
+  if (!requestedUrl.hash && window.location.hash) requestedUrl.hash = window.location.hash;
   const loginUrl = new URL('/auth/login.html', window.location.origin);
-  loginUrl.searchParams.set('redirect', redirect);
+  loginUrl.searchParams.set('redirect', `${requestedUrl.pathname}${requestedUrl.search}${requestedUrl.hash}`);
   loginUrl.searchParams.set('message', 'login-required');
   window.location.replace(loginUrl.href);
 })();

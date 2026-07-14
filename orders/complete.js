@@ -86,8 +86,7 @@
   document.querySelector('#orderedItems').innerHTML = order.items.map(item => `<div class="menu-row"><span>${escapeHtml(item.name)} × ${item.quantity}</span><strong>${formatPrice(item.price * item.quantity)}</strong></div>`).join('');
   document.querySelector('#historyLink').href = `/orders/detail.html#id=${encodeURIComponent(order.id)}`;
   if (isGuestOrder) {
-    const historyLink = document.querySelector('#historyLink');
-    historyLink.hidden = true;
+    document.querySelector('#historyLink')?.remove();
   }
   document.querySelector('#completeCard').hidden = false;
 })();

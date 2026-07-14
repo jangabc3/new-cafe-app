@@ -19,3 +19,8 @@
 .guest-benefits-disabled{background:#faf7f3}
 .guest-benefits-disabled select,.guest-benefits-disabled input,.guest-benefits-disabled button{cursor:not-allowed;opacity:.58}
 @media(max-width:640px){.customer-info:has(.guest-field){grid-template-columns:1fr}.guest-field:last-child{grid-column:auto}}
+
+/* Payment readiness: neutral until every required checkout step is complete. */
+#payButton:not(.is-ready):not(:disabled){border:1px solid #ddd2ca;color:#7f7168;background:#e9e3de;box-shadow:none}
+#payButton:not(.is-ready):not(:disabled):hover{background:#e2dad4;transform:translateY(-1px)}
+#payButton.is-ready{border-color:#70462f;color:#fff;background:#70462f;box-shadow:0 9px 20px rgba(81,48,30,.13)}

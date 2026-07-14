@@ -14,7 +14,7 @@
   Object.entries(qna.categories).forEach(([value, label]) => categoryFilter.add(new Option(label, value)));
 
   const render = () => {
-    const all = qna.getMyInquiries(user.id ?? user.email).sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    const all = qna.getMyInquiries(user).sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
     document.querySelector('#totalCount').textContent = all.length;
     document.querySelector('#pendingCount').textContent = all.filter((item) => item.status === 'PENDING').length;
     document.querySelector('#answeredCount').textContent = all.filter((item) => item.status === 'ANSWERED').length;
@@ -38,10 +38,10 @@
           <tr>
             <td data-label="문의번호">${escape(item.id)}</td>
             <td data-label="유형"><span class="category-badge category-${item.category}">${qna.getInquiryCategoryLabel(item.category)}</span></td>
-            <td data-label="제목"><a href="/qna/detail.html?id=${encodeURIComponent(item.id)}">${escape(item.title)}</a>${item.isPrivate ? '<span class="private-mark" title="비공개 문의">⌑ 비공개</span>' : ''}</td>
+            <td data-label="제목"><a href="/qna/detail.html#id=${encodeURIComponent(item.id)}">${escape(item.title)}</a>${item.isPrivate ? '<span class="private-mark" title="비공개 문의">⌑ 비공개</span>' : ''}</td>
             <td data-label="작성일">${new Date(item.createdAt).toLocaleDateString('ko-KR')}</td>
             <td data-label="상태"><span class="badge ${item.status === 'ANSWERED' ? 'answered' : ''}">${qna.getInquiryStatusLabel(item.status)}</span></td>
-            <td data-label="상세"><a href="/qna/detail.html?id=${encodeURIComponent(item.id)}" aria-label="${escape(item.title)} 상세 보기">›</a></td>
+            <td data-label="상세"><a class="detail-arrow" href="/qna/detail.html#id=${encodeURIComponent(item.id)}" aria-label="${escape(item.title)} 상세 보기">›</a></td>
           </tr>`).join('')}</tbody>
       </table>` : '<div class="empty"><p>아직 등록한 문의가 없습니다.</p><a class="button button--primary" href="/qna/create.html">문의 작성하기</a></div>';
 

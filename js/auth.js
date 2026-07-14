@@ -70,7 +70,7 @@
     window.setTimeout(() => {
       if (getCurrentUser()) return;
       window.alert('로그인 후 30분이 지나 자동 로그아웃되었습니다.');
-      window.location.replace(projectUrl('login.html?message=session-expired'));
+      window.location.replace(projectUrl('auth/login.html?message=session-expired'));
     }, Math.max(0, Number(user.sessionExpiresAt) - Date.now()) + 50);
   };
 
@@ -172,7 +172,7 @@
         return;
       }
 
-      window.location.href = projectUrl('login.html?registered=1');
+      window.location.href = projectUrl('auth/login.html?registered=1');
     });
   };
 
@@ -231,7 +231,9 @@
       }
 
       localStorage.setItem(CURRENT_USER_KEY, JSON.stringify({ ...user, sessionStartedAt: Date.now(), sessionExpiresAt: Date.now() + SESSION_DURATION }));
-      window.location.href = user.role === 'ADMIN' ? projectUrl('admin/index.html') : projectUrl('index.html');
+      window.location.href = user.role === 'ADMIN'
+        ? projectUrl('admin/index.html')
+        : safeRedirect(params.get('redirect'));
     });
   };
 
@@ -247,7 +249,7 @@
     if (!currentUser) {
       loginLink.hidden = false;
       loginLink.textContent = 'LOGIN';
-      loginLink.setAttribute('href', projectUrl('login.html'));
+      loginLink.setAttribute('href', projectUrl('auth/login.html'));
       return;
     }
 
@@ -276,7 +278,7 @@
     const isProfilePage = currentPath.endsWith('/my/profile.html');
     if ((isMyPage || isProfilePage) && !getCurrentUser()) {
       const redirect = isProfilePage ? 'my/profile.html' : 'my/index.html';
-      window.location.replace(projectUrl(`login.html?redirect=${redirect}&message=login-required`));
+      window.location.replace(projectUrl(`auth/login.html?redirect=${redirect}&message=login-required`));
       return;
     }
 
@@ -294,7 +296,7 @@
       if (target.pathname.endsWith('/my/index.html') || target.pathname.endsWith('/my/profile.html')) {
         event.preventDefault();
         const redirect = target.pathname.endsWith('/my/profile.html') ? 'my/profile.html' : 'my/index.html';
-        window.location.href = projectUrl(`login.html?redirect=${redirect}&message=login-required`);
+        window.location.href = projectUrl(`auth/login.html?redirect=${redirect}&message=login-required`);
       }
     }, true);
   };

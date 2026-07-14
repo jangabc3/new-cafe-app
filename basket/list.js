@@ -273,7 +273,7 @@ basketCouponList.addEventListener('click', (event) => {
 applyPointButton.addEventListener('click', () => {
   const benefit = window.MomoLoyalty?.getBenefit();
   if (!benefit) {
-    window.location.href = '../login.html?redirect=basket/list.html&message=login-required';
+    window.location.href = '/auth/login.html?redirect=basket/list.html&message=login-required';
     return;
   }
   const requested = Math.max(0, Math.floor(Number(pointInput.value || 0)));
@@ -288,7 +288,7 @@ applyPointButton.addEventListener('click', () => {
 stampRewardButton.addEventListener('click', () => {
   const benefit = window.MomoLoyalty?.getBenefit();
   if (!benefit) {
-    window.location.href = '../login.html?redirect=basket/list.html&message=login-required';
+    window.location.href = '/auth/login.html?redirect=basket/list.html&message=login-required';
     return;
   }
   if (benefit.rewards < 1) return;

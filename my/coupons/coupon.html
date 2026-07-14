@@ -4,16 +4,16 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>쿠폰함 | MOMO COFFEE</title>
-    <script src="js/auth-guard.js" data-redirect="coupon.html"></script>
-    <link rel="stylesheet" href="css/variables.css">
-    <link rel="stylesheet" href="css/nav.css">
-    <link rel="stylesheet" href="css/footer.css">
-    <link rel="stylesheet" href="coupon.css">
+    <script src="/js/auth-guard.js" data-redirect="/my/coupons/coupon.html"></script>
+    <link rel="stylesheet" href="/css/variables.css">
+    <link rel="stylesheet" href="/css/nav.css">
+    <link rel="stylesheet" href="/css/footer.css">
+    <link rel="stylesheet" href="/my/coupons/coupon.css?v=2">
   </head>
   <body class="coupon-page">
     <header class="site-header">
-      <a class="brand" href="index.html" aria-label="MOMO COFFEE 홈">
-        <img src="assets/images/momo-header-logo.png?v=5" alt="MOMO COFFEE" class="site-logo-image">
+      <a class="brand" href="/" aria-label="MOMO COFFEE 홈">
+        <img src="/assets/images/momo-header-logo.png?v=5" alt="MOMO COFFEE" class="site-logo-image">
         <span><strong>MOMO COFFEE</strong><small>한 잔의 커피, 하루의 행복.</small></span>
       </a>
     </header>
@@ -28,7 +28,7 @@
         <div class="coupon-momo-wrap" aria-hidden="true">
           <span class="floating-heart heart-one">♡</span>
           <span class="floating-heart heart-two">♡</span>
-          <img class="coupon-momo" src="assets/images/momo-coupon-wallet.png?v=2" alt="">
+          <img class="coupon-momo" src="/assets/images/momo-coupon-wallet.png?v=2" alt="">
         </div>
       </section>
 
@@ -44,10 +44,10 @@
         </div>
         <div class="coupon-list" id="couponList"></div>
         <div class="coupon-empty" id="couponEmpty" hidden>
-          <img src="assets/images/momo-face-cute.png" alt="웃고 있는 모모 캐릭터">
+          <img src="/assets/images/momo-face-cute.png" alt="웃고 있는 모모 캐릭터">
           <h2>아직 사용할 수 있는 쿠폰이 없습니다.</h2>
           <p>새로운 메뉴를 만나고 다음 혜택도 기대해 주세요.</p>
-          <a href="menus/list.html">메뉴 보러가기</a>
+          <a href="/menus/list.html">메뉴 보러가기</a>
         </div>
       </section>
 
@@ -62,16 +62,16 @@
             <li>유효기간이 지난 쿠폰은 사용할 수 없습니다.</li>
           </ul>
         </div>
-        <img src="assets/images/momo-face-cute.png" alt="모모 캐릭터">
+        <img src="/assets/images/momo-face-cute.png" alt="모모 캐릭터">
       </section>
     </main>
 
     <footer class="landing-footer"></footer>
     <div class="coupon-toast" id="couponToast" role="status" hidden></div>
 
-    <script src="js/coupons.js"></script>
-    <script src="coupon.js"></script>
-    <script src="js/nav.js"></script>
-    <script src="js/footer.js"></script>
+    <script src="/js/coupons.js"></script>
+    <script src="/my/coupons/coupon.js"></script>
+    <script src="/js/nav.js"></script>
+    <script src="/js/footer.js"></script>
   </body>
 </html>

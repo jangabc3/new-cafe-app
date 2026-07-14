@@ -4,16 +4,16 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>찜한 메뉴 | MOMO COFFEE</title>
-    <script src="js/auth-guard.js" data-redirect="liked-menu.html"></script>
-    <link rel="stylesheet" href="css/variables.css">
-    <link rel="stylesheet" href="css/nav.css">
-    <link rel="stylesheet" href="css/footer.css">
-    <link rel="stylesheet" href="liked-menu.css">
+    <script src="/js/auth-guard.js" data-redirect="/my/liked-menus/liked-menu.html"></script>
+    <link rel="stylesheet" href="/css/variables.css">
+    <link rel="stylesheet" href="/css/nav.css">
+    <link rel="stylesheet" href="/css/footer.css">
+    <link rel="stylesheet" href="/my/liked-menus/liked-menu.css">
   </head>
   <body class="liked-page">
     <header class="site-header">
-      <a class="brand" href="index.html" aria-label="MOMO COFFEE 홈">
-        <img src="assets/images/momo-header-logo.png?v=5" alt="MOMO COFFEE" class="site-logo-image">
+      <a class="brand" href="/" aria-label="MOMO COFFEE 홈">
+        <img src="/assets/images/momo-header-logo.png?v=5" alt="MOMO COFFEE" class="site-logo-image">
         <span><strong>MOMO COFFEE</strong><small>한 잔의 커피, 하루의 행복.</small></span>
       </a>
     </header>
@@ -25,7 +25,7 @@
           <h1 id="likedTitle">찜한 메뉴 <span aria-hidden="true">♥</span></h1>
           <p id="likedHeroDescription"><span id="likedMemberName">회원님</span>이 찜한 메뉴를 확인해보세요.</p>
         </div>
-        <img class="liked-momo" src="assets/images/momo-app-character-cutout.png" alt="커피를 들고 있는 모모 캐릭터">
+        <img class="liked-momo" src="/assets/images/momo-app-character-cutout.png" alt="커피를 들고 있는 모모 캐릭터">
       </section>
 
       <section class="liked-summary" aria-label="찜한 메뉴 요약">
@@ -38,12 +38,12 @@
       <section class="liked-board" aria-label="찜한 메뉴 대시보드">
         <aside class="liked-sidebar" aria-label="마이페이지 메뉴">
           <h2 class="sidebar-title">MY PAGE</h2>
-          <a class="side-link" href="my/index.html"><span class="side-icon side-icon-user" aria-hidden="true"></span>마이페이지</a>
-          <a class="side-link" href="orders/list.html"><span class="side-icon side-icon-bag" aria-hidden="true"></span>주문 내역</a>
-          <a class="side-link is-active" href="liked-menu.html" aria-current="page"><span class="side-icon side-icon-heart" aria-hidden="true"></span>찜한 메뉴</a>
-          <a class="side-link" href="basket/list.html"><span class="side-icon side-icon-cart" aria-hidden="true"></span>장바구니</a>
-          <a class="side-link" href="coupon.html"><span class="side-icon side-icon-ticket" aria-hidden="true"></span>쿠폰함</a>
-          <a class="side-link" href="my/profile.html"><span class="side-icon side-icon-profile" aria-hidden="true"></span>회원 정보 수정</a>
+          <a class="side-link" href="/my/index.html"><span class="side-icon side-icon-user" aria-hidden="true"></span>마이페이지</a>
+          <a class="side-link" href="/orders/list.html"><span class="side-icon side-icon-bag" aria-hidden="true"></span>주문 내역</a>
+          <a class="side-link is-active" href="/my/liked-menus/liked-menu.html" aria-current="page"><span class="side-icon side-icon-heart" aria-hidden="true"></span>찜한 메뉴</a>
+          <a class="side-link" href="/basket/list.html"><span class="side-icon side-icon-cart" aria-hidden="true"></span>장바구니</a>
+          <a class="side-link" href="/my/coupons/coupon.html"><span class="side-icon side-icon-ticket" aria-hidden="true"></span>쿠폰함</a>
+          <a class="side-link" href="/my/profile.html"><span class="side-icon side-icon-profile" aria-hidden="true"></span>회원 정보 수정</a>
           <button class="side-link side-logout" type="button" id="logoutButton"><span class="side-icon side-icon-logout" aria-hidden="true"></span>로그아웃</button>
         </aside>
 
@@ -80,18 +80,18 @@
       <div class="footer-inner">
         <div class="footer-main">
           <section class="footer-brand" aria-label="MOMO COFFEE 브랜드 정보">
-            <a class="footer-logo" href="index.html" aria-label="MOMO COFFEE 홈">
-              <span class="footer-logo-mark" aria-hidden="true"><img src="assets/images/momo-header-logo.png?v=5" alt=""></span>
+            <a class="footer-logo" href="/" aria-label="MOMO COFFEE 홈">
+              <span class="footer-logo-mark" aria-hidden="true"><img src="/assets/images/momo-header-logo.png?v=5" alt=""></span>
               <strong>MOMO COFFEE</strong>
             </a>
             <p class="footer-slogan">한 잔의 커피,<br>하루의 <em>행복.</em></p>
             <p class="footer-description">따뜻한 커피와 달콤한 디저트로<br>당신의 하루에 작은 행복을 전합니다.</p>
           </section>
           <nav class="footer-navigation" aria-label="푸터 내비게이션">
-            <section class="footer-column"><h2>MENU</h2><a href="menus/list.html?category=drink">음료</a><a href="menus/list.html?category=season">시즌 메뉴</a><a href="menus/list.html?category=dessert">디저트</a></section>
-            <section class="footer-column"><h2>STORE</h2><a href="stores/finder.html">매장 찾기</a><a href="stores/finder.html">신규 매장</a></section>
-            <section class="footer-column"><h2>COMMUNITY</h2><a href="community/notice.html">공지사항</a><a href="community/event.html">이벤트</a><a href="community/faq.html">FAQ</a></section>
-            <section class="footer-column"><h2>BRAND</h2><a href="story/brand.html">브랜드 소개</a><a href="story/bi.html">Brand Identity (BI)</a></section>
+            <section class="footer-column"><h2>MENU</h2><a href="/menus/list.html?category=drink">음료</a><a href="/menus/list.html?category=season">시즌 메뉴</a><a href="/menus/list.html?category=dessert">디저트</a></section>
+            <section class="footer-column"><h2>STORE</h2><a href="/stores/finder.html">매장 찾기</a><a href="/stores/finder.html">신규 매장</a></section>
+            <section class="footer-column"><h2>COMMUNITY</h2><a href="/community/notice.html">공지사항</a><a href="/community/event.html">이벤트</a><a href="/community/faq.html">FAQ</a></section>
+            <section class="footer-column"><h2>BRAND</h2><a href="/story/brand.html">브랜드 소개</a><a href="/story/bi.html">Brand Identity (BI)</a></section>
             <section class="footer-column footer-customer"><h2>CUSTOMER CENTER</h2><a href="tel:1234-5678">1234-5678</a><p>09:00 - 18:00</p><a href="mailto:momo@coffee.com">momo@coffee.com</a></section>
           </nav>
         </div>
@@ -101,12 +101,12 @@
 
     <div class="liked-toast" id="toast" hidden role="status"></div>
 
-    <script src="js/data.js"></script>
-    <script src="js/utils.js"></script>
-    <script src="js/coupons.js"></script>
-    <script src="liked-menu.js"></script>
-    <script src="js/nav.js"></script>
-    <script src="js/footer.js"></script>
+    <script src="/js/data.js"></script>
+    <script src="/js/utils.js"></script>
+    <script src="/js/coupons.js"></script>
+    <script src="/my/liked-menus/liked-menu.js"></script>
+    <script src="/js/nav.js"></script>
+    <script src="/js/footer.js"></script>
   </body>
 </html>
 

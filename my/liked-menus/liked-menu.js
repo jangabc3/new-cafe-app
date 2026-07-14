@@ -1,7 +1,7 @@
 const currentUser = JSON.parse(localStorage.getItem('momoCurrentUser') || 'null');
 
 if (!currentUser) {
-  window.location.replace('login.html?redirect=liked-menu.html&message=login-required');
+  window.location.replace('/auth/login.html?redirect=%2Fmy%2Fliked-menus%2Fliked-menu.html&message=login-required');
 }
 
 const LIKED_KEY = 'momoLikedMenuIds';
@@ -27,10 +27,9 @@ function won(value) {
 }
 
 function imagePath(image) {
-  if (!image) return 'assets/images/momo-face-cute.png';
-  if (image.startsWith('http') || image.startsWith('assets/')) return image;
-  if (image.startsWith('../')) return image.slice(3);
-  return image;
+  if (!image) return '/assets/images/momo-face-cute.png';
+  if (image.startsWith('http') || image.startsWith('/')) return image;
+  return `/${image.replace(/^\.\.\//, '')}`;
 }
 
 function getStoredLikedIds() {
@@ -138,7 +137,7 @@ function renderLikedItems() {
 
   grid.innerHTML = items.map((item) => `
     <article class="product-card" data-id="${safe(item.id)}">
-      <a class="product-thumb" href="menus/detail.html?id=${encodeURIComponent(item.id)}" aria-label="${safe(item.name)} 상세 보기">
+      <a class="product-thumb" href="/menus/detail.html?id=${encodeURIComponent(item.id)}" aria-label="${safe(item.name)} 상세 보기">
         <img src="${safe(imagePath(item.image))}" alt="${safe(item.name)}" loading="lazy">
       </a>
       <button class="heart-button" type="button" data-action="unlike" aria-label="${safe(item.name)} 찜 해제">♥</button>
@@ -193,7 +192,7 @@ sortSelect.addEventListener('change', renderLikedItems);
 
 document.querySelector('#logoutButton')?.addEventListener('click', () => {
   localStorage.removeItem('momoCurrentUser');
-  window.location.href = 'index.html';
+  window.location.href = '/';
 });
 
 document.querySelectorAll('.liked-pagination a').forEach((link) => {

@@ -37,7 +37,7 @@
   const requireLogin = (action) => {
     if (user()) return true;
     const redirect = encodeURIComponent(`community/event.html?action=${action}`);
-    window.location.href = `../login.html?redirect=${redirect}&message=login-required`;
+    window.location.href = `/auth/login.html?redirect=${redirect}&message=login-required`;
     return false;
   };
 
@@ -83,7 +83,7 @@
     const key = userKey(member);
     const claims = read('momo_welcome_claims_v1', {});
     if (claims[key]) {
-      if (notify) showToast('웰컴 혜택을 이미 받으셨어요.', { href: '../coupon.html', label: '쿠폰 확인' });
+      if (notify) showToast('웰컴 혜택을 이미 받으셨어요.', { href: '/my/coupons/coupon.html', label: '쿠폰 확인' });
       return;
     }
 
@@ -105,7 +105,7 @@
     const benefits = read(BENEFITS_KEY, {});
     benefits[key] = { ...(benefits[key] || {}), stamps: Number(benefits[key]?.stamps || 0) + 2 };
     write(BENEFITS_KEY, benefits);
-    if (notify) showToast('웰컴 쿠폰과 스탬프 2개가 지급됐어요.', { href: '../coupon.html', label: '쿠폰 확인' });
+    if (notify) showToast('웰컴 쿠폰과 스탬프 2개가 지급됐어요.', { href: '/my/coupons/coupon.html', label: '쿠폰 확인' });
   };
 
   const updateMembershipButton = () => {

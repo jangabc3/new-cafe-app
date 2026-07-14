@@ -1,7 +1,7 @@
 (() => {
   const USERS_KEY = 'momoUsers';
   const CURRENT_USER_KEY = 'momoCurrentUser';
-  const loginUrl = '../login.html?redirect=my/profile.html&message=login-required';
+  const loginUrl = '/auth/login.html?redirect=my/profile.html&message=login-required';
 
   const text = {
     nameRequired: '\uC774\uB984\uC744 \uC785\uB825\uD574\uC8FC\uC138\uC694.',

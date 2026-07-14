@@ -16,7 +16,7 @@
 
   if (currentUser) return;
 
-  const loginUrl = new URL('/login.html', window.location.origin);
+  const loginUrl = new URL('/auth/login.html', window.location.origin);
   loginUrl.searchParams.set('redirect', redirect);
   loginUrl.searchParams.set('message', 'login-required');
   window.location.replace(loginUrl.href);

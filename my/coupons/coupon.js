@@ -98,7 +98,7 @@ list.addEventListener('click', (event) => {
   if (coupon) {
     selectMomoCoupon(coupon.id);
     showToast(`‘${coupon.title}’ 쿠폰을 선택했습니다. 장바구니로 이동합니다.`);
-    window.setTimeout(() => { window.location.href = 'basket/list.html'; }, 800);
+    window.setTimeout(() => { window.location.href = '/basket/list.html'; }, 800);
   }
 });
 

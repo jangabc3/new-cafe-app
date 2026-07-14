@@ -386,7 +386,7 @@ new-cafe-app
 - Linux 배포 후 CSS 미적용 문제
 - Relative Path 문제 해결
 - Nginx Reverse Proxy 설정
-- Git Branch 및 Merge 충돌 해결
+- G   `t Branch 및 Merge 충돌 해결
 - LocalStorage 데이터 구조 개선
 - 관리자 권한 처리
 - 메뉴 옵션 데이터 설계

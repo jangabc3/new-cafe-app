@@ -70,13 +70,33 @@ button, a { font: inherit; }
 .coupon-heading h1 span { color: var(--coupon-pink); font-size: 0.58em; vertical-align: 0.28em; }
 .coupon-heading > p:last-child { margin: 24px 0 0; color: var(--coupon-muted); font-size: 17px; font-weight: 600; line-height: 1.75; }
 
-.coupon-momo-wrap { position: absolute; right: 66px; bottom: -48px; width: 340px; height: 360px; }
+.coupon-momo-wrap {
+  position: absolute;
+  right: 66px;
+  bottom: -48px;
+  width: 340px;
+  height: 360px;
+  isolation: isolate;
+}
+.coupon-momo-wrap::before {
+  position: absolute;
+  inset: 2% -10% -4%;
+  z-index: -1;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(255, 240, 241, 0.72) 0%, rgba(255, 246, 244, 0.38) 56%, transparent 78%);
+  content: "";
+}
 .coupon-momo {
+  display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: 50% 28%;
   filter: saturate(0.98);
+  -webkit-mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, #000 50%, rgba(0, 0, 0, 0.94) 64%, rgba(0, 0, 0, 0.42) 82%, transparent 100%);
+  mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, #000 50%, rgba(0, 0, 0, 0.94) 64%, rgba(0, 0, 0, 0.42) 82%, transparent 100%);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
 }
 .floating-heart { position: absolute; z-index: 2; color: var(--coupon-pink); font-size: 36px; font-weight: 900; animation: heart-float 2.8s ease-in-out infinite; }
 .heart-one { left: -20px; top: 82px; transform: rotate(-13deg); }

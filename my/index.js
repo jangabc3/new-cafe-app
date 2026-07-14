@@ -1,7 +1,7 @@
 const currentUser = JSON.parse(localStorage.getItem('momoCurrentUser') || 'null');
 
 if (!currentUser) {
-  window.location.href = '/login.html?redirect=%2Fmy&message=login-required';
+  window.location.href = '/auth/login.html?redirect=%2Fmy&message=login-required';
 }
 
 const demoOrders = [

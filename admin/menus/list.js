@@ -100,7 +100,7 @@
       const cardClass = paused ? 'is-paused' : menu.isSoldOut ? 'is-soldout' : '';
       const availabilityLabel = menu.isSoldOut ? '판매 재개' : '품절 처리';
       return `<article class="admin-menu-card ${cardClass}">
-        <a class="menu-image" href="/admin/menus/detail.html?id=${encodeURIComponent(menu.id)}" aria-label="${escapeHtml(menu.name)} 상세 보기">
+        <a class="menu-image" href="/admin/menus/detail.html#id=${encodeURIComponent(menu.id)}" aria-label="${escapeHtml(menu.name)} 상세 보기">
           <img src="${escapeHtml(imagePath(menu))}" alt="${escapeHtml(menu.name)}" loading="lazy">
           <span class="menu-state">${menuState(menu)}</span>
         </a>
@@ -111,7 +111,7 @@
           <strong>${formatPrice(Number(menu.price) || 0)}</strong>
         </div>
         <div class="menu-actions">
-          <a href="/admin/menus/edit.html?id=${encodeURIComponent(menu.id)}">수정</a>
+          <a href="/admin/menus/edit.html#id=${encodeURIComponent(menu.id)}">수정</a>
           <button class="availability-action" type="button" data-soldout="${escapeHtml(menu.id)}">${availabilityLabel}</button>
           <button class="delete-action" type="button" data-delete="${escapeHtml(menu.id)}">삭제</button>
         </div>

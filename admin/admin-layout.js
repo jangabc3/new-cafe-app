@@ -8,7 +8,7 @@
   // `serve` can redirect clean URLs while dropping a query string. Detail
   // identifiers therefore travel in the fragment and are restored in-place.
   const routeHash=new URLSearchParams(location.hash.replace(/^#/,''));
-  if(/\/admin\/(?:qna|orders|members)\/detail(?:\.html)?\/?$/.test(location.pathname)&&!new URLSearchParams(location.search).get('id')&&routeHash.get('id')){
+  if(/\/admin\/(?:qna|orders|members|menus)\/detail(?:\.html)?\/?$/.test(location.pathname)&&!new URLSearchParams(location.search).get('id')&&routeHash.get('id')){
     const detailId=routeHash.get('id');
     const section=routeHash.get('section');
     history.replaceState(null,'',`${location.pathname}?id=${encodeURIComponent(detailId)}${section==='answer'?'#answer':''}`);
@@ -44,7 +44,7 @@
   document.querySelectorAll('input,select,textarea').forEach(control=>{if(control.type==='hidden'||control.getAttribute('aria-label')||control.getAttribute('aria-labelledby')||control.labels?.length)return;control.setAttribute('aria-label',control.placeholder||control.name||'입력 항목')});
   document.querySelectorAll('button').forEach(button=>{if(!button.getAttribute('aria-label')&&!button.textContent.trim())button.setAttribute('aria-label',button.title||'버튼')});
   document.querySelectorAll('[data-admin-logout]').forEach(button=>button.onclick=()=>{localStorage.removeItem('momoCurrentUser');location.replace('/auth/login.html')});
-  const detailLinkSelector='a[href*="/admin/qna/detail"],a[href*="/admin/orders/detail"],a[href*="/admin/members/detail"]';
+  const detailLinkSelector='a[href*="/admin/qna/detail"],a[href*="/admin/orders/detail"],a[href*="/admin/members/detail"],a[href*="/admin/menus/detail"]';
   const normalizeDetailLinks=root=>root.querySelectorAll?.(detailLinkSelector).forEach(link=>{
     const target=new URL(link.href,location.origin);
     const detailId=target.searchParams.get('id');

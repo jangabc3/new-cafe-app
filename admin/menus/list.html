@@ -1,1 +1,71 @@
-<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>메뉴 관리 | MOMO COFFEE</title><link rel="stylesheet" href="/css/variables.css"><link rel="stylesheet" href="/admin/admin-layout.css"><link rel="stylesheet" href="/admin/menus/list.css"></head><body data-admin-page="menus"><div class="admin-app"><main class="admin-content"><header class="menu-admin-heading"><div><p class="admin-eyebrow">MENU OPERATIONS</p><h1>메뉴 관리</h1><p>판매 상태와 메뉴 정보를 관리합니다.</p></div><a class="primary-button" href="/admin/menus/create.html">새 메뉴 등록</a></header><section class="menu-admin-summary"><article><strong id="totalCount">0</strong><span>전체 메뉴</span></article><article><strong id="sellingCount">0</strong><span>판매 중</span></article><article><strong id="soldOutCount">0</strong><span>품절</span></article><article><strong id="seasonCount">0</strong><span>시즌 메뉴</span></article></section><section class="menu-toolbar"><select id="availabilityFilter"><option value="all">전체 상태</option><option value="selling">판매 중</option><option value="soldout">품절</option></select><select id="categoryFilter"><option value="all">전체 카테고리</option></select><select id="sortFilter"><option value="default">기본 순서</option><option value="priceAsc">가격 낮은순</option><option value="priceDesc">가격 높은순</option><option value="name">이름순</option></select><input id="searchInput" type="search" placeholder="메뉴명 또는 영문명 검색"></section><section id="menuGrid" class="admin-menu-grid"></section><p id="emptyState" class="empty-state" hidden>조건에 맞는 메뉴가 없습니다.</p></main></div><div id="menuToast" class="admin-toast" hidden></div><script src="/js/data.js"></script><script src="/js/utils.js"></script><script src="/js/admin-activity.js"></script><script src="/js/admin-notifications.js"></script><script src="/admin/admin-layout.js"></script><script src="/admin/menus/list.js"></script></body></html>
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>메뉴 관리 | MOMO COFFEE</title>
+  <link rel="stylesheet" href="/css/variables.css">
+  <link rel="stylesheet" href="/admin/admin-layout.css">
+  <link rel="stylesheet" href="/admin/dashboard-shell.css">
+  <link rel="stylesheet" href="/admin/menus/list.css">
+</head>
+<body data-admin-page="menus">
+  <div class="admin-app">
+    <main class="admin-content menu-catalog-page">
+      <header class="menu-admin-heading">
+        <div>
+          <p class="admin-eyebrow">MENU OPERATIONS</p>
+          <h1>메뉴 관리</h1>
+          <p>판매 중인 메뉴를 등록하고 수정하며 품절 상태를 관리합니다.</p>
+        </div>
+        <a class="menu-create-button" href="/admin/menus/create.html" aria-label="새 메뉴 등록">
+          <span aria-hidden="true">＋</span> 새 메뉴 등록
+        </a>
+      </header>
+
+      <section class="menu-admin-summary" aria-label="메뉴 현황">
+        <article>
+          <span class="summary-icon summary-icon-total" aria-hidden="true"></span>
+          <div><small>전체 메뉴</small><strong><b id="totalCount">0</b>개</strong><p>등록된 전체 메뉴</p></div>
+        </article>
+        <article>
+          <span class="summary-icon summary-icon-selling" aria-hidden="true"></span>
+          <div><small>판매 중</small><strong><b id="sellingCount">0</b>개</strong><p>현재 주문 가능한 메뉴</p></div>
+        </article>
+        <article>
+          <span class="summary-icon summary-icon-paused" aria-hidden="true"></span>
+          <div><small>판매 중지</small><strong><b id="pausedCount">0</b>개</strong><p>운영에서 제외된 메뉴</p></div>
+        </article>
+        <article>
+          <span class="summary-icon summary-icon-soldout" aria-hidden="true"></span>
+          <div><small>품절 메뉴</small><strong><b id="soldOutCount">0</b>개</strong><p>현재 품절된 메뉴</p></div>
+        </article>
+      </section>
+
+      <section class="menu-toolbar" aria-label="메뉴 검색 및 필터">
+        <label><span>상태</span><select id="availabilityFilter"><option value="all">전체 상태</option><option value="selling">판매 중</option><option value="paused">판매 중지</option><option value="soldout">품절</option></select></label>
+        <label><span>카테고리</span><select id="categoryFilter"><option value="all">전체 카테고리</option></select></label>
+        <label><span>가격대</span><select id="priceFilter"><option value="all">전체 가격대</option><option value="under5000">5,000원 미만</option><option value="5000to6999">5,000~6,900원</option><option value="over7000">7,000원 이상</option></select></label>
+        <label><span>정렬</span><select id="sortFilter"><option value="default">기본 순서</option><option value="name">이름순</option><option value="priceAsc">가격 낮은순</option><option value="priceDesc">가격 높은순</option></select></label>
+        <label class="menu-search"><span class="sr-only">메뉴 검색</span><input id="searchInput" type="search" placeholder="메뉴명 또는 설명 검색" autocomplete="off"><i aria-hidden="true"></i></label>
+      </section>
+
+      <section class="catalog-section" aria-labelledby="catalogTitle">
+        <header>
+          <div><p class="admin-eyebrow">MENU CATALOG</p><h2 id="catalogTitle">메뉴 컬렉션</h2></div>
+          <p id="resultCount" aria-live="polite">0개의 메뉴</p>
+        </header>
+        <div id="menuGrid" class="admin-menu-grid"></div>
+        <nav id="pagination" class="menu-pagination" aria-label="메뉴 페이지"></nav>
+      </section>
+    </main>
+  </div>
+  <div id="menuToast" class="admin-toast" role="status" aria-live="polite" hidden></div>
+  <script src="/js/data.js"></script>
+  <script src="/js/utils.js"></script>
+  <script src="/js/admin-activity.js"></script>
+  <script src="/js/admin-notifications.js"></script>
+  <script src="/admin/admin-layout.js?v=20260715-3"></script>
+  <script src="/admin/menus/list.js"></script>
+</body>
+</html>

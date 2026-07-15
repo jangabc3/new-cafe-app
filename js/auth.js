@@ -221,7 +221,8 @@
       }
       if (!isValid) return;
 
-      const user = getUsers().find((candidate) =>
+      const users = getUsers();
+      const user = users.find((candidate) =>
         normalizeEmail(candidate.email) === email && normalizePassword(candidate.password) === password
       );
 
@@ -230,7 +231,18 @@
         return;
       }
 
-      localStorage.setItem(CURRENT_USER_KEY, JSON.stringify({ ...user, sessionStartedAt: Date.now(), sessionExpiresAt: Date.now() + SESSION_DURATION }));
+      if (user.role !== 'ADMIN' && (user.status === 'inactive' || user.isActive === false)) {
+        showNotice('비활성화된 계정입니다. 고객센터에 문의해 주세요.');
+        return;
+      }
+
+      const signedInUser = { ...user, lastLoginAt: new Date().toISOString() };
+      const userIndex = users.findIndex((candidate) => String(candidate.id ?? candidate.email) === String(user.id ?? user.email));
+      if (userIndex >= 0) {
+        users[userIndex] = signedInUser;
+        saveUsers(users);
+      }
+      localStorage.setItem(CURRENT_USER_KEY, JSON.stringify({ ...signedInUser, sessionStartedAt: Date.now(), sessionExpiresAt: Date.now() + SESSION_DURATION }));
       window.location.href = user.role === 'ADMIN'
         ? projectUrl('admin/index.html')
         : safeRedirect(params.get('redirect'));

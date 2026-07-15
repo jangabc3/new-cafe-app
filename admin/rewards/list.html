@@ -1,1 +1,79 @@
-<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>리워드 관리 | MOMO COFFEE</title><link rel="stylesheet" href="/css/variables.css"><link rel="stylesheet" href="/admin/admin-layout.css"><link rel="stylesheet" href="/admin/rewards/list.css"></head><body data-admin-page="rewards"><div class="admin-app"><main class="admin-content"><header class="reward-page-head"><p class="admin-eyebrow">REWARD OPERATIONS</p><h1>리워드 관리</h1><p>전체 회원의 포인트와 쿠폰 처리 이력을 조회합니다.</p></header><section id="rewardStats" class="reward-stats"></section><section class="reward-action-panel"><header><div><p class="admin-eyebrow">REWARD ACTION</p><h2>회원 리워드 처리</h2></div><a id="selectedMemberDetail" href="/admin/members/list.html">회원 상세 보기</a></header><label class="reward-member-select">대상 회원<select id="rewardMember"><option value="">회원을 선택해주세요</option></select></label><div class="reward-action-grid"><form id="rewardPointForm"><h3>포인트 지급·차감</h3><div class="quick-reward-points"><button type="button" data-value="500">500P</button><button type="button" data-value="1000">1,000P</button><button type="button" data-value="3000">3,000P</button><button type="button" data-value="5000">5,000P</button></div><label>처리 포인트<input name="amount" type="number" min="1" max="100000" required></label><label>처리 사유<input name="reason" maxlength="100" required></label><div class="reward-action-buttons"><button type="submit" value="EARN">포인트 지급</button><button class="deduct" type="submit" value="DEDUCT">포인트 차감</button></div></form><form id="rewardCouponForm"><h3>쿠폰 지급</h3><label>쿠폰<select name="template"><option value="1000">1,000원 할인 쿠폰</option><option value="3000">3,000원 할인 쿠폰</option><option value="10">음료 10% 할인 쿠폰</option><option value="SIZE">무료 사이즈업 쿠폰</option><option value="BIRTHDAY">생일 무료 음료 쿠폰</option></select></label><label>유효기간<input name="expiresAt" type="date" required></label><label>지급 사유<input name="reason" maxlength="100" required></label><button type="submit">쿠폰 지급</button></form></div><p id="rewardActionNotice" role="status" aria-live="polite"></p></section><section class="reward-toolbar"><select id="typeFilter"><option value="">전체</option><option value="POINT_EARN">포인트 지급</option><option value="POINT_DEDUCT">포인트 차감</option><option value="COUPON_ISSUE">쿠폰 지급</option><option value="COUPON_REVOKE">쿠폰 회수</option></select><select id="periodFilter"><option value="all">전체 기간</option><option value="today">오늘</option><option value="7">최근 7일</option></select><select id="sortFilter"><option value="desc">최신순</option><option value="asc">오래된순</option></select><input id="rewardSearch" type="search" placeholder="회원명, 이메일, 사유 또는 쿠폰명 검색"></section><section class="reward-list-panel"><div id="rewardList"></div><nav id="rewardPagination" class="reward-pagination"></nav></section></main></div><script src="/js/admin-activity.js"></script><script src="/js/admin-notifications.js"></script><script src="/admin/admin-layout.js"></script><script src="/js/rewards.js"></script><script src="/admin/rewards/list.js"></script></body></html>
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>리워드 관리 | MOMO COFFEE</title>
+  <link rel="stylesheet" href="/css/variables.css">
+  <link rel="stylesheet" href="/admin/admin-layout.css">
+  <link rel="stylesheet" href="/admin/dashboard-shell.css">
+  <link rel="stylesheet" href="/admin/rewards/list.css">
+</head>
+<body data-admin-page="rewards">
+  <div class="admin-app">
+    <main class="admin-content reward-page">
+      <header class="reward-page-head">
+        <div>
+          <p class="admin-eyebrow">REWARD OPERATIONS</p>
+          <h1>리워드 관리</h1>
+          <p>회원 포인트와 쿠폰을 한 화면에서 효율적으로 관리합니다.</p>
+        </div>
+      </header>
+
+      <section id="rewardStats" class="reward-stats" aria-label="리워드 현황"></section>
+
+      <section class="reward-workspace" aria-label="리워드 처리">
+        <article class="reward-editor">
+          <header class="editor-head"><div><p class="admin-eyebrow">POINTS</p><h2>포인트 관리</h2><p>회원을 선택하고 포인트를 적립하거나 차감합니다.</p></div></header>
+          <form id="rewardPointForm" novalidate>
+            <div class="mode-tabs" role="tablist" aria-label="포인트 처리 유형">
+              <button type="button" class="is-active" data-point-mode="EARN" role="tab" aria-selected="true">적립</button>
+              <button type="button" data-point-mode="DEDUCT" role="tab" aria-selected="false">차감</button>
+            </div>
+            <label class="field"><span>회원 검색</span><input id="pointMemberSearch" type="search" autocomplete="off" placeholder="회원명, 이메일 또는 전화번호 검색"></label>
+            <div id="pointMemberResults" class="member-results" hidden></div>
+            <div id="pointMemberCard" class="selected-member" hidden></div>
+            <fieldset class="amount-field"><legend>처리 포인트</legend><div class="quick-points"><button type="button" data-points="500">500P</button><button type="button" data-points="1000">1,000P</button><button type="button" data-points="3000">3,000P</button><button type="button" data-points="5000">5,000P</button><button type="button" data-points="10000">10,000P</button></div><label class="field direct"><span>직접 입력</span><input name="amount" type="number" min="1" max="100000" placeholder="0" required><em>P</em></label></fieldset>
+            <label class="field"><span>처리 사유</span><input name="reason" maxlength="100" placeholder="예: 이벤트 적립, 서비스 보상" required></label>
+            <button id="pointSubmit" class="primary-action" type="submit">포인트 적립</button>
+          </form>
+        </article>
+
+        <article class="reward-editor">
+          <header class="editor-head"><div><p class="admin-eyebrow">COUPONS</p><h2>쿠폰 발행</h2><p>혜택과 유효기간을 지정해 회원에게 발행합니다.</p></div><button id="couponManageButton" class="outline-action" type="button">쿠폰 관리</button></header>
+          <form id="rewardCouponForm" novalidate>
+            <label class="field"><span>쿠폰 선택</span><select name="template" id="couponTemplate" required></select></label>
+            <label class="field"><span>대상 회원 검색</span><input id="couponMemberSearch" type="search" autocomplete="off" placeholder="회원명, 이메일 또는 전화번호 검색"></label>
+            <div id="couponMemberResults" class="member-results" hidden></div>
+            <div id="couponMemberCard" class="selected-member" hidden></div>
+            <div class="coupon-options"><label class="field"><span>발행 수량</span><input name="quantity" type="number" min="1" max="20" value="1" required></label><label class="field"><span>유효기간</span><input name="expiresAt" type="date" required></label></div>
+            <label class="field"><span>발행 사유</span><input name="reason" maxlength="100" placeholder="예: VIP 이벤트, 컴플레인 보상" required></label>
+            <button class="primary-action" type="submit">쿠폰 발행</button>
+          </form>
+        </article>
+      </section>
+
+      <section class="history-panel">
+        <header class="history-head"><div><p class="admin-eyebrow">REWARD HISTORY</p><h2>리워드 내역</h2></div><button id="exportRewards" class="outline-action" type="button">CSV 다운로드</button></header>
+        <div class="reward-toolbar">
+          <select id="typeFilter" aria-label="유형"><option value="">전체 유형</option><option value="POINT_EARN">포인트 적립</option><option value="POINT_DEDUCT">포인트 차감</option><option value="COUPON_ISSUE">쿠폰 발행</option><option value="COUPON_USE">쿠폰 사용</option><option value="COUPON_REVOKE">쿠폰 회수</option></select>
+          <select id="periodFilter" aria-label="기간"><option value="all">전체 기간</option><option value="today">오늘</option><option value="7">최근 7일</option><option value="30">최근 30일</option></select>
+          <select id="sortFilter" aria-label="정렬"><option value="desc">최신순</option><option value="asc">오래된순</option></select>
+          <input id="rewardSearch" type="search" placeholder="회원명, 이메일, 쿠폰명 또는 사유 검색" aria-label="내역 검색">
+        </div>
+        <div class="reward-table-wrap"><table><thead><tr><th>유형</th><th>회원</th><th>처리 내용</th><th>포인트 / 쿠폰</th><th>상태</th><th>처리자</th><th>처리 시간</th><th><span class="sr-only">작업</span></th></tr></thead><tbody id="rewardRows"></tbody></table><div id="rewardEmpty" class="reward-empty" hidden><strong>표시할 리워드 내역이 없습니다.</strong><p>검색어나 필터를 변경해 다시 확인해 주세요.</p></div></div>
+        <footer class="history-footer"><span id="rewardCount"></span><nav id="rewardPagination" class="reward-pagination" aria-label="페이지"></nav><select id="pageSize" aria-label="페이지당 표시 개수"><option value="10">10개씩 보기</option><option value="20">20개씩 보기</option></select></footer>
+      </section>
+    </main>
+  </div>
+
+  <aside id="rewardDrawer" class="reward-drawer" aria-hidden="true"><button class="drawer-backdrop" type="button" data-close-drawer aria-label="상세 닫기"></button><section role="dialog" aria-modal="true" aria-labelledby="drawerTitle"><header><div><p class="admin-eyebrow">REWARD DETAIL</p><h2 id="drawerTitle">처리 상세</h2></div><button type="button" data-close-drawer aria-label="닫기">×</button></header><div id="drawerContent"></div></section></aside>
+  <div id="rewardToast" class="reward-toast" role="status" aria-live="polite"></div>
+  <div id="couponModal" class="coupon-modal" hidden><section role="dialog" aria-modal="true" aria-labelledby="couponModalTitle"><header><div><p class="admin-eyebrow">COUPON LIBRARY</p><h2 id="couponModalTitle">쿠폰 종류 관리</h2></div><button type="button" data-close-coupon aria-label="닫기">×</button></header><form id="couponTemplateForm"><input name="id" type="hidden"><label class="field"><span>쿠폰명</span><input name="name" maxlength="40" required></label><div class="coupon-options"><label class="field"><span>할인 유형</span><select name="discountType"><option value="FIXED">정액 할인</option><option value="PERCENT">정률 할인</option><option value="BENEFIT">혜택</option></select></label><label class="field"><span>할인 값</span><input name="discountValue" type="number" min="1" required></label></div><button class="primary-action" type="submit">저장</button></form><div id="couponTemplateList" class="template-list"></div></section></div>
+  <script src="/js/admin-activity.js"></script>
+  <script src="/js/admin-notifications.js"></script>
+  <script src="/admin/admin-layout.js?v=20260715-3"></script>
+  <script src="/js/rewards.js"></script>
+  <script src="/admin/rewards/list.js"></script>
+</body>
+</html>

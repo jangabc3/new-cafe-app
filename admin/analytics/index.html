@@ -1,1 +1,31 @@
-<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>통계 분석 | MOMO COFFEE</title><link rel="stylesheet" href="/css/variables.css"><link rel="stylesheet" href="/admin/admin-layout.css"><link rel="stylesheet" href="/admin/analytics/index.css"></head><body data-admin-page="analytics"><div class="admin-app"><main class="admin-content"><header class="analytics-head"><p class="admin-eyebrow">BUSINESS ANALYTICS</p><h1>통계 분석</h1><p>실제 주문과 회원, 리워드 데이터를 기준으로 집계합니다.</p></header><div class="analytics-filter"><label>분석 기간 <select id="analyticsPeriod"><option value="1">오늘</option><option value="7" selected>최근 7일</option><option value="30">최근 30일</option></select></label><button id="analyticsRefresh" type="button">새로고침</button></div><section id="salesMetrics" class="metric-grid" aria-label="매출 핵심 지표"></section><div class="analytics-columns"><section class="analytics-card"><h2>일별 매출 추이</h2><div id="salesChart" class="bar-chart" role="img" aria-label="기간별 매출 막대그래프"></div><table id="salesTable"><caption>일별 매출 데이터</caption></table></section><section class="analytics-card"><h2>인기 메뉴 TOP 10</h2><div id="menuRanking"></div></section></div><div class="analytics-columns"><section class="analytics-card"><h2>회원 활동</h2><div id="memberAnalytics"></div></section><section class="analytics-card"><h2>쿠폰·포인트</h2><div id="rewardAnalytics"></div></section></div></main></div><script src="/js/admin-analytics.js"></script><script src="/js/admin-activity.js"></script><script src="/js/admin-notifications.js"></script><script src="/admin/admin-layout.js"></script><script src="/admin/analytics/index.js"></script></body></html>
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>통계 분석 | MOMO COFFEE</title>
+  <link rel="stylesheet" href="/css/variables.css">
+  <link rel="stylesheet" href="/admin/admin-layout.css">
+  <link rel="stylesheet" href="/admin/dashboard-shell.css">
+  <link rel="stylesheet" href="/admin/analytics/index.css">
+</head>
+<body data-admin-page="analytics">
+  <div class="admin-app"><main class="admin-content analytics-page">
+    <header class="analytics-head"><div><p class="admin-eyebrow">BUSINESS ANALYTICS</p><h1>통계 분석</h1><p>비즈니스 성과를 한눈에 파악하고 운영의 다음 방향을 확인하세요.</p></div><div class="analytics-controls"><label><span>조회 기간</span><select id="analyticsPeriod"><option value="7">최근 7일</option><option value="30">최근 30일</option><option value="90">최근 90일</option></select></label><button id="analyticsRefresh" type="button">새로고침</button></div></header>
+    <section id="salesMetrics" class="analytics-kpis" aria-label="핵심 지표"></section>
+    <section class="analytics-primary">
+      <article class="analytics-card sales-card"><header><div><p class="card-eyebrow">SALES OVERVIEW</p><h2>매출 추이</h2></div><div class="chart-tabs" role="tablist"><button class="active" data-chart-unit="day" type="button">일별</button><button data-chart-unit="week" type="button">주별</button><button data-chart-unit="month" type="button">월별</button></div></header><div id="salesChart" class="sales-chart" role="img" aria-label="매출 추이 차트"></div><p id="salesSummary" class="chart-summary"></p></article>
+      <article class="analytics-card ranking-card"><header><div><p class="card-eyebrow">MENU PERFORMANCE</p><h2>인기 메뉴 TOP 10</h2></div></header><div id="menuRanking" class="menu-ranking"></div></article>
+    </section>
+    <section class="analytics-secondary">
+      <article class="analytics-card"><header><div><p class="card-eyebrow">WEEKLY SALES</p><h2>요일별 매출</h2></div></header><div id="weekdaySales" class="weekday-sales"></div></article>
+      <article class="analytics-card"><header><div><p class="card-eyebrow">HOURLY ORDERS</p><h2>시간대별 주문</h2></div></header><div id="hourHeatmap" class="hour-heatmap"></div><div class="heat-legend"><span>낮음</span><i></i><span>높음</span></div></article>
+    </section>
+    <section class="insight-grid">
+      <article class="analytics-card"><header><div><p class="card-eyebrow">MEMBER INSIGHTS</p><h2>회원 인사이트</h2></div></header><div id="memberInsights" class="mini-insights"></div></article>
+      <article class="analytics-card"><header><div><p class="card-eyebrow">ORDER INSIGHTS</p><h2>주문 인사이트</h2></div></header><div id="orderInsights" class="text-insights"></div></article>
+      <article class="analytics-card"><header><div><p class="card-eyebrow">RECENT SIGNALS</p><h2>최근 알림</h2></div></header><div id="analyticsAlerts" class="analytics-alerts"></div></article>
+    </section>
+  </main></div>
+  <script src="/js/admin-analytics.js"></script><script src="/js/admin-activity.js"></script><script src="/js/admin-notifications.js"></script><script src="/admin/admin-layout.js?v=20260715-3"></script><script src="/admin/analytics/index.js"></script>
+</body></html>

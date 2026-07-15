@@ -1,1 +1,65 @@
-<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>주문 관리 | MOMO COFFEE</title><link rel="stylesheet" href="/css/variables.css"><link rel="stylesheet" href="/admin/admin-layout.css"><link rel="stylesheet" href="/admin/orders/list.css"></head><body data-admin-page="orders"><div class="admin-app"><main class="admin-content"><header class="order-heading"><p class="admin-eyebrow">ORDER OPERATIONS</p><h1>주문 관리</h1><p>접수부터 픽업까지 주문 진행 상태를 관리합니다.</p></header><section class="order-summary" id="orderSummary"></section><section class="orders-panel"><div class="order-toolbar"><select id="statusFilter"><option value="">전체 상태</option><option value="RECEIVED">주문 접수</option><option value="PREPARING">제조 중</option><option value="READY">제조 완료</option><option value="PICKED_UP">픽업 완료</option></select><select id="periodFilter"><option value="all">전체 기간</option><option value="today">오늘</option><option value="7">최근 7일</option></select><select id="sortFilter"><option value="desc">최신순</option><option value="asc">오래된순</option></select><input id="searchInput" type="search" placeholder="주문번호, 회원 이름 또는 이메일 검색"><button id="searchButton" type="button">검색</button></div><div id="ordersArea"></div><nav id="pagination" class="admin-pagination" aria-label="페이지"></nav></section></main></div><div id="adminToast" class="admin-toast" role="status" aria-live="polite" hidden></div><script src="/js/data.js"></script><script src="/js/utils.js"></script><script src="/js/admin-activity.js"></script><script src="/js/admin-notifications.js"></script><script src="/admin/admin-layout.js"></script><script src="/admin/orders/list.js"></script></body></html>
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>주문 관리 | MOMO COFFEE</title>
+  <link rel="stylesheet" href="/css/variables.css">
+  <link rel="stylesheet" href="/admin/admin-layout.css">
+  <link rel="stylesheet" href="/admin/dashboard-shell.css">
+  <link rel="stylesheet" href="/admin/orders/list.css">
+</head>
+<body data-admin-page="orders">
+  <div class="admin-app">
+    <main class="admin-content orders-page">
+      <header class="order-heading">
+        <p class="admin-eyebrow">ORDER OPERATIONS</p>
+        <h1>주문 관리</h1>
+        <p>실시간 주문 접수부터 제조, 완료까지 한눈에 관리하세요.</p>
+      </header>
+
+      <div class="orders-layout">
+        <div class="orders-primary">
+          <section class="order-summary" id="orderSummary" aria-label="오늘의 주문 현황"></section>
+
+          <section class="order-filter-section" aria-label="주문 검색 및 필터">
+            <div class="order-toolbar">
+              <label><span>상태</span><select id="statusFilter"><option value="">전체 상태</option><option value="RECEIVED">주문 접수</option><option value="PREPARING">제조 중</option><option value="READY">제조 완료</option><option value="PICKED_UP">픽업 완료</option></select></label>
+              <label><span>매장</span><select id="storeFilter"><option value="">전체 매장</option></select></label>
+              <label><span>기간</span><select id="periodFilter"><option value="all">전체 기간</option><option value="today">오늘</option><option value="7">최근 7일</option></select></label>
+              <label><span>정렬</span><select id="sortFilter"><option value="desc">최신순</option><option value="asc">오래된순</option></select></label>
+              <label class="search-field"><span>주문 검색</span><input id="searchInput" type="search" placeholder="주문번호, 회원 이름 또는 이메일 검색"><button id="searchButton" type="button" aria-label="주문 검색"></button></label>
+            </div>
+          </section>
+
+          <section class="orders-panel" aria-labelledby="orderListTitle">
+            <header class="panel-heading"><div><p>LIVE ORDERS</p><h2 id="orderListTitle">주문 목록</h2></div><span id="orderResultCount">0건</span></header>
+            <div id="ordersArea"></div>
+            <nav id="pagination" class="admin-pagination" aria-label="페이지"></nav>
+          </section>
+        </div>
+
+        <aside class="orders-aside" aria-label="오늘의 주문 보조 정보">
+          <section class="side-card today-card">
+            <header><i class="side-icon icon-calendar" aria-hidden="true"></i><h2>오늘의 주문 요약</h2></header>
+            <dl id="todayOrderSummary"></dl>
+            <a href="/admin/analytics/index.html">주문 통계 보기 <span aria-hidden="true">›</span></a>
+          </section>
+          <section class="side-card recent-card">
+            <header><i class="side-icon icon-recent" aria-hidden="true"></i><h2>최근 주문</h2></header>
+            <div id="recentOrders"></div>
+          </section>
+          <p class="orders-updated" id="ordersUpdated">마지막 업데이트 -</p>
+        </aside>
+      </div>
+    </main>
+  </div>
+  <div id="adminToast" class="admin-toast" role="status" aria-live="polite" hidden></div>
+  <script src="/js/data.js"></script>
+  <script src="/js/utils.js"></script>
+  <script src="/js/admin-activity.js"></script>
+  <script src="/js/admin-notifications.js"></script>
+  <script src="/admin/admin-layout.js?v=20260715-3"></script>
+  <script src="/admin/orders/list.js"></script>
+</body>
+</html>

@@ -1,1 +1,54 @@
-<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>운영 센터 | MOMO COFFEE</title><link rel="stylesheet" href="/css/variables.css"><link rel="stylesheet" href="/admin/admin-layout.css"><link rel="stylesheet" href="/admin/operations/index.css"></head><body data-admin-page="operations"><div class="admin-app"><main class="admin-content"><header class="ops-head"><div><p class="admin-eyebrow">MOMO OPERATION CENTER</p><h1>운영 센터</h1><p id="opsClock"></p></div><button id="opsRefresh">새로고침</button></header><p id="opsUpdated"></p><section id="opsSummary" class="ops-grid"></section><section><h2>긴급 운영 업무</h2><div id="urgentCards" class="ops-grid"></div></section><section class="ops-panel"><h2>운영 타임라인</h2><div id="opsTimeline"></div></section></main></div><script src="/js/admin-analytics.js"></script><script src="/js/admin-notifications.js"></script><script src="/js/admin-settings.js"></script><script src="/js/admin-activity.js"></script><script src="/admin/admin-layout.js"></script><script src="/admin/operations/index.js"></script></body></html>
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>운영 센터 | MOMO COFFEE</title>
+  <link rel="stylesheet" href="/css/variables.css">
+  <link rel="stylesheet" href="/admin/admin-layout.css">
+  <link rel="stylesheet" href="/admin/dashboard-shell.css">
+  <link rel="stylesheet" href="/admin/operations/index.css">
+</head>
+<body data-admin-page="operations">
+  <div class="admin-app">
+    <main class="admin-content operations-page">
+      <header class="ops-hero" aria-labelledby="opsTitle">
+        <div>
+          <p class="admin-eyebrow">MOMO OPERATION CENTER</p>
+          <h1 id="opsTitle">운영 센터</h1>
+          <p>매장 운영 현황을 한눈에 확인하고,<br>필요한 업무를 빠르게 처리하세요.</p>
+        </div>
+      </header>
+
+      <section class="ops-summary" id="opsSummary" aria-label="오늘의 핵심 운영 지표"></section>
+
+      <div class="ops-main-grid">
+        <section class="ops-card status-card" aria-labelledby="storeTitle">
+          <header class="ops-card-heading"><div><h2 id="storeTitle">오늘의 운영 상태</h2><span id="opsStoreState"><i></i> 상태 확인 중</span></div></header>
+          <dl class="store-status" id="storeStatus"></dl>
+          <a class="wide-action" href="/admin/settings/index.html"><span class="wide-action-icon" aria-hidden="true">⚙</span><span class="wide-action-label">운영 시간 설정</span><b aria-hidden="true">›</b></a>
+        </section>
+
+        <section class="ops-card priority-card" aria-labelledby="priorityTitle">
+          <header class="ops-card-heading"><div><h2 id="priorityTitle">우선 처리 업무</h2><span id="priorityTotal">0건</span></div></header>
+          <div class="priority-list" id="urgentCards"></div>
+        </section>
+
+        <section class="ops-card notice-card" aria-labelledby="noticeTitle">
+          <header class="ops-card-heading"><div><h2 id="noticeTitle">공지사항</h2></div><a href="/community/notice.html">전체 보기</a></header>
+          <div class="notice-list" id="opsNotices"></div>
+        </section>
+      </div>
+      <p class="ops-update" id="opsUpdated">마지막 업데이트 -</p>
+    </main>
+  </div>
+  <script src="/js/data.js"></script>
+  <script src="/js/admin-analytics.js"></script>
+  <script src="/js/admin-notifications.js"></script>
+  <script src="/js/admin-settings.js"></script>
+  <script src="/js/admin-activity.js"></script>
+  <script src="/community/notices-data.js"></script>
+  <script src="/admin/admin-layout.js?v=20260715-3"></script>
+  <script src="/admin/operations/index.js"></script>
+</body>
+</html>

@@ -1,71 +1,9 @@
-const menuForm = $('#menuForm');
-const categorySelect = $('#categorySelect');
-const formError = $('#formError');
-const missingPanel = $('#missingPanel');
-const pageTitle = $('#pageTitle');
-const detailLink = $('#detailLink');
-const menuId = getQueryParam('id');
-const menu = getMenuById(menuId);
-
-function initializeCategories() {
-  categorySelect.innerHTML = CATEGORIES
-    .map((category) => `<option value="${category.id}">${escapeHtml(category.name)}</option>`)
-    .join('');
-}
-
-function fillForm() {
-  menuForm.elements.name.value = menu.name;
-  menuForm.elements.category.value = menu.category;
-  menuForm.elements.price.value = menu.price;
-  menuForm.elements.description.value = menu.description;
-  menuForm.elements.image.value = menu.image || '';
-  pageTitle.textContent = `${menu.name} 수정`;
-  detailLink.href = `/admin/menus/detail.html?id=${encodeURIComponent(menu.id)}`;
-  menuForm.hidden = false;
-}
-
-function getFormData(form) {
-  const data = new FormData(form);
-  return {
-    name: data.get('name'),
-    category: data.get('category'),
-    price: data.get('price'),
-    description: data.get('description'),
-    image: data.get('image') || ''
-  };
-}
-
-function validateMenuData(menuData) {
-  if (!menuData.name.trim()) return '메뉴명을 입력해 주세요.';
-  if (!menuData.category) return '카테고리를 선택해 주세요.';
-  if (Number(menuData.price) < 0 || Number.isNaN(Number(menuData.price))) return '가격을 올바르게 입력해 주세요.';
-  if (!menuData.description.trim()) return '설명을 입력해 주세요.';
-  return '';
-}
-
-function showError(message) {
-  formError.textContent = message;
-  formError.hidden = !message;
-}
-
-menuForm.addEventListener('submit', (event) => {
-  event.preventDefault();
-  const menuData = getFormData(menuForm);
-  const error = validateMenuData(menuData);
-
-  if (error) {
-    showError(error);
-    return;
-  }
-
-  updateMenu(menu.id, menuData);
-  window.location.href = `/admin/menus/detail.html?id=${encodeURIComponent(menu.id)}`;
-});
-
-initializeCategories();
-
-if (menu) {
-  fillForm();
-} else {
-  missingPanel.hidden = false;
-}
+(() => {
+  if(!document.querySelector('link[href="/admin/menus/image-upload.css"]')){const style=document.createElement('link');style.rel='stylesheet';style.href='/admin/menus/image-upload.css';document.head.append(style)}
+  const form=document.querySelector('#menuForm'),category=document.querySelector('#categorySelect'),error=document.querySelector('#formError'),preview=document.querySelector('#imagePreview'),fileInput=document.querySelector('#imageFile'),removeButton=document.querySelector('#removeImage');
+  const id=getQueryParam('id')||new URLSearchParams(location.hash.replace(/^#/,'')).get('id'),menu=getMenuById(id);if(!menu){location.replace('/admin/menus/list.html');return}
+  const showError=message=>{error.textContent=message;error.hidden=!message};const setImage=value=>{form.elements.image.value=value||'';preview.hidden=!value;removeButton.hidden=!value;if(value)preview.src=value.startsWith('data:')||value.startsWith('/')?value:`/${value.replace(/^\.\//,'')}`};
+  category.innerHTML=CATEGORIES.map(item=>`<option value="${item.id}">${escapeHtml(item.name)}</option>`).join('');form.elements.name.value=menu.name;form.elements.category.value=menu.category;form.elements.price.value=menu.price;form.elements.description.value=menu.description;setImage(menu.image||'');document.querySelector('#pageTitle').textContent=`${menu.name} 수정`;document.querySelector('#detailLink').href=`/admin/menus/detail.html#id=${encodeURIComponent(menu.id)}`;form.hidden=false;
+  fileInput.addEventListener('change',()=>{const file=fileInput.files[0];if(!file)return;if(!['image/jpeg','image/png','image/webp'].includes(file.type)||file.size>2*1024*1024){showError('JPG, PNG, WEBP 형식의 2MB 이하 이미지를 선택해 주세요.');fileInput.value='';return}const reader=new FileReader();reader.onload=()=>{setImage(reader.result);showError('')};reader.readAsDataURL(file)});removeButton.addEventListener('click',()=>{fileInput.value='';setImage('')});
+  form.addEventListener('submit',event=>{event.preventDefault();MomoAdmin.requireAdmin();const data=new FormData(form),values={name:String(data.get('name')||'').trim(),category:String(data.get('category')||''),price:Number(data.get('price')),description:String(data.get('description')||'').trim(),image:String(data.get('image')||'')};const message=!values.name?'메뉴명을 입력해 주세요.':!values.category?'카테고리를 선택해 주세요.':!Number.isFinite(values.price)||values.price<0?'가격을 올바르게 입력해 주세요.':!values.description?'설명을 입력해 주세요.':'';if(message){showError(message);return}updateMenu(menu.id,values);location.href=`/admin/menus/detail.html#id=${encodeURIComponent(menu.id)}`});
+})();

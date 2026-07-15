@@ -1,1 +1,68 @@
-<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>관리자 대시보드 | MOMO COFFEE</title><link rel="stylesheet" href="/css/variables.css"><link rel="stylesheet" href="/admin/admin-layout.css"><link rel="stylesheet" href="/admin/index.css"></head><body data-admin-page="dashboard"><div class="admin-app"><main class="admin-content"><section class="dashboard-hero"><div><p class="admin-eyebrow">MOMO OPERATIONS</p><h1>오늘도 좋은 하루예요, <span id="heroAdminName">관리자</span>님</h1><p>처리가 필요한 업무와 주요 운영 지표를 확인하세요.</p></div><div class="hero-status"><img src="/assets/images/momo-face-cute.png" alt=""><dl><div><dt>오늘 날짜</dt><dd id="heroDate">-</dd></div><div><dt>현재 운영 상태</dt><dd id="heroStoreState"><span class="live-dot"></span>확인 중</dd></div></dl></div></section><section class="summary-grid" id="summaryGrid" aria-label="오늘 운영 요약"></section><section class="quick-panel"><div><p class="admin-eyebrow">NEEDS ATTENTION</p><h2>처리 필요 업무</h2></div><nav id="attentionLinks"></nav></section><div class="dashboard-columns"><section class="admin-card"><header><div><p class="admin-eyebrow">ORDERS</p><h2>최근 주문</h2></div><a href="/admin/orders/list.html">전체 보기</a></header><div id="recentOrders"></div></section><section class="admin-card"><header><div><p class="admin-eyebrow">Q&amp;A</p><h2>최근 문의</h2></div><a href="/admin/qna/list.html">전체 보기</a></header><div id="recentInquiries"></div></section></div><div class="dashboard-columns lower"><section class="admin-card"><header><div><p class="admin-eyebrow">SALES</p><h2>최근 7일 매출</h2></div><a href="/admin/analytics/index.html">상세 분석</a></header><div id="dashboardSalesChart" class="dashboard-sales-chart" role="img" aria-label="최근 7일 매출 막대그래프"></div><p id="dashboardSalesSummary" class="chart-summary"></p></section><section class="admin-card"><header><div><p class="admin-eyebrow">ACTIVITY</p><h2>최근 관리자 활동</h2></div><a href="/admin/activity/list.html">전체 보기</a></header><ol class="activity-list" id="activityList"></ol></section></div><div class="dashboard-columns lower"><section class="admin-card"><header><div><p class="admin-eyebrow">BEST MENU</p><h2>인기 메뉴 TOP 5</h2></div><a href="/admin/analytics/index.html">상세 분석</a></header><div id="bestMenus"></div></section><section class="admin-card"><header><div><p class="admin-eyebrow">REWARDS</p><h2>리워드 현황</h2></div><a href="/admin/rewards/list.html">관리하기</a></header><div id="dashboardRewardStats" class="menu-status"></div><div id="dashboardRewardRecent" class="admin-list"></div></section></div></main></div><script src="/js/data.js"></script><script src="/js/utils.js"></script><script src="/js/qna.js"></script><script src="/js/rewards.js"></script><script src="/js/admin-activity.js"></script><script src="/js/admin-analytics.js"></script><script src="/js/admin-notifications.js"></script><script src="/js/admin-settings.js"></script><script src="/admin/admin-layout.js"></script><script src="/admin/index.js"></script></body></html>
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>관리자 대시보드 | MOMO COFFEE</title>
+  <link rel="stylesheet" href="/css/variables.css">
+  <link rel="stylesheet" href="/admin/admin-layout.css">
+  <link rel="stylesheet" href="/admin/dashboard-shell.css">
+  <link rel="stylesheet" href="/admin/index.css">
+</head>
+<body data-admin-page="dashboard">
+  <div class="admin-app">
+    <main class="admin-content dashboard-page">
+      <section class="dashboard-welcome" aria-labelledby="dashboardTitle">
+        <div>
+          <p class="admin-eyebrow">MOMO COFFEE · DAILY OPERATIONS</p>
+          <h1 id="dashboardTitle">오늘도 좋은 하루예요,<br><span id="heroAdminName">MOMO 관리자</span>님</h1>
+          <p>오늘의 매장 흐름과 고객 경험을 한눈에 확인해 보세요.</p>
+        </div>
+        <div class="welcome-meta" aria-label="현재 운영 정보">
+          <span id="heroDate">-</span>
+          <strong id="heroStoreState"><i class="live-dot"></i> 운영 상태 확인 중</strong>
+        </div>
+      </section>
+
+      <section class="summary-grid" id="summaryGrid" aria-label="오늘의 핵심 지표"></section>
+
+      <div class="analytics-grid">
+        <section class="dashboard-card sales-card">
+          <header class="card-heading">
+            <div><p class="admin-eyebrow">SALES OVERVIEW</p><h2>매출 추이</h2></div>
+            <div class="chart-actions"><label class="period-select"><span class="sr-only">매출 조회 기간</span><select id="salesPeriodSelect" aria-label="매출 조회 기간"><option value="7">최근 7일</option><option value="14">최근 14일</option><option value="30">최근 30일</option></select></label><a class="chart-shortcut" href="/admin/analytics/index.html">전체 보기</a></div>
+          </header>
+          <div class="chart-legend" aria-hidden="true"><span><i class="legend-line"></i>매출 (원)</span></div>
+          <div id="dashboardSalesChart" class="dashboard-sales-chart" role="img" aria-label="최근 7일 매출 추이 차트"><div class="sales-tooltip" id="salesTooltip" hidden></div></div>
+          <p id="dashboardSalesSummary" class="chart-summary"></p>
+        </section>
+
+        <section class="dashboard-card status-card">
+          <header class="card-heading"><div><p class="admin-eyebrow">ORDER STATUS</p><h2>주문 상태 현황</h2></div><a class="period-chip" href="/admin/orders/list.html">전체 보기</a></header>
+          <div class="status-chart-layout">
+            <div class="status-donut" id="statusDonut"><div><span>총 주문</span><strong id="statusTotal">0건</strong></div></div>
+            <div class="status-legend" id="statusLegend"></div>
+          </div>
+        </section>
+      </div>
+
+      <div class="content-grid">
+        <section class="dashboard-card content-card"><header class="card-heading"><div><p class="admin-eyebrow">ORDERS</p><h2>최근 주문</h2></div><a href="/admin/orders/list.html">전체 보기 <span>→</span></a></header><div id="recentOrders"></div></section>
+        <section class="dashboard-card content-card"><header class="card-heading"><div><p class="admin-eyebrow">CUSTOMER CARE</p><h2>최근 문의</h2></div><a href="/admin/qna/list.html">전체 보기 <span>→</span></a></header><div id="recentInquiries"></div></section>
+        <section class="dashboard-card content-card"><header class="card-heading"><div><p class="admin-eyebrow">BRAND NEWS</p><h2>공지사항</h2></div><a href="/community/notice.html">전체 보기</a></header><div id="recentNotices"></div></section>
+      </div>
+    </main>
+  </div>
+  <script src="/js/data.js"></script>
+  <script src="/js/utils.js"></script>
+  <script src="/js/qna.js"></script>
+  <script src="/js/rewards.js"></script>
+  <script src="/js/admin-activity.js"></script>
+  <script src="/js/admin-analytics.js"></script>
+  <script src="/js/admin-notifications.js"></script>
+  <script src="/js/admin-settings.js"></script>
+  <script src="/community/notices-data.js"></script>
+  <script src="/admin/admin-layout.js?v=20260715-3"></script>
+  <script src="/admin/index.js"></script>
+</body>
+</html>

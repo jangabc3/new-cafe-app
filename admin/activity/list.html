@@ -1,1 +1,48 @@
-<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>활동 로그 | MOMO COFFEE</title><link rel="stylesheet" href="/css/variables.css"><link rel="stylesheet" href="/admin/admin-layout.css"><link rel="stylesheet" href="/admin/activity/list.css"></head><body data-admin-page="activity"><div class="admin-app"><main class="admin-content"><header class="activity-head"><p class="admin-eyebrow">ADMIN AUDIT</p><h1>관리자 활동 로그</h1><p>운영자가 처리한 주요 변경 이력을 확인합니다.</p></header><section class="activity-filters" aria-label="활동 로그 필터"><select id="actionFilter"><option value="">전체 유형</option><option>ORDER</option><option>MENU</option><option>QNA</option><option>POINT</option><option>COUPON</option><option>SETTING</option></select><select id="activityPeriod"><option value="all">전체 기간</option><option value="today">오늘</option><option value="7">최근 7일</option><option value="30">최근 30일</option></select><select id="activitySort"><option value="desc">최신순</option><option value="asc">오래된순</option></select><input id="activitySearch" type="search" placeholder="관리자명, 대상 ID 또는 내용 검색"></section><section id="activityList" class="activity-panel"></section><nav id="activityPagination" aria-label="페이지"></nav></main></div><script src="/js/admin-activity.js"></script><script src="/js/admin-notifications.js"></script><script src="/admin/admin-layout.js"></script><script src="/admin/activity/list.js"></script></body></html>
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>관리자 활동 로그 | MOMO COFFEE</title>
+  <link rel="stylesheet" href="/css/variables.css">
+  <link rel="stylesheet" href="/admin/admin-layout.css">
+  <link rel="stylesheet" href="/admin/dashboard-shell.css">
+  <link rel="stylesheet" href="/admin/activity/list.css">
+</head>
+<body data-admin-page="activity">
+  <div class="admin-app"><main class="admin-content activity-page">
+    <header class="activity-head">
+      <div><p class="admin-eyebrow">ADMIN AUDIT</p><h1>관리자 활동 로그</h1><p>운영자가 수행한 주요 작업을 확인하고 변경 이력을 추적합니다.</p></div>
+      <div class="activity-updated"><time id="activityToday"></time><span>마지막 업데이트 <b id="activityUpdated">-</b></span></div>
+    </header>
+
+    <section id="activityStats" class="activity-stats" aria-label="활동 로그 요약"></section>
+
+    <section class="activity-toolbar" aria-label="활동 로그 검색 및 필터">
+      <label><span>활동 유형</span><select id="actionFilter"><option value="">전체 유형</option><option value="ORDER">주문</option><option value="MENU">메뉴</option><option value="MEMBER">회원</option><option value="QNA">문의</option><option value="POINT">포인트</option><option value="COUPON">쿠폰</option><option value="REWARD">리워드</option><option value="SETTING">운영 설정</option><option value="NOTICE">공지</option></select></label>
+      <label><span>기간</span><select id="activityPeriod"><option value="all">전체 기간</option><option value="today">오늘</option><option value="7">최근 7일</option><option value="30">최근 30일</option></select></label>
+      <label><span>관리자</span><select id="adminFilter"><option value="">전체 관리자</option></select></label>
+      <label><span>중요도</span><select id="importanceFilter"><option value="">전체 중요도</option><option value="important">중요 로그</option><option value="normal">일반 로그</option></select></label>
+      <label class="activity-search"><span>검색</span><input id="activitySearch" type="search" placeholder="관리자명, 대상 ID 또는 작업 내용 검색"></label>
+      <button id="activityReset" class="toolbar-button" type="button">초기화</button>
+      <button id="activityExport" class="toolbar-button" type="button">CSV</button>
+      <button id="activityRefresh" class="toolbar-button primary" type="button">새로고침</button>
+    </section>
+
+    <section class="activity-feed-card" aria-labelledby="activityFeedTitle">
+      <header><div><p class="admin-eyebrow">ACTIVITY FEED</p><h2 id="activityFeedTitle">운영 변경 이력</h2></div><span id="activityCount"></span></header>
+      <div class="activity-column-head" aria-hidden="true"><span>유형</span><span>관리자와 작업 내용</span><span>관련 정보</span><span>일시</span><span></span></div>
+      <div id="activityList" class="activity-feed"></div>
+      <footer class="activity-footer"><span id="activityTotal"></span><nav id="activityPagination" aria-label="페이지"></nav><label><span class="sr-only">페이지당 표시 개수</span><select id="activityPageSize"><option value="10">10개 보기</option><option value="30">30개 보기</option><option value="50">50개 보기</option></select></label></footer>
+    </section>
+  </main></div>
+
+  <aside id="activityDrawer" class="activity-drawer" aria-hidden="true">
+    <button class="drawer-backdrop" type="button" data-close-drawer aria-label="상세 닫기"></button>
+    <section role="dialog" aria-modal="true" aria-labelledby="activityDrawerTitle">
+      <header><div><p class="admin-eyebrow">AUDIT DETAIL</p><h2 id="activityDrawerTitle">작업 상세</h2></div><button type="button" data-close-drawer aria-label="닫기">×</button></header>
+      <div id="activityDrawerContent"></div>
+    </section>
+  </aside>
+  <script src="/js/admin-activity.js"></script><script src="/js/admin-notifications.js"></script><script src="/admin/admin-layout.js?v=20260715-3"></script><script src="/admin/activity/list.js"></script>
+</body></html>
